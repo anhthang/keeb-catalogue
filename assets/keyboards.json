@@ -1,0 +1,152 @@
+[
+  {
+    "Name": "E7-V2",
+    "Maker": "Exclusive",
+    "Layout": "75%",
+    "Homepage": "https://exclusive.run/products/exclusive-e7-v2",
+    "Image": "https://dl.airtable.com/.attachments/8ecd2e4e0a8ed5ae9f264ab09de89212/6e34f71a/1_2048x.jpg",
+    "Release": "Dec 11, 2020 → Dec 14, 2020",
+    "Status": "Closed",
+    "Description": "E7-V2 is based on our first 75% keyboard E7-V1, where we keep the original layout and slim bezel (the principle that we stick to from the beginning). But this time, your latest Exclusive keyboard will be equipped with gasket mounting system, using gasket rubber instead of o-ring."
+  },
+  {
+    "Name": "E7-V1",
+    "Maker": "Exclusive",
+    "Layout": "75%",
+    "Homepage": "https://exclusive.run/products/exclusive-e7-v1",
+    "Image": "https://cdn.shopify.com/s/files/1/0109/5149/1643/products/4C88EF96-F2EB-41D3-B25D-6DBEA7724AF7_org_2048x.jpg?v=1597445642",
+    "Release": "Aug 30, 2018 → Sep 10, 2018",
+    "Status": "Shipped",
+    "Description": "E7-V1 is Exclusive Keyboard's first attempt on the 75% form factor. LED indicator is introduced as a unique blocker for nav cluster, paired with classic weight design from other Exclusive Keyboards family, we're here presenting a 75% custom keyboard that you're waiting for so long."
+  },
+  {
+    "Name": "E8.5",
+    "Maker": "Exclusive",
+    "Layout": "TKL",
+    "Homepage": "https://exclusive.run/collections/frontpage/products/exclusive-e8-5",
+    "Image": "https://cdn.shopify.com/s/files/1/0109/5149/1643/files/8D39CF17-539F-4475-B463-283C33195E53_org_1024x1024.jpg?v=1596669164",
+    "Release": "Nov 24, 2019 → Dec 6, 2019",
+    "Status": "Shipped",
+    "Description": "E8.5 is the latest 80% custom keyboard brought by Exclusive Keyboard. With all-new structure design of gasket mount and signature top-right tag, you will have thousands of custom options for your new TKL keyboard once again."
+  },
+  {
+    "Name": "E6.5",
+    "Maker": "Exclusive",
+    "Layout": "65%",
+    "Homepage": "https://exclusive.run/collections/frontpage/products/exclusive-6-5",
+    "Image": "https://cdn.shopify.com/s/files/1/0109/5149/1643/products/IMG_002_2048x.jpg?v=1597445634",
+    "Release": "Mar 2, 2019 → Mar 9, 2019",
+    "Status": "Shipped",
+    "Description": "E6.5 is the 65% gasket mount custom keyboard by Exclusive Keyboard. While we keep the exclusive family signature name tag and bottom exclusive logo weight, the new typing experience will definitely make this your favorite 65% keyboard of the year."
+  },
+  {
+    "Name": "E6-V2",
+    "Maker": "Exclusive",
+    "Layout": "60%",
+    "Homepage": "https://exclusive.run/collections/frontpage/products/exclusive-e6-v2",
+    "Image": "https://cdn.shopify.com/s/files/1/0109/5149/1643/files/DSC03548_1024x1024.jpg?v=1598999275",
+    "Release": "Feb 28, 2018 → Mar 12, 2018",
+    "Status": "Shipped",
+    "Description": "For whoever like to build a 60% custom keyboard, you don't want to miss this E6-V2. With the classic sandwich design, personalization and customization is the key to this 60% custom mechanical keyboard."
+  },
+  {
+    "Name": "E8-V1",
+    "Maker": "Exclusive",
+    "Layout": "TKL",
+    "Homepage": "https://exclusive.run/collections/frontpage/products/exclusive-e8-v1",
+    "Image": "https://cdn.shopify.com/s/files/1/0109/5149/1643/files/655E3148-88A4-49FB-849F-E8D04EB5DCB3_org_1024x1024.jpg?v=1598939824",
+    "Release": "",
+    "Status": "",
+    "Description": "E8-V1 is optimized for both personalization and the typing experience. You can customize the engraved text on the top badge to give your own keyboard a unique signature, while we are working on the internals to make the keyboard one of the best typing machines for you to use daily."
+  },
+  {
+    "Name": "SPACE65:CyberVoyager",
+    "Maker": "Graystudio",
+    "Layout": "65%",
+    "Homepage": "https://graystudio.club/products/gbspace65-cybervoyager",
+    "Image": "",
+    "Release": "Apr 3, 2020 → Apr 17, 2020",
+    "Status": "Shipped",
+    "Description": ""
+  },
+  {
+    "Name": "Space65",
+    "Maker": "Graystudio",
+    "Layout": "65%",
+    "Homepage": "https://graystudio.club/products/space65",
+    "Image": "",
+    "Release": "Dec 30, 2018 → Jan 14, 2019",
+    "Status": "Shipped",
+    "Description": ""
+  },
+  {
+    "Name": "Think6.5",
+    "Maker": "Graystudio",
+    "Layout": "65%",
+    "Homepage": "https://graystudio.club/products/think6-5-final-batch-limited-qty",
+    "Image": "",
+    "Release": "Apr 14, 2019 → Apr 30, 2019",
+    "Status": "Shipped",
+    "Description": ""
+  },
+  {
+    "Name": "Think6.5 V2",
+    "Maker": "Graystudio",
+    "Layout": "65%",
+    "Homepage": "https://graystudio.club/products/gb-think6-5-v2",
+    "Image": "",
+    "Release": "Jul 20, 2020 → Jul 21, 2020",
+    "Status": "Closed",
+    "Description": ""
+  },
+  {
+    "Name": "Booster",
+    "Maker": "Percent Studio",
+    "Layout": "Numpad",
+    "Homepage": "https://percent.studio/products/booster-for-canoe-65",
+    "Image": "",
+    "Release": "",
+    "Status": "Shipped",
+    "Description": "Booster is a number pad designed for canoe. Shared exactly the same angle and approximate design language, Booster enjoys a highly recognizable identity as canoe. The style of color collocation is quite free, and you can find a collocation scheme for many keycaps. This time we offer four colors for your option."
+  },
+  {
+    "Name": "Canoe",
+    "Maker": "Percent Studio",
+    "Layout": "65%",
+    "Homepage": "https://percent.studio/products/canoe",
+    "Image": "",
+    "Release": "",
+    "Status": "Shipped",
+    "Description": "Canoe, our most classic model, has opened up a variety of new colors, for example, a bright yellow color. Amongst all colors, Yellow is one of the most decorative, which vitalizes Canoe to the next level."
+  },
+  {
+    "Name": "Canoe Gen2",
+    "Maker": "Percent Studio",
+    "Layout": "65%",
+    "Homepage": "https://percent.studio/products/canoe-gen2",
+    "Image": "",
+    "Release": "",
+    "Status": "Shipped",
+    "Description": "This revision of design is more rigorous and restrained.\nAnd it precisely represents our understanding of aesthetic for customized mechanical keyboards."
+  },
+  {
+    "Name": "Skog Reboot",
+    "Maker": "Percent Studio",
+    "Layout": "TKL",
+    "Homepage": "https://percent.studio/products/skog-reboot",
+    "Image": "https://cdn.shopify.com/s/files/1/0162/8117/4080/t/35/assets/pf-421f5dbc--SkogRebootscene1.jpg?v=1606473495",
+    "Release": "",
+    "Status": "Closed",
+    "Description": "As the first keyboard designed by Percent studio, Skog is not that wide spread as the Canoe.\nIt was late 2019 when we had the idea to give this iconic board a refresh."
+  },
+  {
+    "Name": "Volt",
+    "Maker": "Percent Studio",
+    "Layout": "TKL",
+    "Homepage": "https://percent.studio/products/volt",
+    "Image": "",
+    "Release": "",
+    "Status": "Shipped",
+    "Description": "The Volt is a new 80% keyboard designed by Percent Studio. We received a plethora of precious feedback during the past 6 months, through which we found that the majority of customers hope to see features such as Bluetooth, hot-swap, and RGB LEDs in our new work. So we designed the Volt. The Volt is not only equipped with a 4mm integrated positioning board but Kailh hot-swappable sockets, Bluetooth 3.0, full-key RGB LEDs, and USB Type-C as well as Percent Studio’s new design language. We've also experienced changes in suppliers, concepts, production, and quality control process. We believe that customers participating in the group buy will have felt the difference. Together, with great optimism in our product, we proudly introduce you to our latest piece, Volt."
+  }
+]
