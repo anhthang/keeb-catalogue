@@ -9,6 +9,7 @@
     <a-card v-if="keyboard.Image">
       <img slot="cover" :alt="keyboard.Name" :src="keyboard.Image" />
     </a-card>
+
     <a-divider orientation="left">General Information</a-divider>
     <a-descriptions :title="keyboard.Name" :column="1">
       <a-descriptions-item v-if="keyboard.Maker" label="Maker">
@@ -21,16 +22,23 @@
         {{ keyboard.Start }} - {{ keyboard.End }}
       </a-descriptions-item>
     </a-descriptions>
+
     <a-divider v-if="keyboard.Description" orientation="left">
       Description
     </a-divider>
     {{ keyboard.Description }}
-    <a-divider v-if="keyboard.Features" orientation="left">
+
+    <a-divider v-if="keyboard.Features" orientation="left">Features</a-divider>
+    <vue-markdown :source="keyboard.Features" />
+
+    <a-divider v-if="keyboard.Included" orientation="left">
       What's Included
     </a-divider>
-    <vue-markdown :source="keyboard.Features" />
+    <vue-markdown :source="keyboard.Included" />
+
     <a-divider v-if="keyboard.Colors" orientation="left">Colors</a-divider>
     <vue-markdown :source="keyboard.Colors" />
+
     <a-divider v-if="keyboard.Others" orientation="left">
       More Information
     </a-divider>
@@ -51,8 +59,8 @@ export default {
     return {
       statusMap: {
         Shipped: 'success',
-        Closed: 'processing',
-        Live: 'default',
+        Live: 'processing',
+        Closed: 'default',
       },
     }
   },

@@ -8,12 +8,7 @@
         :data-source="keyboards"
         :pagination="pagination"
       >
-        <a-list-item
-          slot="renderItem"
-          key="item.Name"
-          slot-scope="item"
-          @click="showDrawer(item)"
-        >
+        <a-list-item slot="renderItem" key="item.Name" slot-scope="item">
           <template slot="actions">
             <span key="user">
               <a-icon type="user" style="margin-right: 8px" />
@@ -26,22 +21,14 @@
               <a :href="item.Homepage" target="_blank">Home</a>
             </span>
           </template>
-          <template v-if="item.Geekhack" slot="actions">
+          <template v-if="item.geekhack" slot="actions">
             <span key="global">
               <a-icon type="global" style="margin-right: 8px" />
-              <a :href="item.Geekhack">geekhack</a>
+              <a :href="item.geekhack">geekhack</a>
             </span>
           </template>
-          <img
-            slot="extra"
-            width="300"
-            alt="logo"
-            :src="
-              item.Image ||
-              'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
-            "
-          />
-          <a-list-item-meta>
+          <img slot="extra" width="300" :alt="item.Name" :src="item.Image" />
+          <a-list-item-meta @click="showDrawer(item)">
             <a slot="title">{{ item.Name }}</a>
             <a-avatar slot="avatar">{{ item.Maker.charAt(0) }}</a-avatar>
           </a-list-item-meta>
@@ -78,8 +65,8 @@ export default {
       visible: false,
       statusMap: {
         Shipped: 'success',
-        Closed: 'processing',
-        Live: 'default',
+        Live: 'processing',
+        Closed: 'default',
       },
       pagination: {
         pageSize: 5,
