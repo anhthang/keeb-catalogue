@@ -1,13 +1,19 @@
 <template>
   <div class="container">
-    <div>
+    <a-card>
       <!-- <Logo /> -->
+      <SubmitNewKeyboard />
       <a-list
         item-layout="vertical"
         :data-source="keyboards"
         :pagination="pagination"
       >
-        <a-list-item slot="renderItem" key="item.Name" slot-scope="item">
+        <a-list-item
+          slot="renderItem"
+          key="item.Name"
+          slot-scope="item"
+          @click="showDrawer(item)"
+        >
           <template slot="actions">
             <span key="user">
               <a-icon type="user" style="margin-right: 8px" />
@@ -35,7 +41,7 @@
               'https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png'
             "
           />
-          <a-list-item-meta @click="showDrawer(item)">
+          <a-list-item-meta>
             <a slot="title">{{ item.Name }}</a>
             <a-avatar slot="avatar">{{ item.Maker.charAt(0) }}</a-avatar>
           </a-list-item-meta>
@@ -43,8 +49,8 @@
             <a-descriptions-item v-if="item.Status" label="Status">
               <a-badge :status="statusMap[item.Status]" :text="item.Status" />
             </a-descriptions-item>
-            <a-descriptions-item v-if="item.Release" label="GB Time">
-              {{ item.Release }}
+            <a-descriptions-item v-if="item.Start" label="GB Time">
+              {{ item.Start }} - {{ item.End }}
             </a-descriptions-item>
             <a-descriptions-item>
               {{ item.Description }}
@@ -52,7 +58,7 @@
           </a-descriptions>
         </a-list-item>
       </a-list>
-    </div>
+    </a-card>
     <KeyboardDetails
       :visible="visible"
       :on-close="onClose"
@@ -73,7 +79,7 @@ export default {
       statusMap: {
         Shipped: 'success',
         Closed: 'processing',
-        Running: 'default',
+        Live: 'default',
       },
       pagination: {
         pageSize: 5,

@@ -6,7 +6,7 @@
     :visible="visible"
     @close="onClose"
   >
-    <a-card>
+    <a-card v-if="keyboard.Image">
       <img slot="cover" :alt="keyboard.Name" :src="keyboard.Image" />
     </a-card>
     <a-divider orientation="left">General Information</a-divider>
@@ -17,23 +17,34 @@
       <a-descriptions-item v-if="keyboard.Status" label="Status">
         <a-badge :status="statusMap[keyboard.Status]" :text="keyboard.Status" />
       </a-descriptions-item>
-      <a-descriptions-item v-if="keyboard.Release" label="GB Time">
-        {{ keyboard.Release }}
+      <a-descriptions-item v-if="keyboard.Start" label="GB Time">
+        {{ keyboard.Start }} - {{ keyboard.End }}
       </a-descriptions-item>
     </a-descriptions>
-    <a-divider orientation="left">Description</a-divider>
+    <a-divider v-if="keyboard.Description" orientation="left">
+      Description
+    </a-divider>
     {{ keyboard.Description }}
-    <a-divider orientation="left">What's Included</a-divider>
-    TBD
-    <a-divider orientation="left">Colors</a-divider>
-    TBD
-    <a-divider orientation="left">More Information</a-divider>
-    TBD
+    <a-divider v-if="keyboard.Features" orientation="left">
+      What's Included
+    </a-divider>
+    <vue-markdown :source="keyboard.Features" />
+    <a-divider v-if="keyboard.Colors" orientation="left">Colors</a-divider>
+    <vue-markdown :source="keyboard.Colors" />
+    <a-divider v-if="keyboard.Others" orientation="left">
+      More Information
+    </a-divider>
+    <vue-markdown :source="keyboard.Others" />
   </a-drawer>
 </template>
 
 <script>
+import VueMarkdown from 'vue-markdown'
+
 export default {
+  components: {
+    VueMarkdown,
+  },
   // eslint-disable-next-line vue/require-prop-types
   props: ['visible', 'onClose', 'keyboard'],
   data() {
@@ -41,7 +52,7 @@ export default {
       statusMap: {
         Shipped: 'success',
         Closed: 'processing',
-        Running: 'default',
+        Live: 'default',
       },
     }
   },

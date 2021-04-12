@@ -19,9 +19,7 @@
         <a-breadcrumb-item>Home</a-breadcrumb-item>
         <a-breadcrumb-item>Live GBs</a-breadcrumb-item>
       </a-breadcrumb>
-      <div :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
-        <Nuxt />
-      </div>
+      <Nuxt />
     </a-layout-content>
     <a-layout-footer style="text-align: center">
       Keyboard Calendar ©2021 Created by Anh Thang Bui
