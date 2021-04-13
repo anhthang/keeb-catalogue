@@ -14,11 +14,7 @@
         <a-menu-item key="4">Previous GBs</a-menu-item>
       </a-menu>
     </a-layout-header>
-    <a-layout-content style="padding: 0 50px">
-      <a-breadcrumb style="margin: 16px 0">
-        <a-breadcrumb-item>Home</a-breadcrumb-item>
-        <a-breadcrumb-item>Live GBs</a-breadcrumb-item>
-      </a-breadcrumb>
+    <a-layout-content style="padding: 0 48px">
       <Nuxt />
     </a-layout-content>
     <a-layout-footer style="text-align: center">

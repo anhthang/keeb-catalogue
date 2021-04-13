@@ -1,4 +1,13 @@
 # keyboard-calendar
+Building a catalog for mechanical keyboard community
+
+## TODO
+- Maker view
+- Layout view
+- Calendar view
+- Favorite/Wishlist page
+- Keyboard comparison
+- Sign-in by Google
 
 ## Build Setup
 
