@@ -48,6 +48,7 @@
 
 <script>
 import VueMarkdown from 'vue-markdown'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -55,14 +56,8 @@ export default {
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['visible', 'onClose', 'keyboard'],
-  data() {
-    return {
-      statusMap: {
-        Shipped: 'success',
-        Live: 'processing',
-        Closed: 'default',
-      },
-    }
+  computed: {
+    ...mapState(['statusMap']),
   },
 }
 </script>

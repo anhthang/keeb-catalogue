@@ -25,7 +25,7 @@
           </span>
         </template>
         <img slot="extra" width="300" :alt="item.Name" :src="item.Image" />
-        <a-list-item-meta @click="showDrawer(item)">
+        <a-list-item-meta :description="item.Layout" @click="showDrawer(item)">
           <a slot="title">{{ item.Name }}</a>
           <a-avatar slot="avatar">{{ item.Maker.charAt(0) }}</a-avatar>
         </a-list-item-meta>
@@ -51,23 +51,20 @@
 </template>
 
 <script>
-import keyboards from '../assets/keyboards.json'
+import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
-      keyboards,
       currentKeyboard: {},
       visible: false,
-      statusMap: {
-        Shipped: 'success',
-        Live: 'processing',
-        Closed: 'default',
-      },
       pagination: {
         pageSize: 5,
       },
     }
+  },
+  computed: {
+    ...mapState(['statusMap', 'keyboards']),
   },
   methods: {
     showDrawer(item) {
