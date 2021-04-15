@@ -1,7 +1,9 @@
 <template>
   <a-layout id="components-layout-demo-top" class="layout">
     <a-layout-header>
-      <div class="logo" />
+      <nuxt-link to="/">
+        <div class="logo" />
+      </nuxt-link>
       <a-menu
         theme="dark"
         mode="horizontal"
@@ -12,6 +14,9 @@
         <a-menu-item key="2">Live GBs</a-menu-item>
         <a-menu-item key="3">Interest Check</a-menu-item>
         <a-menu-item key="4">Previous GBs</a-menu-item>
+        <a-menu-item key="5">
+          <nuxt-link to="/artisans">Artisans</nuxt-link>
+        </a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout-content style="padding: 0 48px">
