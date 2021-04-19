@@ -1,13 +1,12 @@
 <template>
-  <div class="container">
+  <div class="artisan-container">
     <div style="padding: 16px 0">
       <a-spin tip="Loading..." :spinning="loading">
-        <a-row :gutter="[16, 16]">
+        <a-row :gutter="[16, 16]" type="flex">
           <a-col v-for="colorway in colorways" :key="colorway.id" :span="6">
             <a-card hoverable>
               <img
                 slot="cover"
-                class="colorway-view"
                 loading="lazy"
                 :alt="colorway.name"
                 :src="colorway.img"
@@ -59,9 +58,14 @@ export default {
 </script>
 
 <style>
-.colorway-view {
-  width: 250px;
-  height: 250px;
+.artisan-container .ant-card-cover {
+  height: 300px;
+  overflow: hidden;
+}
+
+.artisan-container .ant-card-cover img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 </style>

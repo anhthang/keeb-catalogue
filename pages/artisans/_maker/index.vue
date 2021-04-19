@@ -1,17 +1,12 @@
 <template>
-  <div class="container">
+  <div class="artisan-container">
     <div style="padding: 16px 0">
       <a-spin tip="Loading..." :spinning="loading">
-        <a-row :gutter="[16, 16]">
+        <a-row :gutter="[16, 16]" type="flex">
           <a-col v-for="sculpt in sculpts" :key="sculpt.id" :span="6">
-            <nuxt-link :to="`${sculpt.link.replace('/maker', '')}`">
+            <nuxt-link :to="`/artisans${sculpt.link.replace('/maker', '')}`">
               <a-card hoverable>
-                <img
-                  slot="cover"
-                  class="sculpt-view"
-                  :alt="sculpt.name"
-                  :src="sculpt.previewImg"
-                />
+                <img slot="cover" :alt="sculpt.name" :src="sculpt.previewImg" />
                 <a-card-meta :title="sculpt.name">
                   <!-- <template slot="description"> www.instagram.com </template> -->
                 </a-card-meta>
@@ -63,9 +58,14 @@ export default {
 </script>
 
 <style>
-.sculpt-view {
-  width: 250px;
-  height: 250px;
+.artisan-container .ant-card-cover {
+  height: 300px;
+  overflow: hidden;
+}
+
+.artisan-container .ant-card-cover img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 </style>

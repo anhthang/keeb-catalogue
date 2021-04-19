@@ -14,9 +14,29 @@
         <a-menu-item key="2">Live GBs</a-menu-item>
         <a-menu-item key="3">Interest Check</a-menu-item>
         <a-menu-item key="4">Previous GBs</a-menu-item>
-        <a-menu-item key="5">
-          <nuxt-link to="/artisans">Artisans</nuxt-link>
-        </a-menu-item>
+        <a-sub-menu key="artisan">
+          <span slot="title"><a-icon type="user" />Artisans</span>
+          <a-menu-item key="a1">
+            <nuxt-link to="/artisans/artkey">Artkey</nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="a2">
+            <nuxt-link to="/artisans/dccaps">DCcaps</nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="a3">
+            <nuxt-link to="/artisans/girlycaps-studios">
+              Girlycaps Studios
+            </nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="a4">
+            <nuxt-link to="/artisans/goldenstar-keycap">GSK</nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="a5">
+            <nuxt-link to="/artisans/melonkeys">Melonkeys</nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="a6">
+            <nuxt-link to="/artisans/trmk">trmk</nuxt-link>
+          </a-menu-item>
+        </a-sub-menu>
       </a-menu>
     </a-layout-header>
     <a-layout-content style="padding: 0 48px">
