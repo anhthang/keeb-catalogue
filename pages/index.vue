@@ -7,6 +7,27 @@
   </div>
 </template>
 
+<script>
+export default {
+  asyncData({ query }) {
+    return {
+      ...query,
+    }
+  },
+  watchQuery({ status }) {
+    this.boardByStatus(status)
+  },
+  mounted() {
+    this.boardByStatus(this.status)
+  },
+  methods: {
+    boardByStatus(status) {
+      this.$store.dispatch('filterByStatus', status)
+    },
+  },
+}
+</script>
+
 <style>
 .container {
   margin: 0 auto;

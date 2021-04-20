@@ -7,13 +7,29 @@
       <a-menu
         theme="dark"
         mode="horizontal"
-        :default-selected-keys="['2']"
+        :default-selected-keys="['1']"
         :style="{ lineHeight: '64px' }"
       >
-        <a-menu-item key="1">Calendar</a-menu-item>
-        <a-menu-item key="2">Live GBs</a-menu-item>
-        <a-menu-item key="3">Interest Check</a-menu-item>
-        <a-menu-item key="4">Previous GBs</a-menu-item>
+        <a-menu-item key="1">
+          <nuxt-link to="/calendar">
+            <a-icon type="calendar" />Calendar
+          </nuxt-link>
+        </a-menu-item>
+        <a-menu-item key="2">
+          <nuxt-link to="/?status=live">
+            <a-icon type="forward" />Live GBs
+          </nuxt-link>
+        </a-menu-item>
+        <a-menu-item key="3">
+          <nuxt-link to="/?status=ic">
+            <a-icon type="question-circle" />Interest Check
+          </nuxt-link>
+        </a-menu-item>
+        <a-menu-item key="4">
+          <nuxt-link to="/?status=closed">
+            <a-icon type="backward" />Previous GBs
+          </nuxt-link>
+        </a-menu-item>
         <a-sub-menu key="artisan">
           <span slot="title"><a-icon type="user" />Artisans</span>
           <a-menu-item key="a1">

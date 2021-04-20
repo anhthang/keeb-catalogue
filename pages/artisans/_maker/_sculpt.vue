@@ -12,8 +12,12 @@
                 :src="colorway.img"
               />
               <template slot="actions" class="ant-card-actions">
-                <a-icon key="star" type="star" />
-                <a-icon key="retweet" type="retweet" />
+                <a-icon key="star" type="star" @click="addWishlist(colorway)" />
+                <a-icon
+                  key="retweet"
+                  type="retweet"
+                  @click="addTradeList(colorway)"
+                />
               </template>
               <a-card-meta :title="colorway.name">
                 <template v-if="colorway.releaseDate" slot="description">
@@ -54,10 +58,22 @@ export default {
         this.loading = false
       })
   },
+  methods: {
+    addWishlist(clw) {
+      // console.log(clw)
+    },
+    addTradeList(clw) {
+      // console.log(clw)
+    },
+  },
 }
 </script>
 
 <style>
+.artisan-container {
+  text-align: center;
+}
+
 .artisan-container .ant-card-cover {
   height: 300px;
   overflow: hidden;
