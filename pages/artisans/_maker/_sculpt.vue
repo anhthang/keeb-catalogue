@@ -4,23 +4,44 @@
       <a-spin tip="Loading..." :spinning="loading">
         <a-row :gutter="[16, 16]" type="flex">
           <a-col v-for="colorway in colorways" :key="colorway.id" :span="6">
-            <a-card hoverable>
+            <a-card hoverable :title="colorway.name">
               <img
                 slot="cover"
                 loading="lazy"
                 :alt="colorway.name"
                 :src="colorway.img"
               />
-              <template slot="actions" class="ant-card-actions">
-                <a-icon key="star" type="star" @click="addWishlist(colorway)" />
-                <a-icon
-                  key="retweet"
-                  type="retweet"
-                  @click="addTradeList(colorway)"
-                />
+              <template slot="extra">
+                <a-dropdown :trigger="['hover']" placement="bottomCenter">
+                  <a-icon type="dash" />
+
+                  <a-menu slot="overlay">
+                    <a-menu-item key="0">Report</a-menu-item>
+                  </a-menu>
+                </a-dropdown>
               </template>
-              <a-card-meta :title="colorway.name">
-                <template v-if="colorway.releaseDate" slot="description">
+              <template slot="actions" class="ant-card-actions">
+                <span>
+                  <a-icon
+                    key="heart"
+                    type="heart"
+                    :theme="wishList[colorway.id] ? 'twoTone' : 'outlined'"
+                    two-tone-color="red"
+                    @click="addWishList(colorway)"
+                  />
+                  Wish
+                </span>
+                <span>
+                  <a-icon
+                    key="retweet"
+                    type="retweet"
+                    @click="addTradeList(colorway)"
+                  />
+                  Trade
+                </span>
+              </template>
+              <a-card-meta v-if="colorway.releaseDate">
+                <template slot="description">
                   {{ colorway.releaseDate }}
                 </template>
               </a-card-meta>
@@ -43,6 +64,8 @@ export default {
     return {
       colorways: [],
       loading: true,
+      wishList: {},
+      tradeList: {},
     }
   },
   async fetch() {
@@ -58,12 +81,34 @@ export default {
         this.loading = false
       })
   },
+  beforeMount() {
+    this.wishList = JSON.parse(localStorage.getItem('KeebCal_WishList')) || {}
+    this.tradeList = JSON.parse(localStorage.getItem('KeebCal_TradeList')) || {}
+  },
   methods: {
-    addWishlist(clw) {
-      // console.log(clw)
+    addWishList(clw) {
+      if (!this.wishList[clw.id]) {
+        this.wishList[clw.id] = clw
+        localStorage.setItem('KeebCal_WishList', JSON.stringify(this.wishList))
+      } else {
+        delete this.wishList[clw.id]
+        localStorage.setItem('KeebCal_WishList', JSON.stringify(this.wishList))
+      }
     },
     addTradeList(clw) {
-      // console.log(clw)
+      if (!this.tradeList[clw.id]) {
+        this.tradeList[clw.id] = clw
+        localStorage.setItem(
+          'KeebCal_TradeList',
+          JSON.stringify(this.tradeList)
+        )
+      } else {
+        delete this.tradeList[clw.id]
+        localStorage.setItem(
+          'KeebCal_TradeList',
+          JSON.stringify(this.tradeList)
+        )
+      }
     },
   },
 }
@@ -83,5 +128,9 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.ant-card-head-title {
+  white-space: pre-line;
 }
 </style>
