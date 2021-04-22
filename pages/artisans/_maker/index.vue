@@ -14,7 +14,13 @@
         </a-button>
         <a-button v-if="makerInfo.discord" key="1">
           <a :href="makerInfo.discord" target="_blank">
-            <a-icon type="discord" /> Discord
+            <a-icon :component="DiscordSvg" class="discord-icon" />
+            Discord
+          </a>
+        </a-button>
+        <a-button v-if="makerInfo.src" key="0">
+          <a :href="makerInfo.src" target="_blank">
+            <a-icon type="file-word" /> Catalog
           </a>
         </a-button>
       </template>
@@ -24,11 +30,8 @@
         <a-row :gutter="[16, 16]" type="flex">
           <a-col v-for="sculpt in makerInfo.sculpts" :key="sculpt.id" :span="6">
             <nuxt-link :to="`/artisans${sculpt.link.replace('/maker', '')}`">
-              <a-card hoverable>
+              <a-card hoverable :title="sculpt.name">
                 <img slot="cover" :alt="sculpt.name" :src="sculpt.previewImg" />
-                <a-card-meta :title="sculpt.name">
-                  <!-- <template slot="description"> www.instagram.com </template> -->
-                </a-card-meta>
               </a-card>
             </nuxt-link>
           </a-col>
@@ -40,6 +43,7 @@
 
 <script>
 // import { mapState } from 'vuex'
+import DiscordSvg from '~/components/DiscordSvg.vue'
 
 export default {
   asyncData({ params }) {
@@ -51,6 +55,7 @@ export default {
     return {
       makerInfo: [],
       loading: true,
+      DiscordSvg,
     }
   },
   async fetch() {
@@ -90,5 +95,10 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.discord-icon {
+  font-size: 18px;
+  vertical-align: middle;
 }
 </style>

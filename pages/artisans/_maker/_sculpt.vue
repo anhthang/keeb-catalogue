@@ -1,9 +1,20 @@
 <template>
   <div class="artisan-container">
+    <a-page-header :title="sculpt.name" @back="() => $router.go(-1)">
+      <template slot="extra">
+        <a-button key="1" type="primary">
+          <a-icon type="file-add" /> Submit new Colorway
+        </a-button>
+      </template>
+    </a-page-header>
     <div style="padding: 16px 0">
       <a-spin tip="Loading..." :spinning="loading">
         <a-row :gutter="[16, 16]" type="flex">
-          <a-col v-for="colorway in colorways" :key="colorway.id" :span="6">
+          <a-col
+            v-for="colorway in sculpt.colorways"
+            :key="colorway.id"
+            :span="6"
+          >
             <a-card hoverable :title="colorway.name">
               <img
                 slot="cover"
@@ -21,22 +32,18 @@
                 </a-dropdown>
               </template>
               <template slot="actions" class="ant-card-actions">
-                <span>
-                  <a-icon
-                    key="heart"
-                    type="heart"
-                    :theme="wishList[colorway.id] ? 'twoTone' : 'outlined'"
-                    two-tone-color="red"
-                    @click="addWishList(colorway)"
-                  />
+                <span
+                  :class="wishList[colorway.id] ? 'wish-item' : ''"
+                  @click="addWishList(colorway)"
+                >
+                  <a-icon key="heart" type="heart" />
                   Wish
                 </span>
-                <span>
-                  <a-icon
-                    key="retweet"
-                    type="retweet"
-                    @click="addTradeList(colorway)"
-                  />
+                <span
+                  :class="tradeList[colorway.id] ? 'trade-item' : ''"
+                  @click="addTradeList(colorway)"
+                >
+                  <a-icon key="retweet" type="retweet" />
                   Trade
                 </span>
               </template>
@@ -62,20 +69,20 @@ export default {
   },
   data() {
     return {
-      colorways: [],
+      sculpt: [],
       loading: true,
       wishList: {},
       tradeList: {},
     }
   },
   async fetch() {
-    this.colorways = await fetch(
+    this.sculpt = await fetch(
       `https://keycap-archivist.com/page-data/maker/${this.maker}/${this.sculpt}/page-data.json`
     )
       .then((res) => res.json())
       .then((res) => {
         this.loading = false
-        return res.result.pageContext.sculpt.colorways
+        return res.result.pageContext.sculpt
       })
       .catch(() => {
         this.loading = false
@@ -86,29 +93,41 @@ export default {
     this.tradeList = JSON.parse(localStorage.getItem('KeebCal_TradeList')) || {}
   },
   methods: {
-    addWishList(clw) {
-      if (!this.wishList[clw.id]) {
-        this.wishList[clw.id] = clw
-        localStorage.setItem('KeebCal_WishList', JSON.stringify(this.wishList))
+    async addWishList(clw) {
+      const wishList = this.wishList
+      if (!wishList[clw.id]) {
+        wishList[clw.id] = clw
       } else {
-        delete this.wishList[clw.id]
-        localStorage.setItem('KeebCal_WishList', JSON.stringify(this.wishList))
+        delete wishList[clw.id]
       }
+
+      this.wishList = { ...wishList }
+      localStorage.setItem('KeebCal_WishList', JSON.stringify(wishList))
+
+      /**
+       * FIXME
+       * https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
+       */
+      this.wishList = wishList
+      await this.$nextTick()
     },
-    addTradeList(clw) {
-      if (!this.tradeList[clw.id]) {
-        this.tradeList[clw.id] = clw
-        localStorage.setItem(
-          'KeebCal_TradeList',
-          JSON.stringify(this.tradeList)
-        )
+    async addTradeList(clw) {
+      const tradeList = this.tradeList
+      if (!tradeList[clw.id]) {
+        tradeList[clw.id] = clw
       } else {
-        delete this.tradeList[clw.id]
-        localStorage.setItem(
-          'KeebCal_TradeList',
-          JSON.stringify(this.tradeList)
-        )
+        delete tradeList[clw.id]
       }
+
+      this.tradeList = { ...tradeList }
+      localStorage.setItem('KeebCal_TradeList', JSON.stringify(tradeList))
+
+      /**
+       * FIXME
+       * https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
+       */
+      this.tradeList = tradeList
+      await this.$nextTick()
     },
   },
 }
@@ -130,7 +149,15 @@ export default {
   object-fit: cover;
 }
 
-.ant-card-head-title {
+/* .ant-card-head-title {
   white-space: pre-line;
+} */
+
+.wish-item {
+  color: hotpink;
+}
+
+.trade-item {
+  color: darkgreen;
 }
 </style>
