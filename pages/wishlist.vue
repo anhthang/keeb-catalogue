@@ -1,5 +1,5 @@
 <template>
-  <div class="wishlist">
+  <div class="wishlist" style="padding: 16px 0">
     <span>
       <a-button
         type="primary"
@@ -9,14 +9,17 @@
       >
         Generate
       </a-button>
-      <a :href="`data:image/png;base64,${base64Img}`" download="wishlist.png">
-        <a-button v-if="base64Img" icon="download" type="primary">
-          Download
-        </a-button>
+      <a
+        v-if="base64Img"
+        :href="`data:image/png;base64,${base64Img}`"
+        download="wishlist.png"
+      >
+        <a-button icon="download" type="primary"> Download </a-button>
       </a>
     </span>
-
-    <img v-if="base64Img" :src="`data:image/png;base64,${base64Img}`" />
+    <div style="padding: 16px 0">
+      <img v-if="base64Img" :src="`data:image/png;base64,${base64Img}`" />
+    </div>
   </div>
 </template>
 
@@ -103,12 +106,10 @@ export default {
 
 <style>
 .wishlist {
+  margin: 0 auto;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-button {
-  margin: 16px;
 }
 </style>

@@ -6,57 +6,57 @@
           <a-icon type="file-add" /> Submit new Colorway
         </a-button>
       </template>
-    </a-page-header>
-    <div style="padding: 16px 0">
-      <a-spin tip="Loading..." :spinning="loading">
-        <a-row :gutter="[16, 16]" type="flex">
-          <a-col
-            v-for="colorway in sculpt.colorways"
-            :key="colorway.id"
-            :span="6"
-          >
-            <a-card hoverable :title="colorway.name">
-              <img
-                slot="cover"
-                loading="lazy"
-                :alt="colorway.name"
-                :src="colorway.img"
-              />
-              <template slot="extra">
-                <a-dropdown :trigger="['hover']" placement="bottomCenter">
-                  <a-icon type="dash" />
+      <div style="padding: 16px 0">
+        <a-spin tip="Loading..." :spinning="loading">
+          <a-row :gutter="[16, 16]" type="flex">
+            <a-col
+              v-for="colorway in sculpt.colorways"
+              :key="colorway.id"
+              :span="6"
+            >
+              <a-card hoverable :title="colorway.name">
+                <img
+                  slot="cover"
+                  loading="lazy"
+                  :alt="colorway.name"
+                  :src="colorway.img"
+                />
+                <template slot="extra">
+                  <a-dropdown :trigger="['hover']" placement="bottomCenter">
+                    <a-icon type="dash" />
 
-                  <a-menu slot="overlay">
-                    <a-menu-item key="0">Report</a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </template>
-              <template slot="actions" class="ant-card-actions">
-                <span
-                  :class="wishList[colorway.id] ? 'wish-item' : ''"
-                  @click="addToList(colorway, 'wish')"
-                >
-                  <a-icon key="heart" type="heart" />
-                  Wish
-                </span>
-                <span
-                  :class="tradeList[colorway.id] ? 'trade-item' : ''"
-                  @click="addToList(colorway, 'trade')"
-                >
-                  <a-icon key="retweet" type="retweet" />
-                  Trade
-                </span>
-              </template>
-              <a-card-meta v-if="colorway.releaseDate">
-                <template slot="description">
-                  {{ colorway.releaseDate }}
+                    <a-menu slot="overlay">
+                      <a-menu-item key="0">Report</a-menu-item>
+                    </a-menu>
+                  </a-dropdown>
                 </template>
-              </a-card-meta>
-            </a-card>
-          </a-col>
-        </a-row>
-      </a-spin>
-    </div>
+                <template slot="actions" class="ant-card-actions">
+                  <span
+                    :class="wishList[colorway.id] ? 'wish-item' : ''"
+                    @click="addToList(colorway, 'wish')"
+                  >
+                    <a-icon key="heart" type="heart" />
+                    Wish
+                  </span>
+                  <span
+                    :class="tradeList[colorway.id] ? 'trade-item' : ''"
+                    @click="addToList(colorway, 'trade')"
+                  >
+                    <a-icon key="retweet" type="retweet" />
+                    Trade
+                  </span>
+                </template>
+                <a-card-meta v-if="colorway.releaseDate">
+                  <template slot="description">
+                    {{ colorway.releaseDate }}
+                  </template>
+                </a-card-meta>
+              </a-card>
+            </a-col>
+          </a-row>
+        </a-spin>
+      </div>
+    </a-page-header>
   </div>
 </template>
 
@@ -129,6 +129,8 @@ export default {
 
 <style>
 .artisan-container {
+  margin: 0 auto;
+  min-height: 100vh;
   text-align: center;
 }
 
@@ -142,10 +144,6 @@ export default {
   height: 100%;
   object-fit: cover;
 }
-
-/* .ant-card-head-title {
-  white-space: pre-line;
-} */
 
 .wish-item {
   color: hotpink;

@@ -24,20 +24,28 @@
           </a>
         </a-button>
       </template>
+      <div style="padding: 16px 0">
+        <a-spin tip="Loading..." :spinning="loading">
+          <a-row :gutter="[16, 16]" type="flex">
+            <a-col
+              v-for="sculpt in makerInfo.sculpts"
+              :key="sculpt.id"
+              :span="6"
+            >
+              <nuxt-link :to="`/artisans${sculpt.link.replace('/maker', '')}`">
+                <a-card hoverable :title="sculpt.name">
+                  <img
+                    slot="cover"
+                    :alt="sculpt.name"
+                    :src="sculpt.previewImg"
+                  />
+                </a-card>
+              </nuxt-link>
+            </a-col>
+          </a-row>
+        </a-spin>
+      </div>
     </a-page-header>
-    <div style="padding: 16px 0">
-      <a-spin tip="Loading..." :spinning="loading">
-        <a-row :gutter="[16, 16]" type="flex">
-          <a-col v-for="sculpt in makerInfo.sculpts" :key="sculpt.id" :span="6">
-            <nuxt-link :to="`/artisans${sculpt.link.replace('/maker', '')}`">
-              <a-card hoverable :title="sculpt.name">
-                <img slot="cover" :alt="sculpt.name" :src="sculpt.previewImg" />
-              </a-card>
-            </nuxt-link>
-          </a-col>
-        </a-row>
-      </a-spin>
-    </div>
   </div>
 </template>
 
@@ -83,6 +91,8 @@ export default {
 
 <style>
 .artisan-container {
+  margin: 0 auto;
+  min-height: 100vh;
   text-align: center;
 }
 
