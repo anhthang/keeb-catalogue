@@ -95,13 +95,13 @@ export default {
   methods: {
     async addToList(clw, type) {
       const listType = type === 'wish' ? 'wishList' : 'tradeList'
-      const theOtherListType = type === 'trade' ? 'wishList' : 'tradeList'
+      const otherListType = type === 'trade' ? 'wishList' : 'tradeList'
 
       const list = this[listType]
-      const theOtherList = this[theOtherListType]
+      const otherList = this[otherListType]
       if (!list[clw.id]) {
-        if (theOtherList[clw.id]) {
-          delete theOtherList[clw.id]
+        if (otherList[clw.id]) {
+          delete otherList[clw.id]
         }
         list[clw.id] = clw
       } else {
@@ -109,9 +109,13 @@ export default {
       }
 
       this[listType] = { ...list }
-      this[theOtherListType] = { ...theOtherList }
+      this[otherListType] = { ...otherList }
 
       localStorage.setItem(`KeebCal_${listType}`, JSON.stringify(list))
+      localStorage.setItem(
+        `KeebCal_${otherListType}`,
+        JSON.stringify(otherList)
+      )
 
       /**
        * FIXME
