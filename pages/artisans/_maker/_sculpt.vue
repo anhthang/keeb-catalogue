@@ -34,14 +34,14 @@
               <template slot="actions" class="ant-card-actions">
                 <span
                   :class="wishList[colorway.id] ? 'wish-item' : ''"
-                  @click="addWishList(colorway)"
+                  @click="addToList(colorway, 'wish')"
                 >
                   <a-icon key="heart" type="heart" />
                   Wish
                 </span>
                 <span
                   :class="tradeList[colorway.id] ? 'trade-item' : ''"
-                  @click="addTradeList(colorway)"
+                  @click="addToList(colorway, 'trade')"
                 >
                   <a-icon key="retweet" type="retweet" />
                   Trade
@@ -89,44 +89,34 @@ export default {
       })
   },
   beforeMount() {
-    this.wishList = JSON.parse(localStorage.getItem('KeebCal_WishList')) || {}
-    this.tradeList = JSON.parse(localStorage.getItem('KeebCal_TradeList')) || {}
+    this.wishList = JSON.parse(localStorage.getItem('KeebCal_wishList')) || {}
+    this.tradeList = JSON.parse(localStorage.getItem('KeebCal_tradeList')) || {}
   },
   methods: {
-    async addWishList(clw) {
-      const wishList = this.wishList
-      if (!wishList[clw.id]) {
-        wishList[clw.id] = clw
+    async addToList(clw, type) {
+      const listType = type === 'wish' ? 'wishList' : 'tradeList'
+      const theOtherListType = type === 'trade' ? 'wishList' : 'tradeList'
+
+      const list = this[listType]
+      const theOtherList = this[theOtherListType]
+      if (!list[clw.id]) {
+        if (theOtherList[clw.id]) {
+          delete theOtherList[clw.id]
+        }
+        list[clw.id] = clw
       } else {
-        delete wishList[clw.id]
+        delete list[clw.id]
       }
 
-      this.wishList = { ...wishList }
-      localStorage.setItem('KeebCal_WishList', JSON.stringify(wishList))
+      this[listType] = { ...list }
+      this[theOtherListType] = { ...theOtherList }
+
+      localStorage.setItem(`KeebCal_${listType}`, JSON.stringify(list))
 
       /**
        * FIXME
        * https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
        */
-      this.wishList = wishList
-      await this.$nextTick()
-    },
-    async addTradeList(clw) {
-      const tradeList = this.tradeList
-      if (!tradeList[clw.id]) {
-        tradeList[clw.id] = clw
-      } else {
-        delete tradeList[clw.id]
-      }
-
-      this.tradeList = { ...tradeList }
-      localStorage.setItem('KeebCal_TradeList', JSON.stringify(tradeList))
-
-      /**
-       * FIXME
-       * https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
-       */
-      this.tradeList = tradeList
       await this.$nextTick()
     },
   },
