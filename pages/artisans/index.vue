@@ -9,12 +9,14 @@
                 <img
                   v-if="missingLogos.includes(maker.id)"
                   slot="cover"
+                  loading="lazy"
                   :alt="maker.name"
                   src="https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/nologo.png"
                 />
                 <img
                   v-else
                   slot="cover"
+                  loading="lazy"
                   :alt="maker.name"
                   :src="`https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${maker.id}.jpg`"
                 />

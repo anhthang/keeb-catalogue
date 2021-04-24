@@ -2,23 +2,18 @@
   <div class="artisan-container">
     <a-page-header :title="makerInfo.name" @back="() => $router.go(-1)">
       <template slot="extra">
-        <a :href="makerInfo.website" target="_blank">
-          <a-button
-            v-if="makerInfo.website"
-            key="3"
-            icon="global"
-            type="primary"
-          >
-            Website
-          </a-button>
+        <a v-if="makerInfo.website" :href="makerInfo.website" target="_blank">
+          <a-button key="3" icon="global" type="primary"> Website </a-button>
         </a>
-        <a :href="makerInfo.instagram" target="_blank">
-          <a-button v-if="makerInfo.instagram" key="2" icon="instagram">
-            Instagram
-          </a-button>
+        <a
+          v-if="makerInfo.instagram"
+          :href="makerInfo.instagram"
+          target="_blank"
+        >
+          <a-button key="2" icon="instagram"> Instagram </a-button>
         </a>
-        <a :href="makerInfo.discord" target="_blank">
-          <a-button v-if="makerInfo.discord" key="1">
+        <a v-if="makerInfo.discord" :href="makerInfo.discord" target="_blank">
+          <a-button key="1">
             <a-icon :component="DiscordSvg" class="discord-icon" />
             Discord
           </a-button>
@@ -41,6 +36,7 @@
                 <a-card hoverable :title="sculpt.name">
                   <img
                     slot="cover"
+                    loading="lazy"
                     :alt="sculpt.name"
                     :src="sculpt.previewImg"
                   />
