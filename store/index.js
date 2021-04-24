@@ -1,4 +1,4 @@
-import keyboards from '../assets/keyboards.json'
+import keyboards from '@/assets/keyboards.json'
 
 export const state = () => {
   return {

@@ -1,9 +1,7 @@
 <template>
   <div>
-    <a-button type="primary">
-      <a href="https://airtable.com/shrqyBD5ia3dSmper" target="_blank">
-        <a-icon type="file-add" /> Submit new Keeb
-      </a>
-    </a-button>
+    <a href="https://airtable.com/shrqyBD5ia3dSmper" target="_blank">
+      <a-button icon="file-add" type="primary"> Submit new Keeb </a-button>
+    </a>
   </div>
 </template>

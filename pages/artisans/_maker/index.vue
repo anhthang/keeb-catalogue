@@ -1,28 +1,33 @@
 <template>
   <div class="artisan-container">
-    <a-page-header :title="makerInfo.name">
+    <a-page-header :title="makerInfo.name" @back="() => $router.go(-1)">
       <template slot="extra">
-        <a-button v-if="makerInfo.website" key="3" type="primary">
-          <a :href="makerInfo.website" target="_blank">
-            <a-icon type="global" /> Website
-          </a>
-        </a-button>
-        <a-button v-if="makerInfo.instagram" key="2">
-          <a :href="makerInfo.instagram" target="_blank">
-            <a-icon type="instagram" /> Instagram
-          </a>
-        </a-button>
-        <a-button v-if="makerInfo.discord" key="1">
-          <a :href="makerInfo.discord" target="_blank">
+        <a :href="makerInfo.website" target="_blank">
+          <a-button
+            v-if="makerInfo.website"
+            key="3"
+            icon="global"
+            type="primary"
+          >
+            Website
+          </a-button>
+        </a>
+        <a :href="makerInfo.instagram" target="_blank">
+          <a-button v-if="makerInfo.instagram" key="2" icon="instagram">
+            Instagram
+          </a-button>
+        </a>
+        <a :href="makerInfo.discord" target="_blank">
+          <a-button v-if="makerInfo.discord" key="1">
             <a-icon :component="DiscordSvg" class="discord-icon" />
             Discord
-          </a>
-        </a-button>
-        <a-button v-if="makerInfo.src" key="0">
-          <a :href="makerInfo.src" target="_blank">
-            <a-icon type="file-word" /> Catalog
-          </a>
-        </a-button>
+          </a-button>
+        </a>
+        <a :href="makerInfo.src" target="_blank">
+          <a-button v-if="makerInfo.src" key="0" icon="file-word">
+            Catalog
+          </a-button>
+        </a>
       </template>
       <div style="padding: 16px 0">
         <a-spin tip="Loading..." :spinning="loading">
@@ -61,7 +66,7 @@ export default {
   },
   data() {
     return {
-      makerInfo: [],
+      makerInfo: {},
       loading: true,
       DiscordSvg,
     }

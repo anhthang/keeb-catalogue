@@ -30,30 +30,12 @@
             <a-icon type="backward" />Previous GBs
           </nuxt-link>
         </a-menu-item>
-        <a-sub-menu key="artisan">
-          <span slot="title"><a-icon type="user" />Artisans</span>
-          <a-menu-item key="a1">
-            <nuxt-link to="/artisans/artkey">Artkey</nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="a2">
-            <nuxt-link to="/artisans/dccaps">DCcaps</nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="a3">
-            <nuxt-link to="/artisans/girlycaps-studios">
-              Girlycaps Studios
-            </nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="a4">
-            <nuxt-link to="/artisans/goldenstar-keycap">GSK</nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="a5">
-            <nuxt-link to="/artisans/melonkeys">Melonkeys</nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="a6">
-            <nuxt-link to="/artisans/trmk">trmk</nuxt-link>
-          </a-menu-item>
-        </a-sub-menu>
         <a-menu-item key="5">
+          <nuxt-link to="/artisans">
+            <a-icon type="user-add" />Artisans
+          </nuxt-link>
+        </a-menu-item>
+        <a-menu-item key="6">
           <nuxt-link to="/wishlist">
             <a-icon type="shopping-cart" />Wishlist
           </nuxt-link>

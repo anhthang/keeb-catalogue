@@ -2,8 +2,8 @@
   <div class="artisan-container">
     <a-page-header :title="sculpt.name" @back="() => $router.go(-1)">
       <template slot="extra">
-        <a-button key="1" type="primary">
-          <a-icon type="file-add" /> Submit new Colorway
+        <a-button key="1" icon="file-add" type="primary">
+          Submit new Colorway
         </a-button>
       </template>
       <div style="padding: 16px 0">

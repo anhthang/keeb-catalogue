@@ -1,5 +1,8 @@
+import makers from '@/assets/makers.json'
+
 export const state = () => {
   return {
+    makers,
     sculpts: [],
     colorways: [],
   }

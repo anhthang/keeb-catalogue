@@ -1,0 +1,477 @@
+[
+  {
+    "name": "404Artisans",
+    "id": "70a60bc4",
+    "slug": "404artisans"
+  },
+  {
+    "name": "Alpha Keycaps",
+    "id": "a00953bd",
+    "slug": "alpha-keycaps"
+  },
+  {
+    "name": "Amidst The Clouds",
+    "id": "8c954f4",
+    "slug": "amidst-the-clouds"
+  },
+  {
+    "name": "Archetype",
+    "id": "63243e40",
+    "slug": "archetype"
+  },
+  {
+    "name": "Artkey",
+    "id": "67588eb5",
+    "slug": "artkey"
+  },
+  {
+    "name": "AX Studio",
+    "id": "9adb7126",
+    "slug": "ax-studio"
+  },
+  {
+    "name": "B.o.B Handcraft",
+    "id": "a9328677",
+    "slug": "bob-handcraft"
+  },
+  {
+    "name": "Backward Caps",
+    "id": "634ef7c",
+    "slug": "backward-caps"
+  },
+  {
+    "name": "Bad and Booj Keys",
+    "id": "b6cb880b",
+    "slug": "bad-and-booj-keys"
+  },
+  {
+    "name": "Bad Habit Caps",
+    "id": "32a182c4",
+    "slug": "bad-habit-caps"
+  },
+  {
+    "name": "Binirias",
+    "id": "85b28a01",
+    "slug": "binirias"
+  },
+  {
+    "name": "BladeMX",
+    "id": "4fa3abe3",
+    "slug": "blademx"
+  },
+  {
+    "name": "Bludgeoned Kaps",
+    "id": "ff8ad9cd",
+    "slug": "bludgeoned-kaps"
+  },
+  {
+    "name": "BoomSnap Caps",
+    "id": "84748ce6",
+    "slug": "boomsnap-caps"
+  },
+  {
+    "name": "Booper-Omniclectic",
+    "id": "3c63e8bf",
+    "slug": "booper-omniclectic"
+  },
+  {
+    "name": "Bowbie",
+    "id": "dc6c280a",
+    "slug": "bowbie"
+  },
+  {
+    "name": "BrewCaps",
+    "id": "40217679",
+    "slug": "brewcaps"
+  },
+  {
+    "name": "Bro Caps",
+    "id": "6b8946c4",
+    "slug": "bro-caps"
+  },
+  {
+    "name": "C.Y.O Keycaps",
+    "id": "384b501d",
+    "slug": "cyo-keycaps"
+  },
+  {
+    "name": "Captomaniacs",
+    "id": "7893764b",
+    "slug": "captomaniacs"
+  },
+  {
+    "name": "Clack Factory",
+    "id": "746e9d1",
+    "slug": "clack-factory"
+  },
+  {
+    "name": "Coconut Keycaps",
+    "id": "155af2e6",
+    "slug": "coconut-keycaps"
+  },
+  {
+    "name": "CozCaps",
+    "id": "84c8facf",
+    "slug": "cozcaps"
+  },
+  {
+    "name": "Craftkey",
+    "id": "fd91c007",
+    "slug": "craftkey"
+  },
+  {
+    "name": "CYSM",
+    "id": "52730e4a",
+    "slug": "cysm"
+  },
+  {
+    "name": "Dalifu Caps",
+    "id": "120fb8f2",
+    "slug": "dalifu-caps"
+  },
+  {
+    "name": "DCcaps",
+    "id": "bced6bca",
+    "slug": "dccaps"
+  },
+  {
+    "name": "DeagCaps",
+    "id": "df46082a",
+    "slug": "deagcaps"
+  },
+  {
+    "name": "Deathcaps",
+    "id": "6ff97cfa",
+    "slug": "deathcaps"
+  },
+  {
+    "name": "Destroyer Caps",
+    "id": "3d066446",
+    "slug": "destroyer-caps"
+  },
+  {
+    "name": "Dollartacos",
+    "id": "95f25c5d",
+    "slug": "dollartacos"
+  },
+  {
+    "name": "Dreadkeys",
+    "id": "685c2588",
+    "slug": "dreadkeys"
+  },
+  {
+    "name": "DustyCaps",
+    "id": "1eb1d13a",
+    "slug": "dustycaps"
+  },
+  {
+    "name": "Fraktal Kaps",
+    "id": "bac9503f",
+    "slug": "fraktal-kaps"
+  },
+  {
+    "name": "Frumpzkeys",
+    "id": "8d20284c",
+    "slug": "frumpzkeys"
+  },
+  {
+    "name": "Girlycaps Studios",
+    "id": "6829387",
+    "slug": "girlycaps-studios"
+  },
+  {
+    "name": "Glyco Caps",
+    "id": "321e47e3",
+    "slug": "glyco-caps"
+  },
+  {
+    "name": "Goldenstar Keycap",
+    "id": "f52fa070",
+    "slug": "goldenstar-keycap"
+  },
+  {
+    "name": "gooey keys",
+    "id": "fb0800a2",
+    "slug": "gooey-keys"
+  },
+  {
+    "name": "Gothcaps",
+    "id": "84c0fb40",
+    "slug": "gothcaps"
+  },
+  {
+    "name": "Grimey as Fuck",
+    "id": "8a2782a7",
+    "slug": "grimey-as-fuck"
+  },
+  {
+    "name": "GTB",
+    "id": "cc91fabb",
+    "slug": "gtb"
+  },
+  {
+    "name": "Hellbent Caps",
+    "id": "8ffca07f",
+    "slug": "hellbent-caps"
+  },
+  {
+    "name": "Hello Caps",
+    "id": "ada5e593",
+    "slug": "hello-caps"
+  },
+  {
+    "name": "Hot Keys Project",
+    "id": "c0c9ffa9",
+    "slug": "hot-keys-project"
+  },
+  {
+    "name": "Hunger Work Studio",
+    "id": "4183ab23",
+    "slug": "hunger-work-studio"
+  },
+  {
+    "name": "HungryHustlas",
+    "id": "8ac373e3",
+    "slug": "hungryhustlas"
+  },
+  {
+    "name": "Just Another Keymaker",
+    "id": "d6c0d49e",
+    "slug": "just-another-keymaker"
+  },
+  {
+    "name": "KapCave",
+    "id": "6513dfae",
+    "slug": "kapcave"
+  },
+  {
+    "name": "Kaphaus",
+    "id": "cdd91103",
+    "slug": "kaphaus"
+  },
+  {
+    "name": "KBK-KWK",
+    "id": "8cb07a8b",
+    "slug": "kbk-kwk"
+  },
+  {
+    "name": "Keycat",
+    "id": "f2a7d69d",
+    "slug": "keycat"
+  },
+  {
+    "name": "KeyCravings",
+    "id": "7b28db24",
+    "slug": "keycravings"
+  },
+  {
+    "name": "KeyForge",
+    "id": "1091a0ac",
+    "slug": "keyforge"
+  },
+  {
+    "name": "KeyKollectiv",
+    "id": "5137e37f",
+    "slug": "keykollectiv"
+  },
+  {
+    "name": "KrakenKap",
+    "id": "c14e96a7",
+    "slug": "krakenkap"
+  },
+  {
+    "name": "Latrialum",
+    "id": "ab1d3b22",
+    "slug": "latrialum"
+  },
+  {
+    "name": "LazyCaps",
+    "id": "4e2dec37",
+    "slug": "lazycaps"
+  },
+  {
+    "name": "Level caps",
+    "id": "fa0bf049",
+    "slug": "level-caps"
+  },
+  {
+    "name": "Lividity",
+    "id": "ddaf1f8c",
+    "slug": "lividity"
+  },
+  {
+    "name": "Lo-Ki Caps",
+    "id": "814e90b",
+    "slug": "lo-ki-caps"
+  },
+  {
+    "name": "Mastonon.kaps",
+    "id": "ea0b31fa",
+    "slug": "mastononkaps"
+  },
+  {
+    "name": "MelonKeys",
+    "id": "f79138dd",
+    "slug": "melonkeys"
+  },
+  {
+    "name": "Navacaps",
+    "id": "8b68584c",
+    "slug": "navacaps"
+  },
+  {
+    "name": "Nightcaps",
+    "id": "1fac6e72",
+    "slug": "nightcaps"
+  },
+  {
+    "name": "Nubbinator",
+    "id": "d2df83d9",
+    "slug": "nubbinator"
+  },
+  {
+    "name": "Obscura",
+    "id": "8874564c",
+    "slug": "obscura"
+  },
+  {
+    "name": "Phage Caps",
+    "id": "500aa195",
+    "slug": "phage-caps"
+  },
+  {
+    "name": "Polymer Salon",
+    "id": "b05d0831",
+    "slug": "polymer-salon"
+  },
+  {
+    "name": "PrimeCaps",
+    "id": "a73f210e",
+    "slug": "primecaps"
+  },
+  {
+    "name": "ProjectKey",
+    "id": "8dac3435",
+    "slug": "projectkey"
+  },
+  {
+    "name": "RADcaps",
+    "id": "c6e4a02a",
+    "slug": "radcaps"
+  },
+  {
+    "name": "Rathcaps",
+    "id": "e0a4bf52",
+    "slug": "rathcaps"
+  },
+  {
+    "name": "Resin Party",
+    "id": "2842faca",
+    "slug": "resin-party"
+  },
+  {
+    "name": "Ritual Master",
+    "id": "1544e340",
+    "slug": "ritual-master"
+  },
+  {
+    "name": "rtg_caps_",
+    "id": "55b03b25",
+    "slug": "rtg_caps_"
+  },
+  {
+    "name": "Rubrehose",
+    "id": "d1df0782",
+    "slug": "rubrehose"
+  },
+  {
+    "name": "S-Craft Studio",
+    "id": "958ea08d",
+    "slug": "s-craft-studio"
+  },
+  {
+    "name": "shirouu.kaps",
+    "id": "e035ee16",
+    "slug": "shirouukaps"
+  },
+  {
+    "name": "Simulacra Caps",
+    "id": "61895633",
+    "slug": "simulacra-caps"
+  },
+  {
+    "name": "Slime Scholar",
+    "id": "a31490c1",
+    "slug": "slime-scholar"
+  },
+  {
+    "name": "Sludgekidd",
+    "id": "34fb9c1f",
+    "slug": "sludgekidd"
+  },
+  {
+    "name": "SodieCaps",
+    "id": "834a1ae7",
+    "slug": "sodiecaps"
+  },
+  {
+    "name": "Suited Up Keycaps",
+    "id": "366c9651",
+    "slug": "suited-up-keycaps"
+  },
+  {
+    "name": "Sway Caps",
+    "id": "ede9ca7c",
+    "slug": "sway-caps"
+  },
+  {
+    "name": "Tech. Stoned. Amish.",
+    "id": "4e4eda29",
+    "slug": "tech-stoned-amish"
+  },
+  {
+    "name": "TinyMakesThings",
+    "id": "dd852aca",
+    "slug": "tinymakesthings"
+  },
+  {
+    "name": "Tokkipee",
+    "id": "72ec7d70",
+    "slug": "tokkipee"
+  },
+  {
+    "name": "trmk",
+    "id": "985ff9d3",
+    "slug": "trmk"
+  },
+  {
+    "name": "Unbranded.caps",
+    "id": "a8ab97a4",
+    "slug": "unbrandedcaps"
+  },
+  {
+    "name": "Wildstory Caps",
+    "id": "de28aff1",
+    "slug": "wildstory-caps"
+  },
+  {
+    "name": "Win Keys",
+    "id": "e2285960",
+    "slug": "win-keys"
+  },
+  {
+    "name": "YoungsterHarris",
+    "id": "15c2097d",
+    "slug": "youngsterharris"
+  },
+  {
+    "name": "Zorbcaps",
+    "id": "ff972406",
+    "slug": "zorbcaps"
+  },
+  {
+    "name": "Zy.cap",
+    "id": "ce8a8e22",
+    "slug": "zycap"
+  }
+]
