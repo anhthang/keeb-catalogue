@@ -1,19 +1,26 @@
 <template>
   <div class="artisan-container">
-    <a-page-header :title="sculpt.name" @back="() => $router.go(-1)">
+    <a-page-header :title="sculptInfo.name" @back="() => $router.go(-1)">
       <template slot="extra">
         <a-button key="1" icon="file-add" type="primary">
           Submit new Colorway
         </a-button>
+        <a-dropdown>
+          <a-menu slot="overlay" @click="onChangeSortType">
+            <a-menu-item key="name">
+              <a-icon type="sort-ascending" /> Name
+            </a-menu-item>
+            <a-menu-item key="date">
+              <a-icon type="clock-circle" /> Date
+            </a-menu-item>
+          </a-menu>
+          <a-button :icon="sortIcon"> Sort </a-button>
+        </a-dropdown>
       </template>
       <div style="padding: 16px 0">
         <a-spin tip="Loading..." :spinning="loading">
           <a-row :gutter="[16, 16]" type="flex">
-            <a-col
-              v-for="colorway in sculpt.colorways"
-              :key="colorway.id"
-              :span="6"
-            >
+            <a-col v-for="colorway in colourways" :key="colorway.id" :span="6">
               <a-card hoverable :title="colorway.name">
                 <img
                   slot="cover"
@@ -61,6 +68,7 @@
 </template>
 
 <script>
+import sortBy from 'lodash.sortby'
 export default {
   asyncData({ params }) {
     return {
@@ -69,24 +77,43 @@ export default {
   },
   data() {
     return {
-      sculpt: [],
+      sort: 'date',
+      sortIcon: 'clock-circle',
+      sculptInfo: {},
+      colorways: [],
       loading: true,
       wishList: {},
       tradeList: {},
     }
   },
   async fetch() {
-    this.sculpt = await fetch(
+    await fetch(
       `https://keycap-archivist.com/page-data/maker/${this.maker}/${this.sculpt}/page-data.json`
     )
       .then((res) => res.json())
       .then((res) => {
         this.loading = false
-        return res.result.pageContext.sculpt
+
+        const { colorways, ...rest } = res.result.pageContext.sculpt
+
+        this.sculptInfo = rest
+        this.colorways = colorways
       })
       .catch(() => {
         this.loading = false
       })
+  },
+  computed: {
+    colourways() {
+      return this.sort === 'name'
+        ? sortBy(this.colorways, 'name')
+        : this.colorways
+    },
+  },
+  watch: {
+    sort() {
+      this.sortIcon = this.sort === 'name' ? 'sort-ascending' : 'clock-circle'
+    },
   },
   beforeMount() {
     this.wishList = JSON.parse(localStorage.getItem('KeebCal_wishList')) || {}
@@ -122,6 +149,9 @@ export default {
        * https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
        */
       await this.$nextTick()
+    },
+    onChangeSortType(e) {
+      this.sort = e.key
     },
   },
 }

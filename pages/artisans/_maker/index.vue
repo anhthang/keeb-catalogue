@@ -27,11 +27,7 @@
       <div style="padding: 16px 0">
         <a-spin tip="Loading..." :spinning="loading">
           <a-row :gutter="[16, 16]" type="flex">
-            <a-col
-              v-for="sculpt in makerInfo.sculpts"
-              :key="sculpt.id"
-              :span="6"
-            >
+            <a-col v-for="sculpt in sculpts" :key="sculpt.id" :span="6">
               <nuxt-link :to="`/artisans${sculpt.link.replace('/maker', '')}`">
                 <a-card hoverable :title="sculpt.name">
                   <img
@@ -52,6 +48,7 @@
 
 <script>
 // import { mapState } from 'vuex'
+import sortBy from 'lodash.sortby'
 import DiscordSvg from '~/components/DiscordSvg.vue'
 
 export default {
@@ -63,18 +60,22 @@ export default {
   data() {
     return {
       makerInfo: {},
+      sculpts: [],
       loading: true,
       DiscordSvg,
     }
   },
   async fetch() {
-    this.makerInfo = await fetch(
+    await fetch(
       `https://keycap-archivist.com/page-data/maker/${this.maker}/page-data.json`
     )
       .then((res) => res.json())
       .then((res) => {
         this.loading = false
-        return res.result.pageContext.maker
+        const { sculpts, ...rest } = res.result.pageContext.maker
+
+        this.makerInfo = rest
+        this.sculpts = sortBy(sculpts, 'name')
       })
       .catch(() => {
         this.loading = false

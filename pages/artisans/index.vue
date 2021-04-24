@@ -7,14 +7,6 @@
             <nuxt-link :to="`/artisans/${maker.slug}`">
               <a-card hoverable :title="maker.name">
                 <img
-                  v-if="missingLogos.includes(maker.id)"
-                  slot="cover"
-                  loading="lazy"
-                  :alt="maker.name"
-                  src="https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/nologo.png"
-                />
-                <img
-                  v-else
                   slot="cover"
                   loading="lazy"
                   :alt="maker.name"
@@ -33,11 +25,6 @@
 import { mapState } from 'vuex'
 
 export default {
-  data() {
-    return {
-      missingLogos: ['746e9d1', '321e47e3', '8cb07a8b'],
-    }
-  },
   computed: {
     ...mapState(['artisans']),
   },
