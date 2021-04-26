@@ -1,5 +1,47 @@
 <template>
   <div class="wishlist" style="padding: 16px 0">
+    <div>
+      <h3>Want</h3>
+      <a-row :gutter="[16, 16]">
+        <draggable :list="draggableWishList">
+          <a-col
+            v-for="colorway in draggableWishList"
+            :key="colorway.id"
+            :span="6"
+          >
+            <a-card :title="colorway.name" size="small">
+              <img
+                slot="cover"
+                loading="lazy"
+                :alt="colorway.name"
+                :src="colorway.img"
+              />
+            </a-card>
+          </a-col>
+        </draggable>
+      </a-row>
+    </div>
+    <div v-if="draggableTradeList.length">
+      <h3>Have</h3>
+      <a-row :gutter="[16, 16]">
+        <draggable :list="draggableTradeList">
+          <a-col
+            v-for="colorway in draggableTradeList"
+            :key="colorway.id"
+            :span="6"
+          >
+            <a-card :title="colorway.name" size="small">
+              <img
+                slot="cover"
+                loading="lazy"
+                :alt="colorway.name"
+                :src="colorway.img"
+              />
+            </a-card>
+          </a-col>
+        </draggable>
+      </a-row>
+    </div>
     <span>
       <a-button
         type="primary"
@@ -24,7 +66,12 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+  components: {
+    draggable,
+  },
   data() {
     return {
       loading: false,
@@ -66,25 +113,37 @@ export default {
         caps: [],
       },
       base64Img: undefined,
+      draggableWishList: [],
+      draggableTradeList: [],
     }
   },
-  beforeMount() {
-    this.wishList = JSON.parse(localStorage.getItem('KeebCal_wishList')) || {}
-    this.tradeList = JSON.parse(localStorage.getItem('KeebCal_tradeList')) || {}
-  },
-  methods: {
-    async generateWishlist() {
-      this.loading = true
-      this.json.caps = Object.values(this.wishList).map((i) => ({
+  watch: {
+    draggableWishList() {
+      this.json.caps = this.draggableWishList.map((i) => ({
         id: i.id,
         isPriority: false,
         legendColor: 'Crimson',
       }))
-      this.json.tradeCaps = Object.values(this.tradeList).map((i) => ({
+    },
+    draggableTradeList() {
+      this.json.tradeCaps = this.draggableTradeList.map((i) => ({
         id: i.id,
         isPriority: false,
-        legendColor: 'Orchid',
+        legendColor: 'Crimson',
       }))
+    },
+  },
+  beforeMount() {
+    const wishList = JSON.parse(localStorage.getItem('KeebCal_wishList')) || {}
+    const tradeList =
+      JSON.parse(localStorage.getItem('KeebCal_tradeList')) || {}
+
+    this.draggableWishList = Object.values(wishList)
+    this.draggableTradeList = Object.values(tradeList)
+  },
+  methods: {
+    async generateWishlist() {
+      this.loading = true
 
       this.base64Img = await this.$axios
         .post('https://app.keycap-archivist.com/api/v2/wishlist', this.json, {
@@ -96,8 +155,6 @@ export default {
         })
         .catch((e) => {
           this.loading = false
-          // console.log(e)
-          // setErrorLoading(true)
         })
     },
   },
