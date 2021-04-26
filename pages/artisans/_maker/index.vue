@@ -1,5 +1,5 @@
 <template>
-  <div class="artisan-container">
+  <div class="maker-container">
     <a-page-header :title="makerInfo.name" @back="() => $router.go(-1)">
       <template slot="extra">
         <a v-if="makerInfo.website" :href="makerInfo.website" target="_blank">
@@ -92,25 +92,25 @@ export default {
 </script>
 
 <style>
-.artisan-container {
+.maker-container {
   margin: 0 auto;
   min-height: 100vh;
   text-align: center;
 }
 
-.artisan-container .ant-card-cover {
+.maker-container .ant-card-cover {
   height: 300px;
   overflow: hidden;
 }
 
-.artisan-container .ant-card-cover img {
+.maker-container .ant-card-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 .discord-icon {
-  font-size: 18px;
+  font-size: 16px;
   vertical-align: middle;
 }
 </style>

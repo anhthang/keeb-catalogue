@@ -38,19 +38,8 @@ export default {
   text-align: center;
 }
 
-.artisan-container .ant-card-cover {
-  height: 300px;
-  overflow: hidden;
-}
-
-.artisan-container .ant-card-cover img {
-  width: 100%;
+/** remove this if all maker had cover/logo */
+.artisan-container .ant-card {
   height: 100%;
-  object-fit: cover;
-}
-
-.discord-icon {
-  font-size: 18px;
-  vertical-align: middle;
 }
 </style>

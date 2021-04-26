@@ -1,17 +1,17 @@
 <template>
-  <div class="artisan-container">
+  <div class="sculpt-container">
     <a-page-header :title="sculptInfo.name" @back="() => $router.go(-1)">
       <template slot="extra">
         <a-button key="1" icon="file-add" type="primary">
           Submit new Colorway
         </a-button>
-        <a-dropdown>
+        <a-dropdown placement="bottomRight">
           <a-menu slot="overlay" @click="onChangeSortType">
             <a-menu-item key="name">
-              <a-icon type="sort-ascending" /> Name
+              <a-icon type="sort-ascending" /> Sort by Name
             </a-menu-item>
             <a-menu-item key="date">
-              <a-icon type="clock-circle" /> Date
+              <a-icon type="clock-circle" /> Sort by Date
             </a-menu-item>
           </a-menu>
           <a-button :icon="sortIcon"> Sort </a-button>
@@ -158,18 +158,18 @@ export default {
 </script>
 
 <style>
-.artisan-container {
+.sculpt-container {
   margin: 0 auto;
   min-height: 100vh;
   text-align: center;
 }
 
-.artisan-container .ant-card-cover {
+.sculpt-container .ant-card-cover {
   height: 300px;
   overflow: hidden;
 }
 
-.artisan-container .ant-card-cover img {
+.sculpt-container .ant-card-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
