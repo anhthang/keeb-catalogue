@@ -14,7 +14,7 @@
               <a-icon type="clock-circle" /> Sort by Date
             </a-menu-item>
           </a-menu>
-          <a-button :icon="sortIcon"> Sort </a-button>
+          <a-button :icon="sortIcon"> Sort By </a-button>
         </a-dropdown>
       </template>
       <div style="padding: 16px 0">

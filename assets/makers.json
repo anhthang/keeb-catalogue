@@ -340,6 +340,11 @@
     "slug": "phage-caps"
   },
   {
+    "name": "Picaps",
+    "id": "afdb1ce2",
+    "slug": "picaps"
+  },
+  {
     "name": "Polymer Salon",
     "id": "b05d0831",
     "slug": "polymer-salon"
@@ -363,6 +368,11 @@
     "name": "Rathcaps",
     "id": "e0a4bf52",
     "slug": "rathcaps"
+  },
+  {
+    "name": "Rejeck Kaps",
+    "id": "d7421e66",
+    "slug": "rejeck-kaps"
   },
   {
     "name": "Resin Party",

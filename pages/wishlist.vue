@@ -1,47 +1,14 @@
 <template>
   <div class="wishlist" style="padding: 16px 0">
-    <div>
-      <h3>Want</h3>
-      <a-row :gutter="[16, 16]">
-        <draggable :list="draggableWishList">
-          <a-col
-            v-for="colorway in draggableWishList"
-            :key="colorway.id"
-            :span="6"
-          >
-            <a-card :title="colorway.name" size="small">
-              <img
-                slot="cover"
-                loading="lazy"
-                :alt="colorway.name"
-                :src="colorway.img"
-              />
-            </a-card>
-          </a-col>
-        </draggable>
-      </a-row>
-    </div>
-    <div v-if="draggableTradeList.length">
-      <h3>Have</h3>
-      <a-row :gutter="[16, 16]">
-        <draggable :list="draggableTradeList">
-          <a-col
-            v-for="colorway in draggableTradeList"
-            :key="colorway.id"
-            :span="6"
-          >
-            <a-card :title="colorway.name" size="small">
-              <img
-                slot="cover"
-                loading="lazy"
-                :alt="colorway.name"
-                :src="colorway.img"
-              />
-            </a-card>
-          </a-col>
-        </draggable>
-      </a-row>
-    </div>
+    <a-row :gutter="16">
+      <a-col :span="6">
+        <wishlist-settings />
+      </a-col>
+      <a-col :span="18">
+        <wishlist-preview />
+      </a-col>
+    </a-row>
+
     <span>
       <a-button
         type="primary"
@@ -66,80 +33,12 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-
 export default {
-  components: {
-    draggable,
-  },
   data() {
     return {
       loading: false,
-      json: {
-        settings: {
-          capsPerLine: '3',
-          priority: {
-            color: 'DarkGoldenRod',
-            font: 'RedRock',
-          },
-          legends: {
-            color: 'Orchid',
-            font: 'Roboto',
-          },
-          title: {
-            color: 'Crimson',
-            font: 'RedRock',
-            text: '',
-          },
-          tradeTitle: {
-            color: 'Orchid',
-            font: 'RedRock',
-            text: 'Collected',
-          },
-          extraText: {
-            color: 'Turquoise',
-            font: 'Roboto',
-            text: 'Willing to topup if needed',
-          },
-          background: {
-            color: 'Black',
-          },
-          social: {
-            reddit: '',
-            discord: '',
-          },
-        },
-        tradeCaps: [],
-        caps: [],
-      },
       base64Img: undefined,
-      draggableWishList: [],
-      draggableTradeList: [],
     }
-  },
-  watch: {
-    draggableWishList() {
-      this.json.caps = this.draggableWishList.map((i) => ({
-        id: i.id,
-        isPriority: false,
-        legendColor: 'Crimson',
-      }))
-    },
-    draggableTradeList() {
-      this.json.tradeCaps = this.draggableTradeList.map((i) => ({
-        id: i.id,
-        isPriority: false,
-        legendColor: 'Crimson',
-      }))
-    },
-  },
-  beforeMount() {
-    const wishList = JSON.parse(localStorage.getItem('KeebCal_wishList')) || {}
-    const tradeList =
-      JSON.parse(localStorage.getItem('KeebCal_tradeList')) || {}
-
-    this.draggableWishList = Object.values(wishList)
-    this.draggableTradeList = Object.values(tradeList)
   },
   methods: {
     async generateWishlist() {
@@ -167,6 +66,16 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+.wishlist .ant-card-cover {
+  height: 250px;
+  overflow: hidden;
+}
+
+.wishlist .ant-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>
