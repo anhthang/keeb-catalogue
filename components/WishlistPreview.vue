@@ -1,6 +1,6 @@
 <template>
-  <a-card class="wishlist-preview" title="Preview" size="small">
-    <div style="padding: 16px 0">
+  <a-card :title="false">
+    <div class="wishlist-preview">
       <a-divider>Want</a-divider>
       <a-row :gutter="[16, 16]">
         <draggable :list="draggableWishList" group="group">
@@ -20,10 +20,9 @@
           </a-col>
         </draggable>
       </a-row>
-    </div>
-    <div v-if="draggableTradeList.length" style="padding: 16px 0">
-      <a-divider>Have</a-divider>
-      <a-row :gutter="[16, 16]">
+
+      <a-divider v-if="draggableTradeList.length">Have</a-divider>
+      <a-row v-if="draggableTradeList.length" :gutter="[16, 16]">
         <draggable :list="draggableTradeList" group="group">
           <a-col
             v-for="colorway in draggableTradeList"
