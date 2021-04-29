@@ -5,6 +5,17 @@ export const state = () => {
     makers,
     sculpts: [],
     colorways: [],
+    wishlistSettings: {
+      caps_per_line: 3,
+      wish: {
+        title: 'Want',
+      },
+      trade: {
+        title: 'Have',
+      },
+      reddit: '',
+      discord: '',
+    },
   }
 }
 
@@ -35,5 +46,8 @@ export const mutations = {
   },
   COLORWAYS(state, data) {
     state.colorways = data
+  },
+  WISHLIST_SETTINGS(state, data) {
+    state.wishlistSettings = data
   },
 }

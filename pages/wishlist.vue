@@ -11,6 +11,19 @@
   </div>
 </template>
 
+<script>
+import { mapMutations } from 'vuex'
+export default {
+  fetch() {
+    const json = JSON.parse(localStorage.getItem('KeebCal_WishlistSettings'))
+    this.WISHLIST_SETTINGS(json)
+  },
+  methods: {
+    ...mapMutations('artisans', ['WISHLIST_SETTINGS']),
+  },
+}
+</script>
+
 <style>
 .wishlist {
   margin: 0 auto;
