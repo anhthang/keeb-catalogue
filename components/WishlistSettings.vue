@@ -1,7 +1,9 @@
 <template>
   <a-card title="Settings" size="small">
     <template slot="extra">
-      <a-button type="primary" icon="save" @click="saveSettings">Save</a-button>
+      <a-button type="primary" icon="save" @click="saveSettings">
+        Save
+      </a-button>
       <a-button
         :loading="loading"
         type="primary"
@@ -72,6 +74,10 @@ export default {
         'KeebCal_WishlistSettings',
         JSON.stringify(this.settings)
       )
+
+      this.$notification.success({
+        message: 'Settings saved',
+      })
     },
     async downloadWishlist() {
       this.loading = true
