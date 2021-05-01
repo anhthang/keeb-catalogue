@@ -13,9 +13,11 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { WISHLIST_SETTINGS } from '@/constants'
+
 export default {
   fetch() {
-    const json = JSON.parse(localStorage.getItem('KeebCal_WishlistSettings'))
+    const json = JSON.parse(localStorage.getItem(WISHLIST_SETTINGS))
     if (json?.caps_per_line) {
       this.WISHLIST_SETTINGS(json)
     }

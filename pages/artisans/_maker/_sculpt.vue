@@ -69,6 +69,8 @@
 
 <script>
 import sortBy from 'lodash.sortby'
+import { WISHLIST, TRADELIST } from '@/constants'
+
 export default {
   asyncData({ params }) {
     return {
@@ -116,8 +118,8 @@ export default {
     },
   },
   beforeMount() {
-    this.wishList = JSON.parse(localStorage.getItem('KeebCal_wishList')) || {}
-    this.tradeList = JSON.parse(localStorage.getItem('KeebCal_tradeList')) || {}
+    this.wishList = JSON.parse(localStorage.getItem(WISHLIST)) || {}
+    this.tradeList = JSON.parse(localStorage.getItem(TRADELIST)) || {}
   },
   methods: {
     async addToList(clw, type) {

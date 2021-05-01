@@ -13,8 +13,11 @@ export const state = () => {
       trade: {
         title: 'Have',
       },
-      reddit: '',
-      discord: '',
+      social: {
+        reddit: '',
+        discord: '',
+        qq: '',
+      },
     },
   }
 }
