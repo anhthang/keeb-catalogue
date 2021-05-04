@@ -24,10 +24,17 @@
           </a-button>
         </a>
       </template>
-      <div style="padding: 16px 0">
+      <div>
         <a-spin tip="Loading..." :spinning="loading">
           <a-row :gutter="[16, 16]" type="flex">
-            <a-col v-for="sculpt in sculpts" :key="sculpt.id" :span="6">
+            <a-col
+              v-for="sculpt in sculpts"
+              :key="sculpt.id"
+              :xs="24"
+              :sm="12"
+              :md="8"
+              :lg="6"
+            >
               <nuxt-link :to="`/artisans${sculpt.link.replace('/maker', '')}`">
                 <a-card hoverable :title="sculpt.name">
                   <img
@@ -99,7 +106,7 @@ export default {
 }
 
 .maker-container .ant-card-cover {
-  height: 300px;
+  height: 250px;
   overflow: hidden;
 }
 

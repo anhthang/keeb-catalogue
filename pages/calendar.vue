@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <a-page-header title="Calendar" class="container">
     <a-calendar @panelChange="onPanelChange" />
-  </div>
+  </a-page-header>
 </template>
 
 <script>

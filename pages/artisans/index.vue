@@ -1,7 +1,7 @@
 <template>
   <div class="artisan-container">
     <a-page-header title="Artisan Makers">
-      <div style="padding: 16px 0">
+      <div>
         <a-row :gutter="[16, 16]" type="flex">
           <a-col v-for="maker in artisans.makers" :key="maker.id" :span="6">
             <nuxt-link :to="`/artisans/${maker.slug}`">

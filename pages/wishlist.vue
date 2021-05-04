@@ -1,5 +1,5 @@
 <template>
-  <div class="wishlist" style="padding: 16px 0">
+  <a-page-header title="Wishlist" class="wishlist">
     <a-row :gutter="16">
       <a-col :span="6">
         <wishlist-settings />
@@ -8,7 +8,7 @@
         <wishlist-preview />
       </a-col>
     </a-row>
-  </div>
+  </a-page-header>
 </template>
 
 <script>

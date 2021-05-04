@@ -17,10 +17,17 @@
           <a-button :icon="sortIcon"> Sort By </a-button>
         </a-dropdown>
       </template>
-      <div style="padding: 16px 0">
+      <div>
         <a-spin tip="Loading..." :spinning="loading">
           <a-row :gutter="[16, 16]" type="flex">
-            <a-col v-for="colorway in colourways" :key="colorway.id" :span="6">
+            <a-col
+              v-for="colorway in colourways"
+              :key="colorway.id"
+              :xs="24"
+              :sm="12"
+              :md="8"
+              :lg="6"
+            >
               <a-card hoverable :title="colorway.name">
                 <img
                   slot="cover"
@@ -167,7 +174,7 @@ export default {
 }
 
 .sculpt-container .ant-card-cover {
-  height: 300px;
+  height: 250px;
   overflow: hidden;
 }
 

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <div style="padding: 16px 0">
-      <SubmitNewKeyboard />
-    </div>
-    <KeyboardList />
+    <a-page-header :title="maker">
+      <SubmitNewKeyboard slot="extra" />
+      <KeyboardList />
+    </a-page-header>
   </div>
 </template>
 

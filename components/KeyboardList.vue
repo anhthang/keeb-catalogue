@@ -8,7 +8,7 @@
       <a-list-item slot="renderItem" key="item.Name" slot-scope="item">
         <template slot="actions">
           <span key="user">
-            <a-icon type="user" style="margin-right: 8px" />
+            <a-icon type="user" />
             <nuxt-link :to="`/maker/${item.Maker.toLowerCase()}`">
               {{ item.Maker }}
             </nuxt-link>
@@ -16,13 +16,13 @@
         </template>
         <template slot="actions">
           <span key="home">
-            <a-icon type="home" style="margin-right: 8px" />
+            <a-icon type="home" />
             <a :href="item.Homepage" target="_blank">Home</a>
           </span>
         </template>
         <template v-if="item.geekhack" slot="actions">
           <span key="global">
-            <a-icon type="global" style="margin-right: 8px" />
+            <a-icon type="global" />
             <a :href="item.geekhack">geekhack</a>
           </span>
         </template>

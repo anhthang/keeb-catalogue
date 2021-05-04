@@ -42,7 +42,7 @@
         </a-menu-item>
       </a-menu>
     </a-layout-header>
-    <a-layout-content style="padding: 0 48px">
+    <a-layout-content>
       <Nuxt />
     </a-layout-content>
     <a-layout-footer style="text-align: center">
