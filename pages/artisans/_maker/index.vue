@@ -103,6 +103,7 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   text-align: center;
+  max-width: 1600px;
 }
 
 .maker-container .ant-card-cover {

@@ -34,6 +34,7 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  max-width: 1600px;
 
   /* text-align: center;
   justify-content: center;

@@ -3,7 +3,14 @@
     <a-page-header title="Artisan Makers">
       <div>
         <a-row :gutter="[16, 16]" type="flex">
-          <a-col v-for="maker in artisans.makers" :key="maker.id" :span="6">
+          <a-col
+            v-for="maker in artisans.makers"
+            :key="maker.id"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+          >
             <nuxt-link :to="`/artisans/${maker.slug}`">
               <a-card hoverable :title="maker.name">
                 <img
@@ -36,6 +43,7 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   text-align: center;
+  max-width: 1600px;
 }
 
 /** remove this if all maker had cover/logo */

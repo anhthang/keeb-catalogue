@@ -1,5 +1,5 @@
 <template>
-  <div class="sculpt-container">
+  <div class="maker-container">
     <a-page-header :title="sculptInfo.name" @back="() => $router.go(-1)">
       <template slot="extra">
         <a-button key="1" icon="file-add" type="primary">
@@ -167,23 +167,6 @@ export default {
 </script>
 
 <style>
-.sculpt-container {
-  margin: 0 auto;
-  min-height: 100vh;
-  text-align: center;
-}
-
-.sculpt-container .ant-card-cover {
-  height: 250px;
-  overflow: hidden;
-}
-
-.sculpt-container .ant-card-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .wish-item {
   color: hotpink;
 }
