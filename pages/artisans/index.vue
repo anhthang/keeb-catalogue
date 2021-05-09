@@ -4,7 +4,7 @@
       <div>
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
-            v-for="maker in artisans.makers"
+            v-for="maker in sortedMakers"
             :key="maker.id"
             :xs="24"
             :sm="12"
@@ -13,6 +13,20 @@
           >
             <nuxt-link :to="`/artisans/${maker.slug}`">
               <a-card hoverable :title="maker.name">
+                <a-icon
+                  slot="extra"
+                  type="star"
+                  :theme="
+                    favoriteMakers.includes(maker.slug) ? 'twoTone' : 'outlined'
+                  "
+                  two-tone-color="#eb2f96"
+                  @click="
+                    (e) => {
+                      e.preventDefault()
+                      addFavoriteMaker(maker.slug)
+                    }
+                  "
+                />
                 <img
                   slot="cover"
                   loading="lazy"
@@ -30,10 +44,35 @@
 
 <script>
 import { mapState } from 'vuex'
+import { FAVORITE_MAKERS } from '@/constants'
+import sortBy from 'lodash.sortby'
 
 export default {
+  data() {
+    return {
+      favoriteMakers: [],
+    }
+  },
   computed: {
-    ...mapState(['artisans']),
+    ...mapState('artisans', ['makers']),
+    sortedMakers() {
+      return sortBy(this.makers, (i) => !this.favoriteMakers.includes(i.slug))
+    },
+  },
+  beforeMount() {
+    this.favoriteMakers =
+      JSON.parse(localStorage.getItem(FAVORITE_MAKERS)) || []
+  },
+  methods: {
+    addFavoriteMaker(slug) {
+      if (!this.favoriteMakers.includes(slug)) {
+        this.favoriteMakers.push(slug)
+      } else {
+        this.favoriteMakers = this.favoriteMakers.filter((i) => i !== slug)
+      }
+
+      localStorage.setItem(FAVORITE_MAKERS, JSON.stringify(this.favoriteMakers))
+    },
   },
 }
 </script>
