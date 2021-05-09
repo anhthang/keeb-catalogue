@@ -1,6 +1,13 @@
 <template>
   <div class="maker-container">
-    <a-page-header :title="makerInfo.name" @back="() => $router.go(-1)">
+    <a-page-header
+      :title="makerInfo.name"
+      :avatar="{
+        props: {
+          src: `https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${makerInfo.id}.jpg`,
+        },
+      }"
+    >
       <template slot="extra">
         <a v-if="makerInfo.website" :href="makerInfo.website" target="_blank">
           <a-button key="3" icon="global" type="primary"> Website </a-button>

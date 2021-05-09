@@ -315,6 +315,11 @@
     "slug": "lo-ki-caps"
   },
   {
+    "name": "Mad Labs Keycaps",
+    "id": "3b7e4de6",
+    "slug": "mad-labs-keycaps"
+  },
+  {
     "name": "Mastonon.kaps",
     "id": "ea0b31fa",
     "slug": "mastononkaps"
@@ -343,6 +348,11 @@
     "name": "Obscura",
     "id": "8874564c",
     "slug": "obscura"
+  },
+  {
+    "name": "Ochre + Moss",
+    "id": "f086fafc",
+    "slug": "ochre-+-moss"
   },
   {
     "name": "okeydokey studio",
@@ -423,6 +433,11 @@
     "name": "Simulacra Caps",
     "id": "61895633",
     "slug": "simulacra-caps"
+  },
+  {
+    "name": "SirReal Caps",
+    "id": "980bdc64",
+    "slug": "sirreal-caps"
   },
   {
     "name": "Slime Scholar",
