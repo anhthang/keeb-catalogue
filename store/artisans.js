@@ -1,10 +1,11 @@
 import makers from '@/assets/makers.json'
+import { sortBy, sample, keyBy } from 'lodash'
+import slugify from 'slugify'
 
 export const state = () => {
   return {
     makers,
-    sculpts: [],
-    colorways: [],
+    database: {},
     wishlistSettings: {
       caps_per_line: 3,
       wish: {
@@ -23,32 +24,38 @@ export const state = () => {
 }
 
 export const actions = {
-  async fetchScults({ commit }, name) {
-    await this.$axios
-      .get(
-        `https://keycap-archivist.com/page-data/maker/${name}/page-data.json`
-      )
-      .then(({ data }) => {
-        commit('SCULPTS', data.result.pageContext.maker.sculpts)
-      })
-  },
-  async fetchColorways({ commit }, sculpt) {
-    await this.$axios
-      .get(
-        `https://keycap-archivist.com/page-data/maker/${sculpt}/page-data.json`
-      )
-      .then(({ data }) => {
-        commit('SCULPTS', data.result.pageContext.sculpt.colorways)
+  async fetchMaker({ commit }, name) {
+    await fetch(
+      `https://raw.githubusercontent.com/keycap-archivist/database/master/db/${name}.json`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // eslint-disable-next-line prefer-const
+        let { sculpts, ...rest } = data
+
+        sculpts = sculpts.map((sculpt) => {
+          const random = sample(sculpt.colorways)
+
+          return {
+            ...sculpt,
+            slug: slugify(sculpt.name, { lower: true }),
+            preview: random.img,
+          }
+        })
+
+        const db = {
+          maker: { ...rest, slug: name },
+          sculpts: keyBy(sortBy(sculpts, 'name'), 'slug'),
+        }
+
+        commit('MAKER_DB', db)
       })
   },
 }
 
 export const mutations = {
-  SCULPTS(state, data) {
-    state.sculpts = data
-  },
-  COLORWAYS(state, data) {
-    state.colorways = data
+  MAKER_DB(state, data) {
+    state.database[data.maker.slug] = data
   },
   WISHLIST_SETTINGS(state, data) {
     state.wishlistSettings = data

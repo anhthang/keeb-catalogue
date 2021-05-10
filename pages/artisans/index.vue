@@ -45,7 +45,7 @@
 <script>
 import { mapState } from 'vuex'
 import { FAVORITE_MAKERS } from '@/constants'
-import sortBy from 'lodash.sortby'
+import { sortBy } from 'lodash'
 
 export default {
   data() {

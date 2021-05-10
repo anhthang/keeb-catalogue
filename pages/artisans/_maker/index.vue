@@ -42,13 +42,13 @@
               :md="8"
               :lg="6"
             >
-              <nuxt-link :to="`/artisans${sculpt.link.replace('/maker', '')}`">
+              <nuxt-link :to="`/artisans/${maker}/${sculpt.slug}`">
                 <a-card hoverable :title="sculpt.name">
                   <img
                     slot="cover"
                     loading="lazy"
                     :alt="sculpt.name"
-                    :src="sculpt.previewImg"
+                    :src="sculpt.preview"
                   />
                 </a-card>
               </nuxt-link>
@@ -61,8 +61,7 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
-import sortBy from 'lodash.sortby'
+import { mapState } from 'vuex'
 import DiscordSvg from '~/components/DiscordSvg.vue'
 
 export default {
@@ -80,28 +79,24 @@ export default {
     }
   },
   async fetch() {
-    await fetch(
-      `https://keycap-archivist.com/page-data/maker/${this.maker}/page-data.json`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        this.loading = false
-        const { sculpts, ...rest } = res.result.pageContext.maker
-
-        this.makerInfo = rest
-        this.sculpts = sortBy(sculpts, 'name')
-      })
-      .catch(() => {
-        this.loading = false
-      })
+    if (!this.database[this.maker]) {
+      await this.$store
+        .dispatch('artisans/fetchMaker', this.maker)
+        .then(() => (this.loading = false))
+    } else {
+      this.loading = false
+    }
   },
   // fetchOnServer: false,
-  // computed: {
-  //   ...mapState(['sculpts']),
-  // },
-  // beforeMount() {
-  //   this.$store.dispatch('artisans/fetchScults')
-  // },
+  computed: {
+    ...mapState('artisans', ['database']),
+  },
+  watch: {
+    loading() {
+      this.makerInfo = this.database[this.maker].maker
+      this.sculpts = this.database[this.maker].sculpts
+    },
+  },
 }
 </script>
 

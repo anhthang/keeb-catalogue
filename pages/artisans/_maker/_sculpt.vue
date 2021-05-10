@@ -1,6 +1,6 @@
 <template>
   <div class="maker-container">
-    <a-page-header :title="sculptInfo.name" @back="() => $router.go(-1)">
+    <a-page-header :title="sculptInfo.name">
       <template slot="extra">
         <a-button key="1" icon="file-add" type="primary">
           Submit new Colorway
@@ -21,7 +21,7 @@
         <a-spin tip="Loading..." :spinning="loading">
           <a-row :gutter="[16, 16]" type="flex">
             <a-col
-              v-for="colorway in colourways"
+              v-for="colorway in colorways"
               :key="colorway.id"
               :xs="24"
               :sm="12"
@@ -75,7 +75,8 @@
 </template>
 
 <script>
-import sortBy from 'lodash.sortby'
+import { mapState } from 'vuex'
+import { sortBy } from 'lodash'
 import { WISHLIST, TRADELIST } from '@/constants'
 
 export default {
@@ -89,39 +90,34 @@ export default {
       sort: 'date',
       sortIcon: 'clock-circle',
       sculptInfo: {},
-      colorways: [],
       loading: true,
       wishList: {},
       tradeList: {},
     }
   },
   async fetch() {
-    await fetch(
-      `https://keycap-archivist.com/page-data/maker/${this.maker}/${this.sculpt}/page-data.json`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        this.loading = false
-
-        const { colorways, ...rest } = res.result.pageContext.sculpt
-
-        this.sculptInfo = rest
-        this.colorways = colorways
-      })
-      .catch(() => {
-        this.loading = false
-      })
+    if (!this.database[this.maker]) {
+      await this.$store
+        .dispatch('artisans/fetchMaker', this.maker)
+        .then(() => (this.loading = false))
+    } else {
+      this.loading = false
+    }
   },
   computed: {
-    colourways() {
+    ...mapState('artisans', ['database']),
+    colorways() {
       return this.sort === 'name'
-        ? sortBy(this.colorways, 'name')
-        : this.colorways
+        ? sortBy(this.sculptInfo.colorways, 'name')
+        : this.sculptInfo.colorways
     },
   },
   watch: {
     sort() {
       this.sortIcon = this.sort === 'name' ? 'sort-ascending' : 'clock-circle'
+    },
+    loading() {
+      this.sculptInfo = this.database[this.maker].sculpts[this.sculpt]
     },
   },
   beforeMount() {
