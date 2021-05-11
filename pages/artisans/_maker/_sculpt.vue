@@ -2,7 +2,7 @@
   <div class="maker-container">
     <a-page-header :title="sculptInfo.name">
       <template slot="extra">
-        <a-button key="1" icon="file-add" type="primary">
+        <a-button key="1" disabled icon="file-add" type="primary">
           Submit new Colorway
         </a-button>
         <a-dropdown placement="bottomRight">
@@ -164,7 +164,7 @@ export default {
 
 <style>
 .wish-item {
-  color: hotpink;
+  color: #eb2f96;
 }
 
 .trade-item {

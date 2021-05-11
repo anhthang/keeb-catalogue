@@ -1,40 +1,39 @@
 <template>
   <div class="artisan-container">
     <a-page-header title="Artisan Makers">
+      <search-artisans slot="extra" style="width: 300px" />
       <div>
+        <a-divider v-if="favorite.length" orientation="left">
+          Favorite
+        </a-divider>
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
-            v-for="maker in sortedMakers"
+            v-for="maker in favorite"
             :key="maker.id"
             :xs="24"
             :sm="12"
             :md="8"
             :lg="6"
+            :xl="4"
           >
-            <nuxt-link :to="`/artisans/${maker.slug}`">
-              <a-card hoverable :title="maker.name">
-                <a-icon
-                  slot="extra"
-                  type="star"
-                  :theme="
-                    favoriteMakers.includes(maker.slug) ? 'twoTone' : 'outlined'
-                  "
-                  two-tone-color="#eb2f96"
-                  @click="
-                    (e) => {
-                      e.preventDefault()
-                      addFavoriteMaker(maker.slug)
-                    }
-                  "
-                />
-                <img
-                  slot="cover"
-                  loading="lazy"
-                  :alt="maker.name"
-                  :src="`https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${maker.id}.jpg`"
-                />
-              </a-card>
-            </nuxt-link>
+            <maker-card theme="twoTone" :maker="maker" />
+          </a-col>
+        </a-row>
+
+        <a-divider v-if="favorite.length" orientation="left">
+          Makers
+        </a-divider>
+        <a-row :gutter="[16, 16]" type="flex">
+          <a-col
+            v-for="maker in otherMakers"
+            :key="maker.id"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+            :xl="4"
+          >
+            <maker-card theme="outlined" :maker="maker" />
           </a-col>
         </a-row>
       </div>
@@ -44,34 +43,15 @@
 
 <script>
 import { mapState } from 'vuex'
-import { FAVORITE_MAKERS } from '@/constants'
-import { sortBy } from 'lodash'
 
 export default {
-  data() {
-    return {
-      favoriteMakers: [],
-    }
-  },
   computed: {
-    ...mapState('artisans', ['makers']),
-    sortedMakers() {
-      return sortBy(this.makers, (i) => !this.favoriteMakers.includes(i.slug))
+    ...mapState('artisans', ['makers', 'favoriteMakers']),
+    favorite() {
+      return this.makers.filter((m) => this.favoriteMakers.includes(m.slug))
     },
-  },
-  beforeMount() {
-    this.favoriteMakers =
-      JSON.parse(localStorage.getItem(FAVORITE_MAKERS)) || []
-  },
-  methods: {
-    addFavoriteMaker(slug) {
-      if (!this.favoriteMakers.includes(slug)) {
-        this.favoriteMakers.push(slug)
-      } else {
-        this.favoriteMakers = this.favoriteMakers.filter((i) => i !== slug)
-      }
-
-      localStorage.setItem(FAVORITE_MAKERS, JSON.stringify(this.favoriteMakers))
+    otherMakers() {
+      return this.makers.filter((m) => !this.favoriteMakers.includes(m.slug))
     },
   },
 }

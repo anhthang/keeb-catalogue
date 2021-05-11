@@ -123,4 +123,8 @@ export default {
   font-size: 16px;
   vertical-align: middle;
 }
+
+.ant-spin-nested-loading {
+  min-height: 300px;
+}
 </style>

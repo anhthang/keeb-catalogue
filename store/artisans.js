@@ -1,11 +1,13 @@
-import makers from '@/assets/makers.json'
 import { sortBy, sample, keyBy } from 'lodash'
 import slugify from 'slugify'
+import { FAVORITE_MAKERS } from '@/constants'
+import makers from '@/assets/makers.json'
 
 export const state = () => {
   return {
     makers,
     database: {},
+    favoriteMakers: JSON.parse(localStorage.getItem(FAVORITE_MAKERS)) || [],
     wishlistSettings: {
       caps_per_line: 3,
       wish: {
@@ -51,6 +53,17 @@ export const actions = {
         commit('MAKER_DB', db)
       })
   },
+  updateFavoriteMakers({ commit, state }, name) {
+    let favoriteMakers = [...state.favoriteMakers]
+    if (!favoriteMakers.includes(name)) {
+      favoriteMakers.push(name)
+    } else {
+      favoriteMakers = favoriteMakers.filter((i) => i !== name)
+    }
+
+    localStorage.setItem(FAVORITE_MAKERS, JSON.stringify(favoriteMakers))
+    commit('FAVORITE_MAKERS', favoriteMakers)
+  },
 }
 
 export const mutations = {
@@ -59,5 +72,8 @@ export const mutations = {
   },
   WISHLIST_SETTINGS(state, data) {
     state.wishlistSettings = data
+  },
+  FAVORITE_MAKERS(state, data) {
+    state.favoriteMakers = data
   },
 }
