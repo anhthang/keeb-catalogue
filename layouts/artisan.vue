@@ -11,27 +11,14 @@
         :style="{ lineHeight: '64px' }"
       >
         <a-menu-item key="1">
-          <nuxt-link to="/calendar">
-            <a-icon type="calendar" />Calendar
+          <nuxt-link to="/artisans">
+            <a-icon type="user-add" />Artisans
           </nuxt-link>
         </a-menu-item>
         <a-menu-item key="2">
-          <nuxt-link to="/?status=live">
-            <a-icon type="forward" />Live GBs
+          <nuxt-link to="/artisans/wishlist">
+            <a-icon type="shopping-cart" />Wishlist
           </nuxt-link>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <nuxt-link to="/?status=ic">
-            <a-icon type="question-circle" />Interest Check
-          </nuxt-link>
-        </a-menu-item>
-        <a-menu-item key="4">
-          <nuxt-link to="/?status=closed">
-            <a-icon type="backward" />Previous GBs
-          </nuxt-link>
-        </a-menu-item>
-        <a-menu-item key="5">
-          <nuxt-link to="/artisans"><a-icon type="link" /> Artisans </nuxt-link>
         </a-menu-item>
       </a-menu>
     </a-layout-header>

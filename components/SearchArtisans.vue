@@ -3,7 +3,7 @@
     mode="multiple"
     label-in-value
     :value="value"
-    placeholder="Select artisan keycaps"
+    placeholder="input search text"
     style="width: 100%"
     :filter-option="false"
     :not-found-content="fetching ? undefined : null"

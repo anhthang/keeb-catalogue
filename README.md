@@ -2,11 +2,16 @@
 Building a catalog for mechanical keyboard community
 
 ## TODO
+- Sign-in by Google or passwordless
+
+### Keyboard
 - Layout view
 - Calendar view
 - Favorite/Wishlist page
 - Keyboard comparison
-- Sign-in by Google or passwordless
+
+### Artisan
+- Show commission keycap or anything is not in keycap-archivist database
 
 ## Build Setup
 

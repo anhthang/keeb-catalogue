@@ -1,7 +1,6 @@
 <template>
   <div class="artisan-container">
     <a-page-header title="Artisan Makers">
-      <search-artisans slot="extra" style="width: 300px" />
       <div>
         <a-divider v-if="favorite.length" orientation="left">
           Favorite
@@ -45,6 +44,7 @@
 import { mapState } from 'vuex'
 
 export default {
+  layout: 'artisan',
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     favorite() {

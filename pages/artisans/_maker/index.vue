@@ -41,6 +41,7 @@
               :sm="12"
               :md="8"
               :lg="6"
+              :xl="4"
             >
               <nuxt-link :to="`/artisans/${maker}/${sculpt.slug}`">
                 <a-card hoverable :title="sculpt.name">
@@ -65,6 +66,7 @@ import { mapState } from 'vuex'
 import DiscordSvg from '~/components/DiscordSvg.vue'
 
 export default {
+  layout: 'artisan',
   asyncData({ params }) {
     return {
       ...params,

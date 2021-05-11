@@ -27,6 +27,7 @@
               :sm="12"
               :md="8"
               :lg="6"
+              :xl="4"
             >
               <a-card hoverable :title="colorway.name">
                 <img
@@ -80,6 +81,7 @@ import { sortBy } from 'lodash'
 import { WISHLIST, TRADELIST } from '@/constants'
 
 export default {
+  layout: 'artisan',
   asyncData({ params }) {
     return {
       ...params,
