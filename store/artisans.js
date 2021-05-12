@@ -9,7 +9,7 @@ export const state = () => {
     database: {},
     favoriteMakers: JSON.parse(localStorage.getItem(FAVORITE_MAKERS)) || [],
     wishlistSettings: {
-      caps_per_line: 3,
+      caps_per_line: 4,
       wish: {
         title: 'Want',
       },

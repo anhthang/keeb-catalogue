@@ -63,7 +63,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import DiscordSvg from '~/components/DiscordSvg.vue'
+import DiscordSvg from '@/components/DiscordSvg'
 
 export default {
   layout: 'artisan',

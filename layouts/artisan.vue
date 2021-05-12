@@ -12,7 +12,7 @@
       >
         <a-menu-item key="1">
           <nuxt-link to="/artisans">
-            <a-icon type="user-add" />Artisans
+            <a-icon type="user-add" />Makers
           </nuxt-link>
         </a-menu-item>
         <a-menu-item key="2">
