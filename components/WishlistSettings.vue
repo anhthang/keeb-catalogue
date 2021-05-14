@@ -116,9 +116,7 @@ export default {
         JSON.stringify(this.settings)
       )
 
-      this.$notification.success({
-        message: 'Settings saved',
-      })
+      this.$message.success('Settings saved')
     },
     async downloadWishlist() {
       this.loading = true
@@ -146,6 +144,8 @@ export default {
     },
     async generateImg() {
       this.loading = true
+
+      this.saveSettings()
 
       const wishList = JSON.parse(localStorage.getItem(WISHLIST))
       const tradeList = JSON.parse(localStorage.getItem(TRADELIST))

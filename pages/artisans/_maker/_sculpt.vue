@@ -39,27 +39,29 @@
                 <template slot="extra">
                   <a-dropdown :trigger="['hover']" placement="bottomCenter">
                     <a-icon type="dash" />
-
                     <a-menu slot="overlay">
                       <a-menu-item key="0">Report</a-menu-item>
                     </a-menu>
                   </a-dropdown>
                 </template>
                 <template slot="actions" class="ant-card-actions">
-                  <span
-                    :class="wishList[colorway.id] ? 'wish-item' : ''"
-                    @click="addToList(colorway, 'wish')"
-                  >
-                    <a-icon key="heart" type="heart" />
-                    Wish
-                  </span>
-                  <span
-                    :class="tradeList[colorway.id] ? 'trade-item' : ''"
-                    @click="addToList(colorway, 'trade')"
-                  >
-                    <a-icon key="retweet" type="retweet" />
-                    Trade
-                  </span>
+                  <a-dropdown :trigger="['click']" placement="topCenter">
+                    <a-icon type="save" />
+                    <a-menu slot="overlay">
+                      <a-sub-menu
+                        title="Add to Collection"
+                        :disabled="!collections.length"
+                      >
+                        <a-menu-item
+                          v-for="collection in collections"
+                          :key="collection"
+                          @click="addToCollection(collection, colorway)"
+                        >
+                          {{ collection }}
+                        </a-menu-item>
+                      </a-sub-menu>
+                    </a-menu>
+                  </a-dropdown>
                 </template>
                 <a-card-meta v-if="colorway.releaseDate">
                   <template slot="description">
@@ -78,7 +80,7 @@
 <script>
 import { mapState } from 'vuex'
 import { sortBy } from 'lodash'
-import { WISHLIST, TRADELIST } from '@/constants'
+import { COLLECTIONS } from '@/constants'
 
 export default {
   layout: 'artisan',
@@ -93,8 +95,7 @@ export default {
       sortIcon: 'clock-circle',
       sculptInfo: {},
       loading: true,
-      wishList: {},
-      tradeList: {},
+      collections: [],
     }
   },
   async fetch() {
@@ -123,39 +124,18 @@ export default {
     },
   },
   beforeMount() {
-    this.wishList = JSON.parse(localStorage.getItem(WISHLIST)) || {}
-    this.tradeList = JSON.parse(localStorage.getItem(TRADELIST)) || {}
+    this.collections = JSON.parse(localStorage.getItem(COLLECTIONS)) || []
   },
   methods: {
-    async addToList(clw, type) {
-      const listType = type === 'wish' ? 'wishList' : 'tradeList'
-      const otherListType = type === 'trade' ? 'wishList' : 'tradeList'
-
-      const list = this[listType]
-      const otherList = this[otherListType]
+    addToCollection(name, clw) {
+      const key = `${COLLECTIONS}_${name}`
+      const list = JSON.parse(localStorage.getItem(key))
       if (!list[clw.id]) {
-        if (otherList[clw.id]) {
-          delete otherList[clw.id]
-        }
         list[clw.id] = clw
-      } else {
-        delete list[clw.id]
       }
 
-      this[listType] = { ...list }
-      this[otherListType] = { ...otherList }
-
-      localStorage.setItem(`KeebCal_${listType}`, JSON.stringify(list))
-      localStorage.setItem(
-        `KeebCal_${otherListType}`,
-        JSON.stringify(otherList)
-      )
-
-      /**
-       * FIXME
-       * https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
-       */
-      await this.$nextTick()
+      localStorage.setItem(key, JSON.stringify(list))
+      this.$message.success(`Added ${clw.name} to ${name}`)
     },
     onChangeSortType(e) {
       this.sort = e.key
@@ -163,13 +143,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.wish-item {
-  color: #eb2f96;
-}
-
-.trade-item {
-  color: darkgreen;
-}
-</style>

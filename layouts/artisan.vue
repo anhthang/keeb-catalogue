@@ -16,6 +16,11 @@
           </nuxt-link>
         </a-menu-item>
         <a-menu-item key="2">
+          <nuxt-link to="/artisans/collection">
+            <a-icon type="code-sandbox" />Collection
+          </nuxt-link>
+        </a-menu-item>
+        <a-menu-item key="3">
           <nuxt-link to="/artisans/wishlist">
             <a-icon type="shopping-cart" />Wishlist
           </nuxt-link>
