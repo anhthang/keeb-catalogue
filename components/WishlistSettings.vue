@@ -22,10 +22,32 @@
         <a-icon slot="prefix" type="font-size" />
       </a-input>
     </a-form-item>
+    <a-form-item label="Wish Collection">
+      <a-select v-model="settings.wish.collection" style="width: 100%">
+        <a-select-option
+          v-for="collection in collections"
+          :key="collection"
+          :value="collection"
+        >
+          {{ collection }}
+        </a-select-option>
+      </a-select>
+    </a-form-item>
     <a-form-item label="Trade Title">
       <a-input v-model="settings.trade.title">
         <a-icon slot="prefix" type="font-size" />
       </a-input>
+    </a-form-item>
+    <a-form-item label="Trade Collection">
+      <a-select v-model="settings.trade.collection" style="width: 100%">
+        <a-select-option
+          v-for="collection in collections"
+          :key="collection"
+          :value="collection"
+        >
+          {{ collection }}
+        </a-select-option>
+      </a-select>
     </a-form-item>
     <a-form-item label="Reddit">
       <a-input v-model="settings.social.reddit" placeholder="u/username">
@@ -49,7 +71,7 @@
 import { mapState, mapMutations } from 'vuex'
 import html2canvas from 'html2canvas'
 import DiscordSvg from '@/components/DiscordSvg'
-import { WISHLIST, TRADELIST } from '@/constants'
+import { COLLECTIONS } from '@/constants'
 
 export default {
   data() {
@@ -57,6 +79,7 @@ export default {
       DiscordSvg,
       loading: false,
       settings: {},
+      collections: [],
     }
   },
   fetch() {
@@ -108,6 +131,9 @@ export default {
       deep: true,
     },
   },
+  beforeMount() {
+    this.collections = JSON.parse(localStorage.getItem(COLLECTIONS)) || []
+  },
   methods: {
     ...mapMutations('artisans', ['WISHLIST_SETTINGS']),
     saveSettings() {
@@ -147,8 +173,12 @@ export default {
 
       this.saveSettings()
 
-      const wishList = JSON.parse(localStorage.getItem(WISHLIST))
-      const tradeList = JSON.parse(localStorage.getItem(TRADELIST))
+      const wishList = JSON.parse(
+        localStorage.getItem(`${COLLECTIONS}_${this.settings.wish.collection}`)
+      )
+      const tradeList = JSON.parse(
+        localStorage.getItem(`${COLLECTIONS}_${this.settings.trade.collection}`)
+      )
 
       const json = {
         settings: this.kaSettings,

@@ -12,14 +12,16 @@ export const state = () => {
       caps_per_line: 4,
       wish: {
         title: 'Want',
+        collection: undefined,
       },
       trade: {
         title: 'Have',
+        collection: undefined,
       },
       social: {
-        reddit: '',
-        discord: '',
-        qq: '',
+        reddit: undefined,
+        discord: undefined,
+        qq: undefined,
       },
     },
   }

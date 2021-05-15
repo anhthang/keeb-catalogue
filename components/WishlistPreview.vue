@@ -65,7 +65,7 @@
 <script>
 import { mapState } from 'vuex'
 import draggable from 'vuedraggable'
-import { WISHLIST, TRADELIST } from '@/constants'
+import { COLLECTIONS } from '@/constants'
 
 export default {
   components: {
@@ -81,13 +81,33 @@ export default {
     ...mapState('artisans', ['wishlistSettings']),
   },
   watch: {
+    wishlistSettings: {
+      handler(after, before) {
+        if (after.wish.collection !== before.wish.collection) {
+          const list = JSON.parse(
+            localStorage.getItem(`${COLLECTIONS}_${after.wish.collection}`)
+          )
+
+          this.draggableWishList = Object.values(list)
+        }
+        if (after.trade.collection !== before.trade.collection) {
+          const list = JSON.parse(
+            localStorage.getItem(`${COLLECTIONS}_${after.trade.collection}`)
+          )
+
+          this.draggableTradeList = Object.values(list)
+        }
+      },
+      deep: true,
+    },
     draggableWishList() {
       const wishList = this.draggableWishList.reduce((out, clw) => {
         out[clw.id] = clw
         return out
       }, {})
 
-      localStorage.setItem(WISHLIST, JSON.stringify(wishList))
+      const key = `${COLLECTIONS}_${this.wishlistSettings.wish.collection}`
+      localStorage.setItem(key, JSON.stringify(wishList))
     },
     draggableTradeList() {
       const tradeList = this.draggableTradeList.reduce((out, clw) => {
@@ -95,15 +115,9 @@ export default {
         return out
       }, {})
 
-      localStorage.setItem(TRADELIST, JSON.stringify(tradeList))
+      const key = `${COLLECTIONS}_${this.wishlistSettings.trade.collection}`
+      localStorage.setItem(key, JSON.stringify(tradeList))
     },
-  },
-  beforeMount() {
-    const wishList = JSON.parse(localStorage.getItem(WISHLIST)) || {}
-    const tradeList = JSON.parse(localStorage.getItem(TRADELIST)) || {}
-
-    this.draggableWishList = Object.values(wishList)
-    this.draggableTradeList = Object.values(tradeList)
   },
   methods: {
     removeCap(colorway, type) {

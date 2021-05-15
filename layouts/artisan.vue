@@ -17,7 +17,7 @@
         </a-menu-item>
         <a-menu-item key="2">
           <nuxt-link to="/artisans/collection">
-            <a-icon type="code-sandbox" />Collection
+            <a-icon type="book" />Collection
           </nuxt-link>
         </a-menu-item>
         <a-menu-item key="3">
