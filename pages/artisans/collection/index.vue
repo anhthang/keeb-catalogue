@@ -17,24 +17,26 @@
         :lg="6"
         :xl="4"
       >
-        <a-card hoverable :title="collection" size="small">
-          <img
-            slot="cover"
-            loading="lazy"
-            :alt="collection"
-            :src="getPreviewImg(collection)"
-          />
+        <nuxt-link :to="`/artisans/collection/${collection.slug}`">
+          <a-card hoverable :title="collection.name">
+            <img
+              slot="cover"
+              loading="lazy"
+              :alt="collection.name"
+              :src="getPreviewImg(collection.slug)"
+            />
 
-          <a-popconfirm
-            slot="extra"
-            title="Are you sure delete this collection?"
-            ok-text="Yes"
-            cancel-text="No"
-            @confirm="delCollection(collection)"
-          >
-            <a-button type="danger" icon="delete" />
-          </a-popconfirm>
-        </a-card>
+            <a-popconfirm
+              slot="extra"
+              title="Are you sure delete this collection?"
+              ok-text="Yes"
+              cancel-text="No"
+              @confirm="delCollection(collection.slug)"
+            >
+              <a-icon type="delete" />
+            </a-popconfirm>
+          </a-card>
+        </nuxt-link>
       </a-col>
     </a-row>
   </a-page-header>
@@ -43,6 +45,7 @@
 <script>
 import { COLLECTIONS } from '@/constants'
 import { sample } from 'lodash'
+import slugify from 'slugify'
 
 export default {
   layout: 'artisan',
@@ -62,7 +65,10 @@ export default {
     },
     handleOk() {
       if (!this.collections.includes(this.collectionName)) {
-        this.collections.push(this.collectionName)
+        this.collections.push({
+          name: this.collectionName,
+          slug: slugify(this.collectionName, { lower: true }),
+        })
 
         localStorage.setItem(COLLECTIONS, JSON.stringify(this.collections))
         localStorage.setItem(
@@ -74,19 +80,19 @@ export default {
         this.$message.success('Added new collection')
       }
     },
-    getPreviewImg(name) {
-      const storage = JSON.parse(localStorage.getItem(`${COLLECTIONS}_${name}`))
+    getPreviewImg(slug) {
+      const storage = JSON.parse(localStorage.getItem(`${COLLECTIONS}_${slug}`))
       return (
         sample(Object.values(storage || {}))?.img ??
         'https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png'
       )
     },
-    delCollection(name) {
-      localStorage.removeItem(`${COLLECTIONS}_${name}`)
+    delCollection(slug) {
+      localStorage.removeItem(`${COLLECTIONS}_${slug}`)
 
       this.$message.success('Collection deleted')
 
-      this.collections = this.collections.filter((n) => n !== name)
+      this.collections = this.collections.filter((n) => n.slug !== slug)
       localStorage.setItem(COLLECTIONS, JSON.stringify(this.collections))
     },
   },

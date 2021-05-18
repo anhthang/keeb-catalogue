@@ -26,19 +26,24 @@
       <a-select v-model="settings.wish.collection" style="width: 100%">
         <a-select-option
           v-for="collection in collections"
-          :key="collection"
-          :value="collection"
+          :key="collection.slug"
+          :value="collection.slug"
         >
-          {{ collection }}
+          {{ collection.name }}
         </a-select-option>
       </a-select>
     </a-form-item>
-    <a-form-item label="Trade Title">
+    <a-form-item>
+      <a-checkbox :checked="wantToTrade" @change="handleWantToTrade">
+        Want to trade
+      </a-checkbox>
+    </a-form-item>
+    <a-form-item v-if="wantToTrade" label="Trade Title">
       <a-input v-model="settings.trade.title">
         <a-icon slot="prefix" type="font-size" />
       </a-input>
     </a-form-item>
-    <a-form-item label="Trade Collection">
+    <a-form-item v-if="wantToTrade" label="Trade Collection">
       <a-select v-model="settings.trade.collection" style="width: 100%">
         <a-select-option
           v-for="collection in collections"
@@ -78,6 +83,7 @@ export default {
     return {
       DiscordSvg,
       loading: false,
+      wantToTrade: false,
       settings: {},
       collections: [],
     }
@@ -143,6 +149,9 @@ export default {
       )
 
       this.$message.success('Settings saved')
+    },
+    handleWantToTrade() {
+      this.wantToTrade = !this.wantToTrade
     },
     async downloadWishlist() {
       this.loading = true

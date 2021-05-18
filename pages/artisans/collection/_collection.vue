@@ -1,0 +1,73 @@
+<template>
+  <div class="maker-container">
+    <a-page-header :title="collection">
+      <div>
+        <a-row :gutter="[16, 16]" type="flex">
+          <a-col
+            v-for="colorway in colorways"
+            :key="colorway.id"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+            :xl="4"
+          >
+            <a-card hoverable :title="colorway.name">
+              <img
+                slot="cover"
+                loading="lazy"
+                :alt="colorway.name"
+                :src="colorway.img"
+              />
+              <a-popconfirm
+                slot="extra"
+                title="Are you sure remove this cap?"
+                ok-text="Yes"
+                cancel-text="No"
+                @confirm="removeCap(colorway)"
+              >
+                <a-icon type="delete" />
+              </a-popconfirm>
+              <a-card-meta v-if="colorway.releaseDate">
+                <template slot="description">
+                  {{ colorway.releaseDate }}
+                </template>
+              </a-card-meta>
+            </a-card>
+          </a-col>
+        </a-row>
+      </div>
+    </a-page-header>
+  </div>
+</template>
+
+<script>
+import { COLLECTIONS } from '@/constants'
+
+export default {
+  layout: 'artisan',
+  asyncData({ params }) {
+    const collections = JSON.parse(localStorage.getItem(`${COLLECTIONS}`)) || []
+    const collection = collections.find((c) => c.slug === params.collection)
+
+    const colorways = JSON.parse(
+      localStorage.getItem(`${COLLECTIONS}_${params.collection}`)
+    )
+    return {
+      collection: collection.name,
+      colorways: Object.values(colorways),
+    }
+  },
+  methods: {
+    removeCap(clw) {
+      this.colorways = this.colorways.filter((i) => i.id !== clw.id)
+      localStorage.setItem(
+        `${COLLECTIONS}_${this.collection}`,
+        JSON.stringify(this.colorways)
+      )
+
+      this.$message.success(`${clw.name} removed from the collection`)
+    },
+  },
+}
+</script>

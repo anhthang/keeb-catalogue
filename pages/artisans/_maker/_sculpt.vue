@@ -57,7 +57,7 @@
                           :key="collection"
                           @click="addToCollection(collection, colorway)"
                         >
-                          {{ collection }}
+                          {{ collection.name }}
                         </a-menu-item>
                       </a-sub-menu>
                     </a-menu>
@@ -127,15 +127,15 @@ export default {
     this.collections = JSON.parse(localStorage.getItem(COLLECTIONS)) || []
   },
   methods: {
-    addToCollection(name, clw) {
-      const key = `${COLLECTIONS}_${name}`
-      const list = JSON.parse(localStorage.getItem(key))
+    addToCollection(collection, clw) {
+      const key = `${COLLECTIONS}_${collection.slug}`
+      const list = JSON.parse(localStorage.getItem(key)) || {}
       if (!list[clw.id]) {
         list[clw.id] = clw
       }
 
       localStorage.setItem(key, JSON.stringify(list))
-      this.$message.success(`Added ${clw.name} to ${name}`)
+      this.$message.success(`Added ${clw.name} to ${collection.name}`)
     },
     onChangeSortType(e) {
       this.sort = e.key

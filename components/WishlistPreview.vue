@@ -84,16 +84,18 @@ export default {
     wishlistSettings: {
       handler(after, before) {
         if (after.wish.collection !== before.wish.collection) {
-          const list = JSON.parse(
-            localStorage.getItem(`${COLLECTIONS}_${after.wish.collection}`)
-          )
+          const list =
+            JSON.parse(
+              localStorage.getItem(`${COLLECTIONS}_${after.wish.collection}`)
+            ) || {}
 
           this.draggableWishList = Object.values(list)
         }
         if (after.trade.collection !== before.trade.collection) {
-          const list = JSON.parse(
-            localStorage.getItem(`${COLLECTIONS}_${after.trade.collection}`)
-          )
+          const list =
+            JSON.parse(
+              localStorage.getItem(`${COLLECTIONS}_${after.trade.collection}`)
+            ) || {}
 
           this.draggableTradeList = Object.values(list)
         }
