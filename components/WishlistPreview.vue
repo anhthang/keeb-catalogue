@@ -11,18 +11,16 @@
             :key="colorway.id"
             :span="6"
           >
-            <a-card :title="colorway.name" size="small" :bordered="false">
+            <a-card :title="cardTitle(colorway)" size="small" :bordered="false">
               <img
                 slot="cover"
                 loading="lazy"
                 :alt="colorway.name"
                 :src="colorway.img"
               />
-              <a-button
+              <a-icon
                 slot="extra"
-                icon="close-circle"
-                size="small"
-                type="link"
+                type="delete"
                 @click="removeCap(colorway, 'wish')"
               />
             </a-card>
@@ -40,18 +38,16 @@
             :key="colorway.id"
             :span="6"
           >
-            <a-card :title="colorway.name" size="small" :bordered="false">
+            <a-card :title="cardTitle(colorway)" size="small" :bordered="false">
               <img
                 slot="cover"
                 loading="lazy"
                 :alt="colorway.name"
                 :src="colorway.img"
               />
-              <a-button
+              <a-icon
                 slot="extra"
-                icon="close-circle"
-                size="small"
-                type="link"
+                type="delete"
                 @click="removeCap(colorway, 'trade')"
               />
             </a-card>
@@ -122,6 +118,9 @@ export default {
     },
   },
   methods: {
+    cardTitle(clw) {
+      return `${clw.name} ${clw.sculpt_name}`
+    },
     removeCap(colorway, type) {
       const vm = this
       this.$confirm({

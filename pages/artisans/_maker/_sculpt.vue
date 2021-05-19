@@ -131,7 +131,10 @@ export default {
       const key = `${COLLECTIONS}_${collection.slug}`
       const list = JSON.parse(localStorage.getItem(key)) || {}
       if (!list[clw.id]) {
-        list[clw.id] = clw
+        list[clw.id] = {
+          ...clw,
+          sculpt_name: this.sculptInfo.name,
+        }
       }
 
       localStorage.setItem(key, JSON.stringify(list))

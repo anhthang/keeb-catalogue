@@ -12,7 +12,7 @@
             :lg="6"
             :xl="4"
           >
-            <a-card hoverable :title="colorway.name">
+            <a-card hoverable :title="cardTitle(colorway)">
               <img
                 slot="cover"
                 loading="lazy"
@@ -50,15 +50,18 @@ export default {
     const collections = JSON.parse(localStorage.getItem(`${COLLECTIONS}`)) || []
     const collection = collections.find((c) => c.slug === params.collection)
 
-    const colorways = JSON.parse(
-      localStorage.getItem(`${COLLECTIONS}_${params.collection}`)
-    )
+    const colorways =
+      JSON.parse(localStorage.getItem(`${COLLECTIONS}_${params.collection}`)) ||
+      {}
     return {
       collection: collection.name,
       colorways: Object.values(colorways),
     }
   },
   methods: {
+    cardTitle(clw) {
+      return `${clw.name} ${clw.sculpt_name}`
+    },
     removeCap(clw) {
       this.colorways = this.colorways.filter((i) => i.id !== clw.id)
       localStorage.setItem(
