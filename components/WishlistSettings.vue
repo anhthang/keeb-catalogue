@@ -47,10 +47,10 @@
       <a-select v-model="settings.trade.collection" style="width: 100%">
         <a-select-option
           v-for="collection in collections"
-          :key="collection"
-          :value="collection"
+          :key="collection.slug"
+          :value="collection.slug"
         >
-          {{ collection }}
+          {{ collection.name }}
         </a-select-option>
       </a-select>
     </a-form-item>

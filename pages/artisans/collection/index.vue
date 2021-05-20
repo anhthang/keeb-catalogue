@@ -3,7 +3,7 @@
     <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
       Add
     </a-button>
-    <a-modal v-model="visible" title="Add new collection" @ok="handleOk">
+    <a-modal v-model="visible" title="Add new collection" @ok="addCollection">
       <a-input v-model="collectionName" placeholder="Enter collection name" />
     </a-modal>
 
@@ -63,18 +63,13 @@ export default {
     showModal() {
       this.visible = true
     },
-    handleOk() {
+    addCollection() {
+      const slug = slugify(this.collectionName, { lower: true })
       if (!this.collections.includes(this.collectionName)) {
-        this.collections.push({
-          name: this.collectionName,
-          slug: slugify(this.collectionName, { lower: true }),
-        })
+        this.collections.push({ name: this.collectionName, slug })
 
         localStorage.setItem(COLLECTIONS, JSON.stringify(this.collections))
-        localStorage.setItem(
-          `${COLLECTIONS}_${this.collectionName}`,
-          JSON.stringify({})
-        )
+        localStorage.setItem(`${COLLECTIONS}_${slug}`, JSON.stringify({}))
         this.visible = false
 
         this.$message.success('Added new collection')
