@@ -1,10 +1,13 @@
 <template>
   <div class="maker-container">
-    <a-page-header :title="collection">
+    <a-page-header :title="name">
+      <a-button slot="extra" disabled type="primary" icon="file-add">
+        Add
+      </a-button>
       <div>
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
-            v-for="colorway in colorways"
+            v-for="colorway in collections"
             :key="colorway.id"
             :xs="24"
             :sm="12"
@@ -54,8 +57,10 @@ export default {
       JSON.parse(localStorage.getItem(`${COLLECTIONS}_${params.collection}`)) ||
       {}
     return {
-      collection: collection.name,
-      colorways: Object.values(colorways),
+      ...params,
+      name: collection.name,
+      colorways,
+      collections: Object.values(colorways),
     }
   },
   methods: {
@@ -63,7 +68,9 @@ export default {
       return `${clw.name} ${clw.sculpt_name}`
     },
     removeCap(clw) {
-      this.colorways = this.colorways.filter((i) => i.id !== clw.id)
+      this.collections = this.collections.filter((c) => c.id !== clw.id)
+
+      delete this.colorways[clw.id]
       localStorage.setItem(
         `${COLLECTIONS}_${this.collection}`,
         JSON.stringify(this.colorways)

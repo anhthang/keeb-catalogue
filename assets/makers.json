@@ -165,6 +165,11 @@
     "slug": "dollartacos"
   },
   {
+    "name": "Doohickeys",
+    "id": "2230f9b3",
+    "slug": "doohickeys"
+  },
+  {
     "name": "Dreadkeys",
     "id": "685c2588",
     "slug": "dreadkeys"
@@ -173,6 +178,11 @@
     "name": "DustyCaps",
     "id": "1eb1d13a",
     "slug": "dustycaps"
+  },
+  {
+    "name": "Dwarf Factory",
+    "id": "3e9cabfa",
+    "slug": "dwarf-factory"
   },
   {
     "name": "Fraktal Kaps",
@@ -283,6 +293,11 @@
     "name": "KeyKollectiv",
     "id": "5137e37f",
     "slug": "keykollectiv"
+  },
+  {
+    "name": "KeyLabs Keycaps",
+    "id": "dbf82e90",
+    "slug": "keylabs-keycaps"
   },
   {
     "name": "KrakenKap",

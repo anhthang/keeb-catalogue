@@ -196,11 +196,13 @@ export default {
           isPriority: false,
           legendColor: 'Crimson',
         })),
-        tradeCaps: Object.values(tradeList).map((i) => ({
-          id: i.id,
-          isPriority: false,
-          legendColor: 'Orchid',
-        })),
+        tradeCaps: this.settings.wantToTrade
+          ? Object.values(tradeList).map((i) => ({
+              id: i.id,
+              isPriority: false,
+              legendColor: 'Orchid',
+            }))
+          : [],
       }
 
       const base64Img = await this.$axios
