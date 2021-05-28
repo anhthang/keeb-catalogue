@@ -10,6 +10,7 @@ export const state = () => {
     favoriteMakers: JSON.parse(localStorage.getItem(FAVORITE_MAKERS)) || [],
     wishlistSettings: {
       caps_per_line: 4,
+      want_to_trade: false,
       wish: {
         title: 'Want',
         collection: undefined,

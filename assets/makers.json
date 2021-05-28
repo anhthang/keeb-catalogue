@@ -75,6 +75,11 @@
     "slug": "bludgeoned-kaps"
   },
   {
+    "name": "Bogwitch Brie",
+    "id": "4d74b92e",
+    "slug": "bogwitch-brie"
+  },
+  {
     "name": "BoomSnap Caps",
     "id": "84748ce6",
     "slug": "boomsnap-caps"
@@ -360,6 +365,11 @@
     "slug": "nubbinator"
   },
   {
+    "name": "Object.Garage",
+    "id": "2f6b5457",
+    "slug": "object-garage"
+  },
+  {
     "name": "Obscura",
     "id": "8874564c",
     "slug": "obscura"
@@ -398,6 +408,16 @@
     "name": "ProjectKey",
     "id": "8dac3435",
     "slug": "projectkey"
+  },
+  {
+    "name": "Psycho Keycaps",
+    "id": "55851cb5",
+    "slug": "psycho-keycaps"
+  },
+  {
+    "name": "Q Qaps",
+    "id": "6b46c555",
+    "slug": "q-qaps"
   },
   {
     "name": "RADcaps",

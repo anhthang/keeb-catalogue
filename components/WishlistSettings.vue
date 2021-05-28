@@ -26,16 +26,20 @@
       </a-select>
     </a-form-item>
     <a-form-item>
-      <a-checkbox :checked="wantToTrade" @change="handleWantToTrade">
+      <a-checkbox
+        v-model="settings.want_to_trade"
+        :checked="wantToTrade"
+        @change="handleWantToTrade"
+      >
         Want to trade
       </a-checkbox>
     </a-form-item>
-    <a-form-item v-if="wantToTrade" label="Trade Title">
+    <a-form-item v-if="settings.want_to_trade" label="Trade Title">
       <a-input v-model="settings.trade.title">
         <a-icon slot="prefix" type="font-size" />
       </a-input>
     </a-form-item>
-    <a-form-item v-if="wantToTrade" label="Trade Collection">
+    <a-form-item v-if="settings.want_to_trade" label="Trade Collection">
       <a-select v-model="settings.trade.collection" style="width: 100%">
         <a-select-option
           v-for="collection in collections"

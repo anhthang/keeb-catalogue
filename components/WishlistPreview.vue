@@ -40,10 +40,12 @@
         </draggable>
       </a-row>
 
-      <a-divider v-if="draggableTradeList.length">
+      <a-divider
+        v-if="draggableTradeList.length && wishlistSettings.want_to_trade"
+      >
         {{ wishlistSettings.trade.title }}
       </a-divider>
-      <a-row :gutter="[16, 16]">
+      <a-row v-if="wishlistSettings.want_to_trade" :gutter="[16, 16]">
         <draggable :list="draggableTradeList" group="group">
           <a-col
             v-for="colorway in draggableTradeList"
