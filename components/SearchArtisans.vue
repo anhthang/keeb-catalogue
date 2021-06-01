@@ -11,7 +11,7 @@
     @change="handleChange"
   >
     <a-spin v-if="fetching" slot="notFoundContent" size="small" />
-    <a-select-opt-group v-for="maker in data" :key="maker[0]">
+    <a-select-opt-group v-for="maker in filteredCaps" :key="maker[0]">
       <a-select-option v-for="cap in maker[1]" :key="cap.id">
         {{ `${cap.sculpt_name} / ${cap.name}` }}
       </a-select-option>
@@ -24,6 +24,8 @@ import { mapMutations } from 'vuex'
 import { debounce, groupBy } from 'lodash'
 
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['selected', 'visible'],
   data() {
     this.lastFetchId = 0
     this.fetchKeycaps = debounce(this.fetchKeycaps, 800)
@@ -32,6 +34,20 @@ export default {
       value: [],
       fetching: false,
     }
+  },
+  computed: {
+    filteredCaps() {
+      const caps = this.data.filter((c) => !this.selected.includes(c.id))
+
+      return Object.entries(groupBy(caps, 'maker_name'))
+    },
+  },
+  watch: {
+    visible() {
+      if (this.visible === false) {
+        this.value = []
+      }
+    },
   },
   methods: {
     ...mapMutations('artisans', ['ADD_TO_COLLECTION']),
@@ -42,7 +58,7 @@ export default {
 
       this.data = []
       this.fetching = true
-      fetch(`http://localhost:4000/keycaps?name_like=${value}&limit=100`)
+      fetch(`http://localhost:4000/keycaps?name_like=${value}&_limit=100`)
         .then((response) => response.json())
         .then((body) => {
           if (fetchId !== this.lastFetchId) {
@@ -50,7 +66,7 @@ export default {
             return
           }
 
-          this.data = Object.entries(groupBy(body, 'maker_name'))
+          this.data = body
           this.fetching = false
         })
     },

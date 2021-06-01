@@ -9,7 +9,7 @@
         title="Add keycap to collection"
         @ok="addToCollection"
       >
-        <search-artisans :selected="collections" />
+        <search-artisans :selected="selectedIds" :visible="visible" />
       </a-modal>
 
       <div>
@@ -74,6 +74,9 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['addToCollectionItems']),
+    selectedIds() {
+      return this.collections.map((c) => c.id)
+    },
   },
   methods: {
     cardTitle(clw) {
@@ -106,9 +109,6 @@ export default {
       this.updateLocalStorage()
 
       this.visible = false
-
-      // hide caps already in collection in search result
-      // clear seleted
     },
   },
 }
