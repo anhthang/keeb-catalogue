@@ -9,7 +9,7 @@
         title="Add keycap to collection"
         @ok="addToCollection"
       >
-        <search-artisans :value="selectedKeycaps" />
+        <search-artisans :selected="collections" />
       </a-modal>
 
       <div>
@@ -49,6 +49,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { keyBy } from 'lodash'
 import { COLLECTIONS } from '@/constants'
 
 export default {
@@ -63,14 +64,12 @@ export default {
     return {
       ...params,
       name: collection.name,
-      colorways,
       collections: Object.values(colorways),
     }
   },
   data() {
     return {
       visible: false,
-      selectedKeycaps: [],
     }
   },
   computed: {
@@ -83,14 +82,16 @@ export default {
     showModal() {
       this.visible = !this.visible
     },
+    updateLocalStorage() {
+      const key = `${COLLECTIONS}_${this.collection}`
+      const value = keyBy(this.collections, 'id')
+
+      localStorage.setItem(key, JSON.stringify(value))
+    },
     removeCap(clw) {
       this.collections = this.collections.filter((c) => c.id !== clw.id)
 
-      delete this.colorways[clw.id]
-      localStorage.setItem(
-        `${COLLECTIONS}_${this.collection}`,
-        JSON.stringify(this.colorways)
-      )
+      this.updateLocalStorage()
 
       this.$message.success(`${clw.name} removed from the collection`)
     },
@@ -102,7 +103,12 @@ export default {
 
       this.collections.push(...caps)
 
+      this.updateLocalStorage()
+
       this.visible = false
+
+      // hide caps already in collection in search result
+      // clear seleted
     },
   },
 }
