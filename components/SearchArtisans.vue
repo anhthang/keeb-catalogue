@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { debounce, groupBy } from 'lodash'
 
 export default {
@@ -33,6 +34,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('artisans', ['ADD_TO_COLLECTION']),
     fetchKeycaps(value) {
       if (!value) return
       this.lastFetchId += 1
@@ -40,7 +42,7 @@ export default {
 
       this.data = []
       this.fetching = true
-      fetch(`http://localhost:4000/keycaps?name_like=${value}`)
+      fetch(`http://localhost:4000/keycaps?name_like=${value}&limit=100`)
         .then((response) => response.json())
         .then((body) => {
           if (fetchId !== this.lastFetchId) {
@@ -53,6 +55,7 @@ export default {
         })
     },
     handleChange(value) {
+      this.ADD_TO_COLLECTION(value)
       Object.assign(this, {
         value,
         data: [],

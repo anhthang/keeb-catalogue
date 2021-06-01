@@ -30,4 +30,13 @@ $ yarn start
 $ yarn generate
 ```
 
+### Autocomplete API
+
+Use `json-server` to bootstrap the API from `database.json` file. Document is here: https://www.npmjs.com/package/json-server
+
+```bash
+# start api at localhost:4000
+$ json-server --watch database.json --port 4000
+```
+
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

@@ -10,7 +10,7 @@
     <a-row :gutter="[16, 16]" type="flex">
       <a-col
         v-for="collection in collections"
-        :key="collection"
+        :key="collection.slug"
         :xs="24"
         :sm="12"
         :md="8"

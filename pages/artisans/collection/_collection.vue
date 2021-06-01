@@ -1,9 +1,17 @@
 <template>
   <div class="maker-container">
     <a-page-header :title="name">
-      <a-button slot="extra" disabled type="primary" icon="file-add">
+      <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
         Add
       </a-button>
+      <a-modal
+        v-model="visible"
+        title="Add keycap to collection"
+        @ok="addToCollection"
+      >
+        <search-artisans :value="selectedKeycaps" />
+      </a-modal>
+
       <div>
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
@@ -31,11 +39,6 @@
               >
                 <a-icon type="delete" />
               </a-popconfirm>
-              <a-card-meta v-if="colorway.releaseDate">
-                <template slot="description">
-                  {{ colorway.releaseDate }}
-                </template>
-              </a-card-meta>
             </a-card>
           </a-col>
         </a-row>
@@ -45,6 +48,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { COLLECTIONS } from '@/constants'
 
 export default {
@@ -63,9 +67,21 @@ export default {
       collections: Object.values(colorways),
     }
   },
+  data() {
+    return {
+      visible: false,
+      selectedKeycaps: [],
+    }
+  },
+  computed: {
+    ...mapState('artisans', ['addToCollectionItems']),
+  },
   methods: {
     cardTitle(clw) {
       return `${clw.name} ${clw.sculpt_name}`
+    },
+    showModal() {
+      this.visible = !this.visible
     },
     removeCap(clw) {
       this.collections = this.collections.filter((c) => c.id !== clw.id)
@@ -77,6 +93,16 @@ export default {
       )
 
       this.$message.success(`${clw.name} removed from the collection`)
+    },
+    async addToCollection(value) {
+      const caps = await this.$store.dispatch(
+        'artisans/fetchCaps',
+        this.addToCollectionItems.map((i) => i.key)
+      )
+
+      this.collections.push(...caps)
+
+      this.visible = false
     },
   },
 }

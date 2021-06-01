@@ -54,7 +54,7 @@
                       >
                         <a-menu-item
                           v-for="collection in collections"
-                          :key="collection"
+                          :key="collection.slug"
                           @click="addToCollection(collection, colorway)"
                         >
                           {{ collection.name }}
