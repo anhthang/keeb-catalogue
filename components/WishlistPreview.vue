@@ -1,7 +1,7 @@
 <template>
   <a-card title="Preview" size="small">
     <template slot="extra">
-      <a-button type="primary" icon="copy"> Copy </a-button>
+      <a-button disabled type="primary" icon="copy"> Copy </a-button>
       <a-button
         :loading="loading"
         type="primary"
