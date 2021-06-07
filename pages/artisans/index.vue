@@ -15,7 +15,7 @@
             :lg="6"
             :xl="4"
           >
-            <maker-card theme="twoTone" :maker="maker" />
+            <maker-card :favorite="true" :maker="maker" />
           </a-col>
         </a-row>
 
@@ -32,7 +32,7 @@
             :lg="6"
             :xl="4"
           >
-            <maker-card theme="outlined" :maker="maker" />
+            <maker-card :maker="maker" />
           </a-col>
         </a-row>
       </div>
@@ -57,16 +57,16 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .artisan-container {
   margin: 0 auto;
   min-height: 100vh;
   text-align: center;
   max-width: 1600px;
-}
 
-/** remove this if all maker had cover/logo */
-.artisan-container .ant-card {
-  height: 100%;
+  /** remove this if all maker had cover/logo */
+  .ant-card {
+    height: 100%;
+  }
 }
 </style>

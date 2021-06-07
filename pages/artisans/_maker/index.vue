@@ -102,23 +102,23 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .maker-container {
   margin: 0 auto;
   min-height: 100vh;
   text-align: center;
   max-width: 1600px;
-}
 
-.maker-container .ant-card-cover {
-  height: 250px;
-  overflow: hidden;
-}
+  .ant-card-cover {
+    height: 250px;
+    overflow: hidden;
 
-.maker-container .ant-card-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
 }
 
 .discord-icon {

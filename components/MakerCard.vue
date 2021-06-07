@@ -4,8 +4,7 @@
       <a-icon
         slot="extra"
         type="star"
-        :theme="theme"
-        two-tone-color="#eb2f96"
+        :class="favorite ? 'favorite-maker' : ''"
         @click="
           (e) => {
             e.preventDefault()
@@ -26,7 +25,7 @@
 <script>
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['maker', 'theme'],
+  props: ['maker', 'favorite'],
   methods: {
     addFavoriteMaker(slug) {
       this.$store.dispatch('artisans/updateFavoriteMakers', slug)
@@ -34,3 +33,11 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.anticon-star {
+  &.favorite-maker {
+    color: #eb2f96;
+  }
+}
+</style>

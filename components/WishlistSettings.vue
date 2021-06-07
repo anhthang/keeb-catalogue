@@ -113,7 +113,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .ant-input-number {
   width: 100%;
 }
