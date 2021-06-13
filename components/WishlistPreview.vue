@@ -216,7 +216,7 @@ export default {
           isPriority: false,
           legendColor: 'Crimson',
         })),
-        tradeCaps: this.wishlistSettings.wantToTrade
+        tradeCaps: this.wishlistSettings.want_to_trade
           ? Object.values(tradeList).map((i) => ({
               id: i.id,
               isPriority: false,
