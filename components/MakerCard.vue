@@ -33,11 +33,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.anticon-star {
-  &.favorite-maker {
-    color: #eb2f96;
-  }
-}
-</style>

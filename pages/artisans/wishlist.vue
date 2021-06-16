@@ -27,24 +27,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.wishlist {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  max-width: 1600px;
-
-  .ant-card-cover {
-    height: 250px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-}
-</style>

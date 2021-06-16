@@ -1,7 +1,10 @@
 <template>
   <div class="right-header">
     <a-dropdown>
-      <a-avatar :src="user.avatar" />
+      <div>
+        <a-avatar :src="user.avatar" />
+        {{ user.name }}
+      </div>
       <a-menu slot="overlay">
         <a-menu-item>
           <span @click="loginWithGoogle">

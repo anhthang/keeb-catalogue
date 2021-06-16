@@ -1,5 +1,5 @@
 <template>
-  <div class="maker-container">
+  <div class="container maker-container">
     <a-page-header
       :title="makerInfo.name"
       :avatar="{
@@ -100,32 +100,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.maker-container {
-  margin: 0 auto;
-  min-height: 100vh;
-  text-align: center;
-  max-width: 1600px;
-
-  .ant-card-cover {
-    height: 250px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-}
-
-.discord-icon {
-  font-size: 16px;
-  vertical-align: middle;
-}
-
-.ant-spin-nested-loading {
-  min-height: 300px;
-}
-</style>

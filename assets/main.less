@@ -2,8 +2,13 @@
 
 @import 'ant-design-vue/dist/antd.less';
 
-body {
-  font-family: 'Dosis', sans-serif;
+@font-family: 'Dosis', sans-serif;
+
+
+/* Below style applied for both light & dark */
+
+.right-header {
+  color: @text-color-dark; // as we are using dark theme for navbar
 }
 
 #components-layout-demo-top .logo {
@@ -13,3 +18,92 @@ body {
   margin: 16px 24px 16px 0;
   float: left;
 }
+
+.container {
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1600px;
+
+  /* text-align: center;
+  justify-content: center;
+  align-items: center; */
+}
+
+.artisan-container {
+  text-align: center;
+  flex-direction: initial;
+
+  /** remove this if all maker had cover/logo */
+  .ant-card {
+    height: 100%;
+  }
+}
+
+.maker-container {
+  text-align: center;
+
+  .ant-card-cover {
+    height: 250px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.discord-icon {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.ant-spin-nested-loading {
+  min-height: 300px;
+}
+
+.anticon-star {
+  &.favorite-maker {
+    color: #eb2f96;
+  }
+}
+
+.ant-input-number {
+  width: 100%;
+}
+
+.ant-layout-header {
+  display: flex;
+  .ant-menu {
+    flex: 1;
+  }
+}
+
+.wishlist {
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1600px;
+
+  .ant-card-cover {
+    height: 250px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-preview {
+    .ant-card-head-title {
+      text-align: center;
+    }
+  }
+}
+

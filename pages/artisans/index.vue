@@ -1,5 +1,5 @@
 <template>
-  <div class="artisan-container">
+  <div class="container artisan-container">
     <a-page-header title="Artisan Makers">
       <div>
         <a-divider v-if="favorite.length" orientation="left">
@@ -55,17 +55,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.artisan-container {
-  margin: 0 auto;
-  min-height: 100vh;
-  text-align: center;
-  max-width: 1600px;
-
-  /** remove this if all maker had cover/logo */
-  .ant-card {
-    height: 100%;
-  }
-}
-</style>

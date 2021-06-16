@@ -65,12 +65,3 @@
     </a-layout-footer>
   </a-layout>
 </template>
-
-<style lang="less">
-.ant-layout-header {
-  display: flex;
-  .ant-menu {
-    flex: 1;
-  }
-}
-</style>

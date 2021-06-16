@@ -247,11 +247,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.wishlist-preview {
-  .ant-card-head-title {
-    text-align: center;
-  }
-}
-</style>

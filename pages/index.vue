@@ -27,17 +27,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  max-width: 1600px;
-
-  /* text-align: center;
-  justify-content: center;
-  align-items: center; */
-}
-</style>
