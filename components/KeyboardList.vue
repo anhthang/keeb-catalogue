@@ -9,7 +9,7 @@
         <template slot="actions">
           <span key="user">
             <a-icon type="user" />
-            <nuxt-link :to="`/maker/${item.Maker.toLowerCase()}`">
+            <nuxt-link :to="`/keebs/${item.Maker.toLowerCase()}`">
               {{ item.Maker }}
             </nuxt-link>
           </span>

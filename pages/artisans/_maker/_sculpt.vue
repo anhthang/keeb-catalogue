@@ -1,5 +1,5 @@
 <template>
-  <div class="maker-container">
+  <div class="container maker-container">
     <a-page-header :title="sculptInfo.name">
       <template slot="extra">
         <a-button key="1" disabled icon="file-add" type="primary">

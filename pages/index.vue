@@ -1,28 +1,14 @@
 <template>
-  <div class="container">
-    <a-page-header>
-      <SubmitNewKeyboard slot="extra" />
-      <KeyboardList />
-    </a-page-header>
-  </div>
+  <a-page-header title="Calendar" class="container">
+    <a-calendar @panelChange="onPanelChange" />
+  </a-page-header>
 </template>
 
 <script>
 export default {
-  asyncData({ query }) {
-    return {
-      ...query,
-    }
-  },
-  watchQuery({ status }) {
-    this.boardByStatus(status)
-  },
-  mounted() {
-    this.boardByStatus(this.status)
-  },
   methods: {
-    boardByStatus(status) {
-      this.$store.dispatch('filterByStatus', status)
+    onPanelChange(value, mode) {
+      // console.log(value, mode)
     },
   },
 }
