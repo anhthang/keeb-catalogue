@@ -2,7 +2,7 @@
   <a-layout id="components-layout-demo-top" class="layout">
     <a-layout-header>
       <nuxt-link to="/">
-        <div class="logo" />
+        <div class="logo">Keeb Catalogue</div>
       </nuxt-link>
       <a-menu
         theme="dark"
