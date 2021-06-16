@@ -15,25 +15,47 @@
             <a-icon type="calendar" />Calendar
           </nuxt-link>
         </a-menu-item>
-        <a-menu-item key="2">
-          <nuxt-link to="/?status=live">
-            <a-icon type="forward" />Live GBs
-          </nuxt-link>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <nuxt-link to="/?status=ic">
-            <a-icon type="question-circle" />Interest Check
-          </nuxt-link>
-        </a-menu-item>
-        <a-menu-item key="4">
-          <nuxt-link to="/?status=closed">
-            <a-icon type="backward" />Previous GBs
-          </nuxt-link>
-        </a-menu-item>
-        <a-menu-item key="5">
-          <nuxt-link to="/artisans"><a-icon type="link" /> Artisans </nuxt-link>
-        </a-menu-item>
+
+        <a-sub-menu key="2">
+          <span slot="title"><a-icon type="desktop" /> Keebs</span>
+          <a-menu-item key="3">
+            <nuxt-link to="/?status=live">
+              <a-icon type="forward" />Live GBs
+            </nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="4">
+            <nuxt-link to="/?status=ic">
+              <a-icon type="question-circle" />Interest Check
+            </nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="5">
+            <nuxt-link to="/?status=closed">
+              <a-icon type="backward" />Previous GBs
+            </nuxt-link>
+          </a-menu-item>
+        </a-sub-menu>
+
+        <a-sub-menu key="6">
+          <span slot="title"><a-icon type="user" /> Artisans </span>
+          <a-menu-item key="7">
+            <nuxt-link to="/artisans">
+              <a-icon type="user-add" />Makers
+            </nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="8">
+            <nuxt-link to="/artisans/collection">
+              <a-icon type="book" />Collection
+            </nuxt-link>
+          </a-menu-item>
+          <a-menu-item key="9">
+            <nuxt-link to="/artisans/wishlist">
+              <a-icon type="shopping-cart" />Wishlist
+            </nuxt-link>
+          </a-menu-item>
+        </a-sub-menu>
       </a-menu>
+
+      <right-header />
     </a-layout-header>
     <a-layout-content>
       <Nuxt />
@@ -43,3 +65,12 @@
     </a-layout-footer>
   </a-layout>
 </template>
+
+<style lang="less">
+.ant-layout-header {
+  display: flex;
+  .ant-menu {
+    flex: 1;
+  }
+}
+</style>

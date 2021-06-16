@@ -66,7 +66,6 @@ import { mapState } from 'vuex'
 import DiscordSvg from '@/components/DiscordSvg'
 
 export default {
-  layout: 'artisan',
   asyncData({ params }) {
     return {
       ...params,

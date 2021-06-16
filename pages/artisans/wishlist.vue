@@ -16,7 +16,6 @@ import { mapMutations } from 'vuex'
 import { WISHLIST_SETTINGS } from '@/constants'
 
 export default {
-  layout: 'artisan',
   fetch() {
     const json = JSON.parse(localStorage.getItem(WISHLIST_SETTINGS))
     if (json?.caps_per_line) {

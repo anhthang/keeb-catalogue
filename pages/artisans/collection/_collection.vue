@@ -53,7 +53,6 @@ import { keyBy } from 'lodash'
 import { COLLECTIONS } from '@/constants'
 
 export default {
-  layout: 'artisan',
   asyncData({ params }) {
     const collections = JSON.parse(localStorage.getItem(`${COLLECTIONS}`)) || []
     const collection = collections.find((c) => c.slug === params.collection)

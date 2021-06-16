@@ -9,6 +9,10 @@ export const state = () => {
     },
     keyboards,
     keebs: keyboards,
+    user: {
+      avatar: '',
+      name: '',
+    },
   }
 }
 
@@ -29,5 +33,8 @@ export const mutations = {
     state.keyboards = state.keebs.filter(
       (k) => k.Status.toLowerCase() === status
     )
+  },
+  SET_USER(state, user) {
+    state.user = user
   },
 }

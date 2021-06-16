@@ -83,7 +83,6 @@ import { sortBy } from 'lodash'
 import { COLLECTIONS } from '@/constants'
 
 export default {
-  layout: 'artisan',
   asyncData({ params }) {
     return {
       ...params,

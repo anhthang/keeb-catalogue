@@ -48,7 +48,6 @@ import { sample } from 'lodash'
 import slugify from 'slugify'
 
 export default {
-  layout: 'artisan',
   data() {
     return {
       visible: false,

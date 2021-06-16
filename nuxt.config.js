@@ -41,6 +41,8 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://firebase.nuxtjs.org
+    '@nuxtjs/firebase',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -50,6 +52,22 @@ export default {
   pwa: {
     manifest: {
       lang: 'en',
+    },
+  },
+
+  // Firebase module configuration: https://firebase.nuxtjs.org
+  firebase: {
+    config: {
+      apiKey: process.env.API_KEY,
+      authDomain: process.env.AUTH_DOMAIN,
+      projectId: process.env.PROJECT_ID,
+      storageBucket: process.env.STORAGE_BUCKET,
+      messagingSenderId: process.env.MESSAGING_SENDER_ID,
+      appId: process.env.APP_ID,
+      measurementId: process.env.MEASUREMENT_ID,
+    },
+    services: {
+      auth: true,
     },
   },
 

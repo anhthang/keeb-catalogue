@@ -44,7 +44,6 @@
 import { mapState } from 'vuex'
 
 export default {
-  layout: 'artisan',
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     favorite() {
