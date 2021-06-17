@@ -57,7 +57,7 @@ export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['visible', 'onClose', 'keyboard'],
   computed: {
-    ...mapState(['statusMap']),
+    ...mapState('keebs', ['statusMap']),
   },
 }
 </script>

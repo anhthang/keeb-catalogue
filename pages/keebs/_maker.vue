@@ -17,10 +17,10 @@ export default {
     }
   },
   fetch() {
-    this.$store.dispatch('filterByMaker', this.maker)
+    this.$store.dispatch('keebs/filterByMaker', this.maker)
   },
   computed: {
-    ...mapState(['statusMap']),
+    ...mapState('keebs', ['statusMap']),
   },
 }
 </script>

@@ -66,7 +66,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['statusMap', 'keyboards']),
+    ...mapState('keebs', ['statusMap', 'keyboards']),
   },
   methods: {
     showDrawer(item) {
