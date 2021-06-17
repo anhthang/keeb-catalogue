@@ -67,7 +67,12 @@ export default {
       measurementId: process.env.MEASUREMENT_ID,
     },
     services: {
-      auth: true,
+      auth: {
+        initialize: {
+          onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+        },
+      },
+      firestore: true,
     },
   },
 

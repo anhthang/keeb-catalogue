@@ -9,10 +9,7 @@ export const state = () => {
     },
     keyboards,
     keebs: keyboards,
-    user: {
-      avatar: '',
-      name: '',
-    },
+    user: {},
   }
 }
 
@@ -34,7 +31,14 @@ export const mutations = {
       (k) => k.Status.toLowerCase() === status
     )
   },
-  SET_USER(state, user) {
-    state.user = user
+  ON_AUTH_STATE_CHANGED_MUTATION: (state, { authUser, claims }) => {
+    if (!authUser) {
+      state.user = {}
+      // claims = null
+      // perform logout operations
+    } else {
+      const { uid, email, emailVerified, displayName, photoURL } = authUser
+      state.user = { uid, email, emailVerified, displayName, photoURL }
+    }
   },
 }

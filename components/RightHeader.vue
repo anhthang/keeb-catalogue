@@ -2,11 +2,11 @@
   <div class="right-header">
     <a-dropdown>
       <div>
-        <a-avatar :src="user.avatar" />
-        {{ user.name }}
+        <a-avatar :src="user.photoURL" />
+        {{ user.displayName }}
       </div>
       <a-menu slot="overlay">
-        <a-menu-item v-if="!user.avatar">
+        <a-menu-item v-if="!user.photoURL">
           <span @click="loginWithGoogle">
             <a-icon type="google" /> Login with Google
           </span>
@@ -20,26 +20,19 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   computed: {
     ...mapState(['user']),
   },
   methods: {
-    ...mapMutations(['SET_USER']),
     async loginWithGoogle() {
       const google = new this.$fireModule.auth.GoogleAuthProvider()
       await this.$fireModule
         .auth()
         .signInWithPopup(google)
         .then(({ credential, user }) => {
-          this.SET_USER({
-            avatar: user.photoURL,
-            name: user.displayName,
-            token: credential.accessToken,
-          })
-
           this.$message.success(
             `Hello, ${user.displayName}. You successfully logged into this website.`
           )
@@ -53,11 +46,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          this.SET_USER({
-            avatar: '',
-            name: '',
-          })
-
+          this.$message.success('You have been logged out successfully.')
           this.$router.push('/')
         })
         .catch((err) => {
