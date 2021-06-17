@@ -6,13 +6,13 @@
         {{ user.name }}
       </div>
       <a-menu slot="overlay">
-        <a-menu-item>
+        <a-menu-item v-if="!user.avatar">
           <span @click="loginWithGoogle">
             <a-icon type="google" /> Login with Google
           </span>
         </a-menu-item>
-        <a-menu-item>
-          <a href="javascript:;"> Logout </a>
+        <a-menu-item v-else>
+          <span @click="logout"><a-icon type="logout" /> Logout </span>
         </a-menu-item>
       </a-menu>
     </a-dropdown>
@@ -29,13 +29,40 @@ export default {
   methods: {
     ...mapMutations(['SET_USER']),
     async loginWithGoogle() {
-      const provider = new this.$fireModule.auth.GoogleAuthProvider()
-      const { user } = await this.$fireModule.auth().signInWithPopup(provider)
+      const google = new this.$fireModule.auth.GoogleAuthProvider()
+      await this.$fireModule
+        .auth()
+        .signInWithPopup(google)
+        .then(({ credential, user }) => {
+          this.SET_USER({
+            avatar: user.photoURL,
+            name: user.displayName,
+            token: credential.accessToken,
+          })
 
-      this.SET_USER({
-        avatar: user.photoURL,
-        name: user.displayName,
-      })
+          this.$message.success(
+            `Hello, ${user.displayName}. You successfully logged into this website.`
+          )
+        })
+        .catch((err) => {
+          this.$message.warning(err.message)
+        })
+    },
+    async logout() {
+      await this.$fireModule
+        .auth()
+        .signOut()
+        .then(() => {
+          this.SET_USER({
+            avatar: '',
+            name: '',
+          })
+
+          this.$router.push('/')
+        })
+        .catch((err) => {
+          this.$message.error(err.message)
+        })
     },
   },
 }

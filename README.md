@@ -2,7 +2,7 @@
 Building a catalog for mechanical keyboard community
 
 ## TODO
-- Sign-in by Google or passwordless
+- Fix dark mode
 
 ### Keyboard
 - Layout view
