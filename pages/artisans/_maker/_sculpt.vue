@@ -80,7 +80,6 @@
 <script>
 import { mapState } from 'vuex'
 import { sortBy } from 'lodash'
-import { COLLECTIONS } from '@/constants'
 
 export default {
   asyncData({ params }) {
@@ -94,7 +93,6 @@ export default {
       sortIcon: 'clock-circle',
       sculptInfo: {},
       loading: true,
-      collections: [],
     }
   },
   async fetch() {
@@ -107,7 +105,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('artisans', ['database']),
+    ...mapState('artisans', ['database', 'collections']),
+    ...mapState(['user']),
     colorways() {
       return this.sort === 'name'
         ? sortBy(this.sculptInfo.colorways, 'name')
@@ -123,21 +122,29 @@ export default {
     },
   },
   beforeMount() {
-    this.collections = JSON.parse(localStorage.getItem(COLLECTIONS)) || []
+    this.$store.dispatch('artisans/getUserCollections', this.user.uid)
   },
   methods: {
     addToCollection(collection, clw) {
-      const key = `${COLLECTIONS}_${collection.slug}`
-      const list = JSON.parse(localStorage.getItem(key)) || {}
-      if (!list[clw.id]) {
-        list[clw.id] = {
-          ...clw,
-          sculpt_name: this.sculptInfo.name,
-        }
-      }
-
-      localStorage.setItem(key, JSON.stringify(list))
-      this.$message.success(`Added ${clw.name} to ${collection.name}`)
+      this.$fire.firestore
+        .collection(`artisans/${this.user.uid}/collections`)
+        .doc(collection.slug)
+        .update({
+          [clw.id]: {
+            id: clw.id,
+            name: clw.name,
+            img: clw.img,
+            sculpt_name: this.sculptInfo.name,
+          },
+        })
+        .then(() => {
+          this.$message.success(
+            `Successfully added ${clw.name} to the collection!`
+          )
+        })
+        .catch((e) => {
+          this.$message.error('Error adding sculpt to collection: ', e.message)
+        })
     },
     onChangeSortType(e) {
       this.sort = e.key

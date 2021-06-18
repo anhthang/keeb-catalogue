@@ -1,6 +1,6 @@
 <template>
   <div class="container maker-container">
-    <a-page-header :title="name">
+    <a-page-header :title="collection">
       <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
         Add
       </a-button>
@@ -49,30 +49,31 @@
 
 <script>
 import { mapState } from 'vuex'
-import { keyBy } from 'lodash'
-import { COLLECTIONS } from '@/constants'
 
 export default {
   asyncData({ params }) {
-    const collections = JSON.parse(localStorage.getItem(`${COLLECTIONS}`)) || []
-    const collection = collections.find((c) => c.slug === params.collection)
-
-    const colorways =
-      JSON.parse(localStorage.getItem(`${COLLECTIONS}_${params.collection}`)) ||
-      {}
     return {
       ...params,
-      name: collection.name,
-      collections: Object.values(colorways),
     }
   },
   data() {
     return {
       visible: false,
+      collections: [],
     }
+  },
+  async fetch() {
+    const doc = await this.$fire.firestore
+      .collection(`artisans/${this.user.uid}/collections`)
+      .doc(this.collection)
+      .get()
+      .then((doc) => doc.data())
+
+    this.collections = Object.values(doc || {})
   },
   computed: {
     ...mapState('artisans', ['addToCollectionItems']),
+    ...mapState(['user']),
     selectedIds() {
       return this.collections.map((c) => c.id)
     },
@@ -84,18 +85,23 @@ export default {
     showModal() {
       this.visible = !this.visible
     },
-    updateLocalStorage() {
-      const key = `${COLLECTIONS}_${this.collection}`
-      const value = keyBy(this.collections, 'id')
-
-      localStorage.setItem(key, JSON.stringify(value))
-    },
     removeCap(clw) {
       this.collections = this.collections.filter((c) => c.id !== clw.id)
 
-      this.updateLocalStorage()
+      const docRef = this.$fire.firestore
+        .collection(`artisans/${this.user.uid}/collections`)
+        .doc(this.collection)
 
-      this.$message.success(`${clw.name} removed from the collection`)
+      docRef
+        .update({
+          [clw.id]: this.$fireModule.firestore.FieldValue.delete(),
+        })
+        .then(() => {
+          this.$message.success(`${clw.name} removed from the collection`)
+        })
+        .catch((err) => {
+          this.$message.error(err.message)
+        })
     },
     async addToCollection(value) {
       const caps = await this.$store.dispatch(
@@ -104,8 +110,6 @@ export default {
       )
 
       this.collections.push(...caps)
-
-      this.updateLocalStorage()
 
       this.visible = false
     },

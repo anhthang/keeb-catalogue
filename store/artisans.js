@@ -1,5 +1,5 @@
 import * as qs from 'querystring'
-import { sortBy, sample, keyBy } from 'lodash'
+import { sortBy, sample, keyBy, cloneDeep } from 'lodash'
 import slugify from 'slugify'
 import { FAVORITE_MAKERS } from '@/constants'
 import makers from '@/assets/makers.json'
@@ -8,6 +8,7 @@ export const state = () => {
   return {
     makers,
     database: {},
+    collections: [],
     favoriteMakers: JSON.parse(localStorage.getItem(FAVORITE_MAKERS)) || [],
     addToCollectionItems: [],
     wishlistSettings: {
@@ -74,6 +75,51 @@ export const actions = {
     localStorage.setItem(FAVORITE_MAKERS, JSON.stringify(favoriteMakers))
     commit('FAVORITE_MAKERS', favoriteMakers)
   },
+  getUserCollections({ commit }, uid) {
+    this.$fire.firestore
+      .collection('artisans')
+      .doc(uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          commit('USER_COLLECTIONS', doc.data().collections)
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!')
+        }
+      })
+  },
+  // getUserCollection({ commit }, { uid, collection }) {
+  //   this.$fire.firestore
+  //     .collection(`artisans/${uid}/collections`)
+  //     .doc(collection)
+  //     .get()
+  //     .then((doc) => {
+  //       console.log(doc.id, ' => ', doc.data())
+  //     })
+  // },
+
+  // getDocumentsInCollection({ commit }, uid) {
+  //   this.$fire.firestore
+  //     .collection(`artisans/${uid}/collections`)
+  //     .get()
+  //     .then((snapshots) => {
+  //       snapshots.forEach((doc) => {
+  //         console.log(doc.id, ' => ', doc.data())
+  //       })
+  //     })
+  // },
+  addCollection({ commit, state }, data) {
+    const collections = cloneDeep(state.collections)
+    collections.push(data)
+
+    commit('USER_COLLECTIONS', collections)
+  },
+  delCollection({ commit, state }, slug) {
+    const collections = state.collections.filter((c) => c.slug !== slug)
+
+    commit('USER_COLLECTIONS', collections)
+  },
 }
 
 export const mutations = {
@@ -88,5 +134,8 @@ export const mutations = {
   },
   ADD_TO_COLLECTION(state, data) {
     state.addToCollectionItems = data
+  },
+  USER_COLLECTIONS(state, data) {
+    state.collections = data
   },
 }

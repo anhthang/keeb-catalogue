@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { COLLECTIONS } from '@/constants'
 import { sample } from 'lodash'
 import slugify from 'slugify'
@@ -52,27 +53,18 @@ export default {
     return {
       visible: false,
       collectionName: undefined,
-      collections: [],
     }
   },
+  computed: {
+    ...mapState('artisans', ['collections']),
+    ...mapState(['user']),
+  },
   beforeMount() {
-    this.collections = JSON.parse(localStorage.getItem(COLLECTIONS)) || []
+    this.$store.dispatch('artisans/getUserCollections', this.user.uid)
   },
   methods: {
     showModal() {
       this.visible = true
-    },
-    addCollection() {
-      const slug = slugify(this.collectionName, { lower: true })
-      if (!this.collections.includes(this.collectionName)) {
-        this.collections.push({ name: this.collectionName, slug })
-
-        localStorage.setItem(COLLECTIONS, JSON.stringify(this.collections))
-        localStorage.setItem(`${COLLECTIONS}_${slug}`, JSON.stringify({}))
-        this.visible = false
-
-        this.$message.success('Added new collection')
-      }
     },
     getPreviewImg(slug) {
       const storage = JSON.parse(localStorage.getItem(`${COLLECTIONS}_${slug}`))
@@ -81,13 +73,53 @@ export default {
         'https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png'
       )
     },
+    addCollection() {
+      const slug = slugify(this.collectionName, { lower: true })
+
+      const isExist = this.collections.some((c) => c.slug === slug)
+      if (isExist) {
+        this.$message.error('Collection already exist.')
+        return
+      }
+
+      this.$store.dispatch('artisans/addCollection', {
+        name: this.collectionName,
+        slug,
+      })
+
+      this.$fire.firestore.collection('artisans').doc(this.user.uid).update({
+        collections: this.collections,
+      })
+
+      this.$fire.firestore
+        .collection(`artisans/${this.user.uid}/collections`)
+        .doc(slug)
+        .set({})
+        .then(() => {
+          this.$message.success('Collection successfully added!')
+          this.visible = false
+        })
+        .catch((error) => {
+          this.$message.error('Error adding collection: ', error.message)
+        })
+    },
     delCollection(slug) {
-      localStorage.removeItem(`${COLLECTIONS}_${slug}`)
+      this.$store.dispatch('artisans/delCollection', slug)
 
-      this.$message.success('Collection deleted')
+      this.$fire.firestore.collection('artisans').doc(this.user.uid).update({
+        collections: this.collections,
+      })
 
-      this.collections = this.collections.filter((n) => n.slug !== slug)
-      localStorage.setItem(COLLECTIONS, JSON.stringify(this.collections))
+      this.$fire.firestore
+        .collection(`artisans/${this.user.uid}/collections`)
+        .doc(slug)
+        .delete()
+        .then(() => {
+          this.$message.success('Collection successfully deleted!')
+        })
+        .catch((error) => {
+          this.$message.error('Error removing collection: ', error.message)
+        })
     },
   },
 }
