@@ -59,9 +59,6 @@ export default {
     ...mapState('artisans', ['collections']),
     ...mapState(['user']),
   },
-  beforeMount() {
-    this.$store.dispatch('artisans/getUserCollections', this.user.uid)
-  },
   methods: {
     showModal() {
       this.visible = true

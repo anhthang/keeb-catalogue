@@ -71,7 +71,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import DiscordSvg from '@/components/DiscordSvg'
-import { COLLECTIONS, WISHLIST_SETTINGS } from '@/constants'
+import { WISHLIST_SETTINGS } from '@/constants'
 
 export default {
   data() {
@@ -79,14 +79,13 @@ export default {
       DiscordSvg,
       wantToTrade: false,
       settings: {},
-      collections: [],
     }
   },
   fetch() {
     this.settings = this.wishlistSettings
   },
   computed: {
-    ...mapState('artisans', ['wishlistSettings']),
+    ...mapState('artisans', ['wishlistSettings', 'collections']),
   },
   watch: {
     settings: {
@@ -95,9 +94,6 @@ export default {
       },
       deep: true,
     },
-  },
-  beforeMount() {
-    this.collections = JSON.parse(localStorage.getItem(COLLECTIONS)) || []
   },
   methods: {
     ...mapMutations('artisans', ['WISHLIST_SETTINGS']),

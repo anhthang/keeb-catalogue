@@ -1,15 +1,13 @@
 import * as qs from 'querystring'
-import { sortBy, sample, keyBy, cloneDeep } from 'lodash'
+import { sortBy, sample, keyBy } from 'lodash'
 import slugify from 'slugify'
-import { FAVORITE_MAKERS } from '@/constants'
-import makers from '@/assets/makers.json'
 
 export const state = () => {
   return {
-    makers,
+    makers: [],
     database: {},
     collections: [],
-    favoriteMakers: JSON.parse(localStorage.getItem(FAVORITE_MAKERS)) || [],
+    favoriteMakers: [],
     addToCollectionItems: [],
     wishlistSettings: {
       caps_per_line: 4,
@@ -64,7 +62,7 @@ export const actions = {
       `http://localhost:4000/keycaps?${qs.stringify({ id })}`
     ).then((res) => res.json())
   },
-  updateFavoriteMakers({ commit, state }, name) {
+  async updateFavoriteMakers({ commit, state }, { name, uid }) {
     let favoriteMakers = [...state.favoriteMakers]
     if (!favoriteMakers.includes(name)) {
       favoriteMakers.push(name)
@@ -72,45 +70,49 @@ export const actions = {
       favoriteMakers = favoriteMakers.filter((i) => i !== name)
     }
 
-    localStorage.setItem(FAVORITE_MAKERS, JSON.stringify(favoriteMakers))
-    commit('FAVORITE_MAKERS', favoriteMakers)
+    await this.$fire.firestore
+      .collection('artisans')
+      .doc(uid)
+      .update({
+        makers: favoriteMakers,
+      })
+      .then(() => {
+        commit('FAVORITE_MAKERS', favoriteMakers)
+      })
   },
-  getUserCollections({ commit }, uid) {
+  getArtisanMakers({ commit }) {
+    // eslint-disable-next-line no-console
+    console.log('getting artisan makers')
+    this.$fire.firestore
+      .collection('artisan-makers')
+      .get()
+      .then((snapshots) => {
+        const makers = []
+        snapshots.forEach((doc) => {
+          makers.push(doc.data())
+        })
+
+        commit('ARTISAN_MAKERS', makers)
+      })
+  },
+  getUserDocument({ commit }, uid) {
+    // eslint-disable-next-line no-console
+    console.log('getting user document', uid)
     this.$fire.firestore
       .collection('artisans')
       .doc(uid)
       .get()
       .then((doc) => {
         if (doc.exists) {
-          commit('USER_COLLECTIONS', doc.data().collections)
+          commit('USER_DOCUMENT', doc.data())
         } else {
           // doc.data() will be undefined in this case
-          console.log('No such document!')
         }
       })
   },
-  // getUserCollection({ commit }, { uid, collection }) {
-  //   this.$fire.firestore
-  //     .collection(`artisans/${uid}/collections`)
-  //     .doc(collection)
-  //     .get()
-  //     .then((doc) => {
-  //       console.log(doc.id, ' => ', doc.data())
-  //     })
-  // },
 
-  // getDocumentsInCollection({ commit }, uid) {
-  //   this.$fire.firestore
-  //     .collection(`artisans/${uid}/collections`)
-  //     .get()
-  //     .then((snapshots) => {
-  //       snapshots.forEach((doc) => {
-  //         console.log(doc.id, ' => ', doc.data())
-  //       })
-  //     })
-  // },
   addCollection({ commit, state }, data) {
-    const collections = cloneDeep(state.collections)
+    const collections = [...state.collections]
     collections.push(data)
 
     commit('USER_COLLECTIONS', collections)
@@ -123,6 +125,9 @@ export const actions = {
 }
 
 export const mutations = {
+  ARTISAN_MAKERS(state, makers) {
+    state.makers = makers
+  },
   MAKER_DB(state, data) {
     state.database[data.maker.slug] = data
   },
@@ -134,6 +139,10 @@ export const mutations = {
   },
   ADD_TO_COLLECTION(state, data) {
     state.addToCollectionItems = data
+  },
+  USER_DOCUMENT(state, data) {
+    state.collections = data.collections
+    state.favoriteMakers = data.makers
   },
   USER_COLLECTIONS(state, data) {
     state.collections = data

@@ -23,12 +23,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['maker', 'favorite'],
+  computed: {
+    ...mapState(['user']),
+  },
   methods: {
-    addFavoriteMaker(slug) {
-      this.$store.dispatch('artisans/updateFavoriteMakers', slug)
+    addFavoriteMaker(name) {
+      this.$store.dispatch('artisans/updateFavoriteMakers', {
+        name,
+        uid: this.user.uid,
+      })
     },
   },
 }

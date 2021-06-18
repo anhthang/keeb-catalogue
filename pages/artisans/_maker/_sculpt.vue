@@ -121,9 +121,6 @@ export default {
       this.sculptInfo = this.database[this.maker].sculpts[this.sculpt]
     },
   },
-  beforeMount() {
-    this.$store.dispatch('artisans/getUserCollections', this.user.uid)
-  },
   methods: {
     addToCollection(collection, clw) {
       this.$fire.firestore

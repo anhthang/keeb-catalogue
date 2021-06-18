@@ -46,12 +46,17 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
+    ...mapState(['user']),
     favorite() {
       return this.makers.filter((m) => this.favoriteMakers.includes(m.slug))
     },
     otherMakers() {
       return this.makers.filter((m) => !this.favoriteMakers.includes(m.slug))
     },
+  },
+  beforeMount() {
+    this.$store.dispatch('artisans/getArtisanMakers')
+    this.$store.dispatch('artisans/getUserDocument', this.user.uid)
   },
 }
 </script>
