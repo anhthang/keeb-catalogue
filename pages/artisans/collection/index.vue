@@ -84,12 +84,12 @@ export default {
         slug,
       })
 
-      this.$fire.firestore.collection('artisans').doc(this.user.uid).update({
+      this.$fire.firestore.collection('users').doc(this.user.uid).update({
         collections: this.collections,
       })
 
       this.$fire.firestore
-        .collection(`artisans/${this.user.uid}/collections`)
+        .collection(`users/${this.user.uid}/collections`)
         .doc(slug)
         .set({})
         .then(() => {
@@ -103,12 +103,12 @@ export default {
     delCollection(slug) {
       this.$store.dispatch('artisans/delCollection', slug)
 
-      this.$fire.firestore.collection('artisans').doc(this.user.uid).update({
+      this.$fire.firestore.collection('users').doc(this.user.uid).update({
         collections: this.collections,
       })
 
       this.$fire.firestore
-        .collection(`artisans/${this.user.uid}/collections`)
+        .collection(`users/${this.user.uid}/collections`)
         .doc(slug)
         .delete()
         .then(() => {

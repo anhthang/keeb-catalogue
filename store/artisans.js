@@ -71,7 +71,7 @@ export const actions = {
     }
 
     await this.$fire.firestore
-      .collection('artisans')
+      .collection('users')
       .doc(rootState.user.uid)
       .update({
         makers: favoriteMakers,
@@ -102,7 +102,7 @@ export const actions = {
     // eslint-disable-next-line no-console
     console.log('getting user document', uid)
     this.$fire.firestore
-      .collection('artisans')
+      .collection('users')
       .doc(uid)
       .get()
       .then((doc) => {
@@ -144,8 +144,8 @@ export const mutations = {
     state.addToCollectionItems = data
   },
   USER_DOCUMENT(state, data) {
-    state.collections = data.collections
-    state.favoriteMakers = data.makers
+    state.collections = data.collections || []
+    state.favoriteMakers = data.makers || []
   },
   USER_COLLECTIONS(state, data) {
     state.collections = data

@@ -124,7 +124,7 @@ export default {
   methods: {
     addToCollection(collection, clw) {
       this.$fire.firestore
-        .collection(`artisans/${this.user.uid}/collections`)
+        .collection(`users/${this.user.uid}/collections`)
         .doc(collection.slug)
         .update({
           [clw.id]: {

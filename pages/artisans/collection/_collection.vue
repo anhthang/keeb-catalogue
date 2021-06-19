@@ -64,7 +64,7 @@ export default {
   },
   async fetch() {
     const doc = await this.$fire.firestore
-      .collection(`artisans/${this.user.uid}/collections`)
+      .collection(`users/${this.user.uid}/collections`)
       .doc(this.collection)
       .get()
       .then((doc) => doc.data())
@@ -89,7 +89,7 @@ export default {
       this.collections = this.collections.filter((c) => c.id !== clw.id)
 
       const docRef = this.$fire.firestore
-        .collection(`artisans/${this.user.uid}/collections`)
+        .collection(`users/${this.user.uid}/collections`)
         .doc(this.collection)
 
       docRef
