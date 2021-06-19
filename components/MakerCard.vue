@@ -2,6 +2,7 @@
   <nuxt-link :to="`/artisans/${maker.slug}`">
     <a-card hoverable :title="maker.name">
       <a-icon
+        v-if="user && user.uid"
         slot="extra"
         type="star"
         :class="favorite ? 'favorite-maker' : ''"
@@ -33,10 +34,7 @@ export default {
   },
   methods: {
     addFavoriteMaker(name) {
-      this.$store.dispatch('artisans/updateFavoriteMakers', {
-        name,
-        uid: this.user.uid,
-      })
+      this.$store.dispatch('artisans/updateFavoriteMakers', name)
     },
   },
 }

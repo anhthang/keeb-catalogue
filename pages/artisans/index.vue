@@ -46,7 +46,6 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
-    ...mapState(['user']),
     favorite() {
       return this.makers.filter((m) => this.favoriteMakers.includes(m.slug))
     },
@@ -56,7 +55,7 @@ export default {
   },
   beforeMount() {
     this.$store.dispatch('artisans/getArtisanMakers')
-    this.$store.dispatch('artisans/getUserDocument', this.user.uid)
+    this.$store.dispatch('artisans/getUserDocument')
   },
 }
 </script>

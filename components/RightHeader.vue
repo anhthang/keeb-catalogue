@@ -42,8 +42,7 @@ export default {
         })
     },
     async logout() {
-      await this.$fireModule
-        .auth()
+      await this.$fire.auth
         .signOut()
         .then(() => {
           this.$message.success('You have been logged out successfully.')

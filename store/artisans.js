@@ -62,7 +62,7 @@ export const actions = {
       `http://localhost:4000/keycaps?${qs.stringify({ id })}`
     ).then((res) => res.json())
   },
-  async updateFavoriteMakers({ commit, state }, { name, uid }) {
+  async updateFavoriteMakers({ commit, state, rootState }, name) {
     let favoriteMakers = [...state.favoriteMakers]
     if (!favoriteMakers.includes(name)) {
       favoriteMakers.push(name)
@@ -72,7 +72,7 @@ export const actions = {
 
     await this.$fire.firestore
       .collection('artisans')
-      .doc(uid)
+      .doc(rootState.user.uid)
       .update({
         makers: favoriteMakers,
       })
@@ -95,7 +95,10 @@ export const actions = {
         commit('ARTISAN_MAKERS', makers)
       })
   },
-  getUserDocument({ commit }, uid) {
+  getUserDocument({ commit, rootState }) {
+    const uid = rootState.user.uid
+    if (!uid) return
+
     // eslint-disable-next-line no-console
     console.log('getting user document', uid)
     this.$fire.firestore
