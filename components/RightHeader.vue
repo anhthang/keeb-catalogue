@@ -36,7 +36,7 @@ export default {
           return this.$fire.firestore
             .collection('users')
             .doc(user.uid)
-            .set({})
+            .set({}, { merge: true })
             .then(() => {
               this.$message.success(
                 `Hello, ${user.displayName}. You successfully logged into this website.`

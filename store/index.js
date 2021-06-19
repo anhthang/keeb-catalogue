@@ -8,6 +8,8 @@ export const mutations = {
   ON_AUTH_STATE_CHANGED_MUTATION: (state, { authUser, claims }) => {
     if (!authUser) {
       state.user = {}
+      state.artisans.collections = []
+      state.artisans.favoriteMakers = []
       // claims = null
       // perform logout operations
     } else {

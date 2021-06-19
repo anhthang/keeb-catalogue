@@ -1,6 +1,12 @@
 <template>
   <a-page-header title="Collection" class="container maker-container">
-    <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
+    <a-button
+      slot="extra"
+      :disabled="!user || !user.uid"
+      type="primary"
+      icon="file-add"
+      @click="showModal"
+    >
       Add
     </a-button>
     <a-modal v-model="visible" title="Add new collection" @ok="addCollection">
@@ -8,6 +14,11 @@
     </a-modal>
 
     <a-row :gutter="[16, 16]" type="flex">
+      <a-alert
+        v-if="!user || !user.uid"
+        message="You must log in before using this feature."
+        banner
+      />
       <a-col
         v-for="collection in collections"
         :key="collection.slug"
