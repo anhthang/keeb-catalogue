@@ -75,7 +75,6 @@
 <script>
 import { mapState } from 'vuex'
 import draggable from 'vuedraggable'
-import { COLLECTIONS } from '@/constants'
 
 export default {
   components: {
@@ -84,12 +83,14 @@ export default {
   data() {
     return {
       loading: false,
+      collection: {},
       draggableTradeList: [],
       draggableWishList: [],
     }
   },
   computed: {
     ...mapState('artisans', ['wishlistSettings']),
+    ...mapState(['user']),
     kaSettings() {
       return {
         capsPerLine: this.wishlistSettings.caps_per_line,
@@ -130,50 +131,31 @@ export default {
     wishlistSettings: {
       handler(after, before) {
         if (after.wish.collection !== before.wish.collection) {
-          this.draggableWishList = this.getCollection(after.wish.collection)
+          this.draggableWishList = this.collection[after.wish.collection]
         }
         if (after.trade.collection !== before.trade.collection) {
-          this.draggableTradeList = this.getCollection(after.trade.collection)
+          this.draggableTradeList = this.collection[after.trade.collection]
         }
       },
       deep: true,
     },
-    draggableWishList() {
-      const wishList = this.draggableWishList.reduce((out, clw) => {
-        out[clw.id] = clw
-        return out
-      }, {})
-
-      const key = `${COLLECTIONS}_${this.wishlistSettings.wish.collection}`
-      localStorage.setItem(key, JSON.stringify(wishList))
-    },
-    draggableTradeList() {
-      const tradeList = this.draggableTradeList.reduce((out, clw) => {
-        out[clw.id] = clw
-        return out
-      }, {})
-
-      const key = `${COLLECTIONS}_${this.wishlistSettings.trade.collection}`
-      localStorage.setItem(key, JSON.stringify(tradeList))
-    },
   },
   beforeMount() {
-    this.draggableWishList = this.getCollection(
-      this.wishlistSettings.wish.collection
-    )
-    this.draggableTradeList = this.getCollection(
-      this.wishlistSettings.trade.collection
-    )
+    this.getUserCollections()
   },
   methods: {
     cardTitle(clw) {
       return `${clw.name} ${clw.sculpt_name}`
     },
-    getCollection(name) {
-      const collection =
-        JSON.parse(localStorage.getItem(`${COLLECTIONS}_${name}`)) || {}
-
-      return Object.values(collection)
+    getUserCollections() {
+      this.$fire.firestore
+        .collection(`users/${this.user.uid}/collections`)
+        .get()
+        .then((doc) => {
+          doc.docs.forEach((d) => {
+            this.collection[d.id] = Object.values(d.data())
+          })
+        })
     },
     removeCap(colorway, type) {
       const vm = this
@@ -198,26 +180,15 @@ export default {
 
       // this.saveSettings()
 
-      const wishList = JSON.parse(
-        localStorage.getItem(
-          `${COLLECTIONS}_${this.wishlistSettings.wish.collection}`
-        )
-      )
-      const tradeList = JSON.parse(
-        localStorage.getItem(
-          `${COLLECTIONS}_${this.wishlistSettings.trade.collection}`
-        )
-      )
-
       const json = {
         settings: this.kaSettings,
-        caps: Object.values(wishList).map((i) => ({
+        caps: this.draggableWishList.map((i) => ({
           id: i.id,
           isPriority: false,
           legendColor: 'Crimson',
         })),
         tradeCaps: this.wishlistSettings.want_to_trade
-          ? Object.values(tradeList).map((i) => ({
+          ? this.draggableTradeList.map((i) => ({
               id: i.id,
               isPriority: false,
               legendColor: 'Orchid',
