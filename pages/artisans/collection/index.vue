@@ -13,12 +13,11 @@
       <a-input v-model="collectionName" placeholder="Enter collection name" />
     </a-modal>
 
+    <a-row v-if="!user || !user.uid" type="flex">
+      <a-alert message="You must log in before using this feature." banner />
+    </a-row>
+
     <a-row :gutter="[16, 16]" type="flex">
-      <a-alert
-        v-if="!user || !user.uid"
-        message="You must log in before using this feature."
-        banner
-      />
       <a-col
         v-for="collection in collections"
         :key="collection.slug"
@@ -30,13 +29,6 @@
       >
         <nuxt-link :to="`/artisans/collection/${collection.slug}`">
           <a-card hoverable :title="collection.name">
-            <img
-              slot="cover"
-              loading="lazy"
-              :alt="collection.name"
-              :src="getPreviewImg(collection.slug)"
-            />
-
             <a-popconfirm
               slot="extra"
               title="Are you sure delete this collection?"
@@ -55,8 +47,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { COLLECTIONS } from '@/constants'
-import { sample } from 'lodash'
 import slugify from 'slugify'
 
 export default {
@@ -73,13 +63,6 @@ export default {
   methods: {
     showModal() {
       this.visible = true
-    },
-    getPreviewImg(slug) {
-      const storage = JSON.parse(localStorage.getItem(`${COLLECTIONS}_${slug}`))
-      return (
-        sample(Object.values(storage || {}))?.img ??
-        'https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png'
-      )
     },
     addCollection() {
       const slug = slugify(this.collectionName, { lower: true })

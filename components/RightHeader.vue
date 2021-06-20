@@ -2,16 +2,21 @@
   <div class="right-header">
     <a-dropdown>
       <div>
-        <a-avatar :src="user.photoURL" />
+        <a-avatar :src="authenticated" />
         {{ user.displayName }}
       </div>
-      <a-menu slot="overlay">
-        <a-menu-item v-if="!user.photoURL">
+      <a-menu v-if="!authenticated" slot="overlay">
+        <a-menu-item>
           <span @click="loginWithGoogle">
             <a-icon type="google" /> Login with Google
           </span>
         </a-menu-item>
-        <a-menu-item v-else>
+      </a-menu>
+      <a-menu v-else slot="overlay">
+        <a-menu-item>
+          <span @click="gotoSettings"><a-icon type="setting" /> Settings </span>
+        </a-menu-item>
+        <a-menu-item>
           <span @click="logout"><a-icon type="logout" /> Logout </span>
         </a-menu-item>
       </a-menu>
@@ -25,6 +30,9 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState(['user']),
+    authenticated() {
+      return this.user?.photoURL
+    },
   },
   methods: {
     async loginWithGoogle() {
@@ -38,6 +46,7 @@ export default {
             .doc(user.uid)
             .set({}, { merge: true })
             .then(() => {
+              this.$store.dispatch('artisans/getUserDocument')
               this.$message.success(
                 `Hello, ${user.displayName}. You successfully logged into this website.`
               )
@@ -57,6 +66,9 @@ export default {
         .catch((err) => {
           this.$message.error(err.message)
         })
+    },
+    gotoSettings() {
+      this.$router.push('/account/settings')
     },
   },
 }
