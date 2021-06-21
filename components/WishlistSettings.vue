@@ -70,7 +70,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import DiscordSvg from '@/components/DiscordSvg'
+import DiscordSvg from '@/components/icons/DiscordSvg'
 import { WISHLIST_SETTINGS } from '@/constants'
 
 export default {

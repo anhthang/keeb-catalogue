@@ -14,7 +14,11 @@
     </a-modal>
 
     <a-row v-if="!user || !user.uid" type="flex">
-      <a-alert message="You must log in before using this feature." banner />
+      <a-alert
+        class="collection-alert"
+        message="You must log in before using this feature."
+        banner
+      />
     </a-row>
 
     <a-row :gutter="[16, 16]" type="flex">
@@ -115,3 +119,9 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.collection-alert {
+  margin: 0 auto;
+}
+</style>

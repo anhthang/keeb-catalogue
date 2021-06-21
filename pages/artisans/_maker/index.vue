@@ -63,7 +63,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import DiscordSvg from '@/components/DiscordSvg'
+import DiscordSvg from '@/components/icons/DiscordSvg'
 
 export default {
   asyncData({ params }) {
