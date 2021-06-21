@@ -95,25 +95,6 @@ export const actions = {
         commit('ARTISAN_MAKERS', makers)
       })
   },
-  getUserDocument({ commit, rootState }) {
-    const uid = rootState.user.uid
-    if (!uid) return
-
-    // eslint-disable-next-line no-console
-    console.log('getting user document', uid)
-    this.$fire.firestore
-      .collection('users')
-      .doc(uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          commit('USER_DOCUMENT', doc.data())
-        } else {
-          // doc.data() will be undefined in this case
-        }
-      })
-  },
-
   addCollection({ commit, state }, data) {
     const collections = [...state.collections]
     collections.push(data)
@@ -142,10 +123,6 @@ export const mutations = {
   },
   ADD_TO_COLLECTION(state, data) {
     state.addToCollectionItems = data
-  },
-  USER_DOCUMENT(state, data) {
-    state.collections = data.collections || []
-    state.favoriteMakers = data.makers || []
   },
   USER_COLLECTIONS(state, data) {
     state.collections = data

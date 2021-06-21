@@ -41,16 +41,9 @@ export default {
         .auth()
         .signInWithPopup(google)
         .then(({ credential, user }) => {
-          return this.$fire.firestore
-            .collection('users')
-            .doc(user.uid)
-            .set({}, { merge: true })
-            .then(() => {
-              this.$store.dispatch('artisans/getUserDocument')
-              this.$message.success(
-                `Hello, ${user.displayName}. You successfully logged into this website.`
-              )
-            })
+          this.$message.success(
+            `Hello, ${user.displayName}. You successfully logged into this website.`
+          )
         })
         .catch((err) => {
           this.$message.warning(err.message)

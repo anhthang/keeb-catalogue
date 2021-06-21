@@ -55,7 +55,6 @@ export default {
   },
   beforeMount() {
     this.$store.dispatch('artisans/getArtisanMakers')
-    this.$store.dispatch('artisans/getUserDocument')
   },
 }
 </script>
