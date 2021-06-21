@@ -42,6 +42,7 @@ export const mutations = {
     }
   },
   USER_DOCUMENT(state, data) {
+    state.user.social = data.social || {}
     state.artisans.collections = data.collections || []
     state.artisans.favoriteMakers = data.makers || []
   },

@@ -56,7 +56,11 @@
                 </a-input>
               </a-form-item>
               <a-form-item>
-                <a-button icon="save" type="primary" @click="saveSocialCfg">
+                <a-button
+                  icon="save"
+                  type="primary"
+                  @click="saveSettings('social')"
+                >
                   Save
                 </a-button>
               </a-form-item>
@@ -85,17 +89,20 @@ export default {
   computed: {
     ...mapState(['user']),
   },
+  beforeMount() {
+    this.settings.social = this.user.social
+  },
   methods: {
-    saveSocialCfg() {
+    saveSettings(type) {
       this.loading = true
       this.$fire.firestore
         .collection('users')
         .doc(this.user.uid)
         .update({
-          social: this.settings.social,
+          [type]: this.settings[type],
         })
         .then(() => {
-          this.$message.success('Settings saved.')
+          this.$message.success('Settings updated successfully.')
           this.loading = false
         })
         .catch((e) => {
