@@ -2,7 +2,7 @@
   <div class="right-header">
     <a-dropdown>
       <div>
-        <a-avatar :src="authenticated" />
+        <a-avatar :src="avatarUrl" />
         {{ user.displayName }}
       </div>
       <a-menu v-if="!authenticated" slot="overlay">
@@ -16,6 +16,7 @@
         <a-menu-item>
           <span @click="gotoSettings"><a-icon type="setting" /> Settings </span>
         </a-menu-item>
+        <a-menu-divider />
         <a-menu-item>
           <span @click="logout"><a-icon type="logout" /> Logout </span>
         </a-menu-item>
@@ -29,9 +30,11 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['user']),
-    authenticated() {
-      return this.user?.photoURL
+    ...mapState(['user', 'authenticated']),
+    avatarUrl() {
+      return this.authenticated
+        ? this.user.photoURL
+        : 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
     },
   },
   methods: {

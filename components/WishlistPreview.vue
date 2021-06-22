@@ -12,7 +12,7 @@
       </a-button>
     </template>
 
-    <div class="wishlist-preview">
+    <div class="artisan-container">
       <a-divider v-if="draggableWishList.length">
         {{ wishlistSettings.wish.title }}
       </a-divider>

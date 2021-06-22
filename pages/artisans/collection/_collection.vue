@@ -1,5 +1,5 @@
 <template>
-  <div class="container maker-container">
+  <div class="container artisan-container">
     <a-page-header :title="collection">
       <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
         Add

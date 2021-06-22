@@ -1,6 +1,7 @@
 export const state = () => {
   return {
     user: {},
+    authenticated: false,
   }
 }
 
@@ -33,12 +34,14 @@ export const mutations = {
     if (!authUser) {
       // claims = null
       // perform logout operations
+      state.authenticated = false
       state.user = {}
       state.artisans.collections = []
       state.artisans.favoriteMakers = []
     } else {
       const { uid, email, emailVerified, displayName, photoURL } = authUser
       state.user = { uid, email, emailVerified, displayName, photoURL }
+      state.authenticated = true
     }
   },
   USER_DOCUMENT(state, data) {

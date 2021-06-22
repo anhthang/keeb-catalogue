@@ -1,52 +1,54 @@
 <template>
-  <a-page-header title="Collection" class="container maker-container">
-    <a-button
-      slot="extra"
-      :disabled="!user || !user.uid"
-      type="primary"
-      icon="file-add"
-      @click="showModal"
-    >
-      Add
-    </a-button>
-    <a-modal v-model="visible" title="Add new collection" @ok="addCollection">
-      <a-input v-model="collectionName" placeholder="Enter collection name" />
-    </a-modal>
-
-    <a-row v-if="!user || !user.uid" type="flex">
-      <a-alert
-        class="collection-alert"
-        message="You must log in before using this feature."
-        banner
-      />
-    </a-row>
-
-    <a-row :gutter="[16, 16]" type="flex">
-      <a-col
-        v-for="collection in collections"
-        :key="collection.slug"
-        :xs="24"
-        :sm="12"
-        :md="8"
-        :lg="6"
-        :xl="4"
+  <div class="container artisan-container">
+    <a-page-header title="Collection">
+      <a-button
+        slot="extra"
+        :disabled="!user || !user.uid"
+        type="primary"
+        icon="file-add"
+        @click="showModal"
       >
-        <nuxt-link :to="`/artisans/collection/${collection.slug}`">
-          <a-card hoverable :title="collection.name">
-            <a-popconfirm
-              slot="extra"
-              title="Are you sure delete this collection?"
-              ok-text="Yes"
-              cancel-text="No"
-              @confirm="delCollection(collection.slug)"
-            >
-              <a-icon type="delete" />
-            </a-popconfirm>
-          </a-card>
-        </nuxt-link>
-      </a-col>
-    </a-row>
-  </a-page-header>
+        Add
+      </a-button>
+      <a-modal v-model="visible" title="Add new collection" @ok="addCollection">
+        <a-input v-model="collectionName" placeholder="Enter collection name" />
+      </a-modal>
+
+      <a-row v-if="!user || !user.uid" type="flex">
+        <a-alert
+          class="collection-alert"
+          message="You must log in before using this feature."
+          banner
+        />
+      </a-row>
+
+      <a-row :gutter="[16, 16]" type="flex">
+        <a-col
+          v-for="collection in collections"
+          :key="collection.slug"
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+          :xl="4"
+        >
+          <nuxt-link :to="`/artisans/collection/${collection.slug}`">
+            <a-card hoverable :title="collection.name">
+              <a-popconfirm
+                slot="extra"
+                title="Are you sure delete this collection?"
+                ok-text="Yes"
+                cancel-text="No"
+                @confirm="delCollection(collection.slug)"
+              >
+                <a-icon type="delete" />
+              </a-popconfirm>
+            </a-card>
+          </nuxt-link>
+        </a-col>
+      </a-row>
+    </a-page-header>
+  </div>
 </template>
 
 <script>

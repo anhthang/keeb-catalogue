@@ -1,5 +1,5 @@
 <template>
-  <div class="container artisan-container">
+  <div class="container artisan-maker-container">
     <a-page-header title="Artisan Makers">
       <div>
         <a-divider v-if="favorite.length" orientation="left">
