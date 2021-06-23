@@ -1,6 +1,6 @@
 <template>
   <div class="container artisan-container">
-    <a-page-header :title="collection">
+    <a-page-header :title="collectionName">
       <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
         Add
       </a-button>
@@ -15,7 +15,7 @@
       <div>
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
-            v-for="colorway in collections"
+            v-for="colorway in collectionItems"
             :key="colorway.id"
             :xs="24"
             :sm="12"
@@ -49,6 +49,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { keyBy } from 'lodash'
 
 export default {
   asyncData({ params }) {
@@ -59,7 +60,7 @@ export default {
   data() {
     return {
       visible: false,
-      collections: [],
+      collectionItems: [],
     }
   },
   async fetch() {
@@ -69,13 +70,19 @@ export default {
       .get()
       .then((doc) => doc.data())
 
-    this.collections = Object.values(doc || {})
+    this.collectionItems = Object.values(doc || {})
   },
   computed: {
-    ...mapState('artisans', ['addToCollectionItems']),
+    ...mapState('artisans', ['addToCollectionItems', 'collections']),
     ...mapState(['user']),
     selectedIds() {
-      return this.collections.map((c) => c.id)
+      return this.collectionItems.map((c) => c.id)
+    },
+    collectionName() {
+      const collection = this.collections.find(
+        (c) => c.slug === this.collection
+      )
+      return collection?.name
     },
   },
   methods: {
@@ -86,7 +93,7 @@ export default {
       this.visible = !this.visible
     },
     removeCap(clw) {
-      this.collections = this.collections.filter((c) => c.id !== clw.id)
+      this.collectionItems = this.collectionItems.filter((c) => c.id !== clw.id)
 
       const docRef = this.$fire.firestore
         .collection(`users/${this.user.uid}/collections`)
@@ -97,19 +104,32 @@ export default {
           [clw.id]: this.$fireModule.firestore.FieldValue.delete(),
         })
         .then(() => {
-          this.$message.success(`${clw.name} removed from the collection`)
+          this.$message.success(`${clw.name} removed from the collection.`)
         })
         .catch((err) => {
           this.$message.error(err.message)
         })
     },
-    async addToCollection(value) {
+    async addToCollection() {
       const caps = await this.$store.dispatch(
         'artisans/fetchCaps',
         this.addToCollectionItems.map((i) => i.key)
       )
 
-      this.collections.push(...caps)
+      const collectionMap = keyBy(this.collectionItems, 'id')
+
+      this.$fire.firestore
+        .collection(`users/${this.user.uid}/collections`)
+        .doc(this.collection)
+        .set(collectionMap)
+        .then(() => {
+          this.$message.success('Successfully added to collection.')
+        })
+        .catch((err) => {
+          this.$message.error(err.message)
+        })
+
+      this.collectionItems.push(...caps)
 
       this.visible = false
     },

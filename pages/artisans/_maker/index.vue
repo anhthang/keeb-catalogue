@@ -21,7 +21,11 @@
         </a>
         <a v-if="makerInfo.discord" :href="makerInfo.discord" target="_blank">
           <a-button key="1">
-            <a-icon :component="DiscordSvg" class="discord-icon" />
+            <a-icon
+              :component="DiscordSvg"
+              class="discord-icon"
+              style="margin-top: -6px"
+            />
             Discord
           </a-button>
         </a>
@@ -82,13 +86,12 @@ export default {
   async fetch() {
     if (!this.database[this.maker]) {
       await this.$store
-        .dispatch('artisans/fetchMaker', this.maker)
+        .dispatch('artisans/fetchMakerDatabase', this.maker)
         .then(() => (this.loading = false))
     } else {
       this.loading = false
     }
   },
-  // fetchOnServer: false,
   computed: {
     ...mapState('artisans', ['database']),
   },

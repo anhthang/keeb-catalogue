@@ -1,24 +1,32 @@
 <template>
   <div class="right-header">
-    <a-dropdown>
+    <a-dropdown v-if="authenticated">
       <div>
-        <a-avatar :src="avatarUrl" />
+        <a-avatar :src="user.photoURL" />
         {{ user.displayName }}
       </div>
-      <a-menu v-if="!authenticated" slot="overlay">
-        <a-menu-item>
-          <span @click="loginWithGoogle">
-            <a-icon type="google" /> Login with Google
-          </span>
-        </a-menu-item>
-      </a-menu>
-      <a-menu v-else slot="overlay">
+      <a-menu slot="overlay">
         <a-menu-item>
           <span @click="gotoSettings"><a-icon type="setting" /> Settings </span>
         </a-menu-item>
         <a-menu-divider />
         <a-menu-item>
           <span @click="logout"><a-icon type="logout" /> Logout </span>
+        </a-menu-item>
+      </a-menu>
+    </a-dropdown>
+    <a-dropdown v-else>
+      <div>
+        <a-avatar
+          src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
+        />
+        Login
+      </div>
+      <a-menu slot="overlay">
+        <a-menu-item>
+          <span @click="loginWithGoogle">
+            <a-icon type="google" /> Login with Google
+          </span>
         </a-menu-item>
       </a-menu>
     </a-dropdown>
@@ -31,11 +39,6 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState(['user', 'authenticated']),
-    avatarUrl() {
-      return this.authenticated
-        ? this.user.photoURL
-        : 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
-    },
   },
   methods: {
     async loginWithGoogle() {

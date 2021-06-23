@@ -98,7 +98,7 @@ export default {
   async fetch() {
     if (!this.database[this.maker]) {
       await this.$store
-        .dispatch('artisans/fetchMaker', this.maker)
+        .dispatch('artisans/fetchMakerDatabase', this.maker)
         .then(() => (this.loading = false))
     } else {
       this.loading = false

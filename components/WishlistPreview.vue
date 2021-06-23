@@ -1,5 +1,5 @@
 <template>
-  <a-card title="Preview" size="small">
+  <a-card title="Preview" size="small" class="wishlist-preview">
     <template slot="extra">
       <a-button disabled type="primary" icon="copy"> Copy </a-button>
       <a-button
@@ -218,3 +218,9 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.wishlist-preview {
+  height: 100%;
+}
+</style>

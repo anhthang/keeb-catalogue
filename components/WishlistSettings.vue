@@ -1,11 +1,5 @@
 <template>
   <a-card title="Settings" size="small">
-    <template slot="extra">
-      <a-button type="primary" icon="save" @click="saveSettings">
-        Save
-      </a-button>
-    </template>
-
     <!-- <a-form-item label="Caps per Line">
       <a-input-number v-model="settings.caps_per_line" :min="1" :max="10" />
     </a-form-item> -->
@@ -15,7 +9,7 @@
       </a-input>
     </a-form-item>
     <a-form-item label="Wish Collection">
-      <a-select v-model="settings.wish.collection" style="width: 100%">
+      <a-select v-model="settings.wish.collection">
         <a-select-option
           v-for="collection in collections"
           :key="collection.slug"
@@ -40,7 +34,7 @@
       </a-input>
     </a-form-item>
     <a-form-item v-if="settings.want_to_trade" label="Trade Collection">
-      <a-select v-model="settings.trade.collection" style="width: 100%">
+      <a-select v-model="settings.trade.collection">
         <a-select-option
           v-for="collection in collections"
           :key="collection.slug"
@@ -71,7 +65,6 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import DiscordSvg from '@/components/icons/DiscordSvg'
-import { WISHLIST_SETTINGS } from '@/constants'
 
 export default {
   data() {
@@ -97,11 +90,6 @@ export default {
   },
   methods: {
     ...mapMutations('artisans', ['WISHLIST_SETTINGS']),
-    saveSettings() {
-      localStorage.setItem(WISHLIST_SETTINGS, JSON.stringify(this.settings))
-
-      this.$message.success('Settings saved')
-    },
     handleWantToTrade() {
       this.wantToTrade = !this.wantToTrade
     },

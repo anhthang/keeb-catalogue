@@ -27,7 +27,7 @@
             </a-col>
           </a-row>
         </a-tab-pane>
-        <a-tab-pane key="social" tab="Social">
+        <a-tab-pane key="social" tab="Social Profiles">
           <a-spin :spinning="loading">
             <a-row>
               <a-col span="16">

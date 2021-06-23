@@ -3,8 +3,7 @@
     mode="multiple"
     label-in-value
     :value="value"
-    placeholder="input search text"
-    style="width: 100%"
+    placeholder="Search"
     :filter-option="false"
     :not-found-content="fetching ? undefined : null"
     @search="fetchKeycaps"

@@ -30,7 +30,7 @@ export const state = () => {
 }
 
 export const actions = {
-  async fetchMaker({ commit }, name) {
+  async fetchMakerDatabase({ commit }, name) {
     await fetch(
       `https://raw.githubusercontent.com/keycap-archivist/database/master/db/${name}.json`
     )

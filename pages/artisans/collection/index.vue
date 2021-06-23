@@ -3,7 +3,7 @@
     <a-page-header title="Collection">
       <a-button
         slot="extra"
-        :disabled="!user || !user.uid"
+        :disabled="!authenticated"
         type="primary"
         icon="file-add"
         @click="showModal"
@@ -14,7 +14,7 @@
         <a-input v-model="collectionName" placeholder="Enter collection name" />
       </a-modal>
 
-      <a-row v-if="!user || !user.uid" type="flex">
+      <a-row v-if="!authenticated" type="flex">
         <a-alert
           class="collection-alert"
           message="You must log in before using this feature."
@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['collections']),
-    ...mapState(['user']),
+    ...mapState(['user', 'authenticated']),
   },
   methods: {
     showModal() {
