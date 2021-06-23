@@ -6,7 +6,7 @@ export const state = () => {
 }
 
 export const actions = {
-  onAuthStateChangedAction({ commit }, { authUser, claims }) {
+  async onAuthStateChangedAction({ commit }, { authUser, claims }) {
     if (!authUser) {
       // claims = null
       // Perform logout operations
@@ -14,7 +14,7 @@ export const actions = {
       // Initialize user document
       // eslint-disable-next-line no-console
       console.log('getting user document', authUser.uid)
-      this.$fire.firestore
+      await this.$fire.firestore
         .collection('users')
         .doc(authUser.uid)
         .get()

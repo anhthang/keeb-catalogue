@@ -1,5 +1,5 @@
 <template>
-  <a-card title="Settings" size="small">
+  <a-card title="Settings" size="small" class="wishlist-settings">
     <!-- <a-form-item label="Caps per Line">
       <a-input-number v-model="settings.caps_per_line" :min="1" :max="10" />
     </a-form-item> -->
@@ -75,10 +75,14 @@ export default {
     }
   },
   fetch() {
-    this.settings = this.wishlistSettings
+    this.settings = {
+      ...this.wishlistSettings,
+      social: { ...this.user.social },
+    }
   },
   computed: {
     ...mapState('artisans', ['wishlistSettings', 'collections']),
+    ...mapState(['user']),
   },
   watch: {
     settings: {
@@ -96,3 +100,11 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.wishlist-settings {
+  .ant-select {
+    width: 100%;
+  }
+}
+</style>
