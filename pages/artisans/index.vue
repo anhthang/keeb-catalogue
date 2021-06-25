@@ -1,6 +1,28 @@
 <template>
   <div class="container artisan-maker-container">
     <a-page-header title="Artisan Makers">
+      <a-button
+        v-if="false"
+        slot="extra"
+        type="primary"
+        icon="user-add"
+        @click="showModal"
+      >
+        Add
+      </a-button>
+      <a-modal v-model="visible" title="Add new maker" @ok="addMaker">
+        <a-form-item label="Name">
+          <a-input v-model="makerName">
+            <a-icon slot="prefix" type="user" />
+          </a-input>
+        </a-form-item>
+        <a-form-item label="Id">
+          <a-input v-model="makerId">
+            <a-icon slot="prefix" type="solution" />
+          </a-input>
+        </a-form-item>
+      </a-modal>
+
       <div>
         <a-divider v-if="favorite.length" orientation="left">
           Favorite
@@ -44,6 +66,13 @@
 import { mapState } from 'vuex'
 
 export default {
+  data() {
+    return {
+      visible: false,
+      makerName: undefined,
+      makerId: undefined,
+    }
+  },
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     favorite() {
@@ -55,6 +84,28 @@ export default {
   },
   beforeMount() {
     this.$store.dispatch('artisans/getArtisanMakers')
+  },
+  methods: {
+    showModal() {
+      this.visible = true
+    },
+    addMaker() {
+      this.$fire.firestore
+        .collection('artisan-makers')
+        .doc()
+        .set({
+          name: this.makerName,
+          id: this.makerId,
+          slug: this.makerName.replaceAll(' ', '-').replaceAll('.', '-'),
+        })
+        .then(() => {
+          this.visible = false
+          this.$message.success('Successfully added new maker.')
+        })
+        .catch((e) => {
+          this.$message.error(e.message)
+        })
+    },
   },
 }
 </script>
