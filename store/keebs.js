@@ -1,4 +1,5 @@
-import keyboards from '@/assets/keyboards.json'
+/* eslint-disable no-console */
+import { invert } from 'lodash'
 
 export const state = () => {
   return {
@@ -7,27 +8,61 @@ export const state = () => {
       Live: 'processing',
       Closed: 'default',
     },
-    keyboards,
-    keebs: keyboards,
+    keyboards: [],
+    maker: {},
   }
 }
 
 export const actions = {
-  filterByMaker({ commit }, maker) {
-    commit('FILTER_MAKER', maker)
+  async getKeyboardsByMaker({ commit }, makerId) {
+    console.log('getting keyboards from', makerId)
+
+    const maker = await this.$fire.firestore
+      .collection('keyboards')
+      .doc(makerId)
+      .get()
+      .then((d) => d.data())
+
+    commit('SET_MAKER', maker)
+
+    this.$fire.firestore
+      .collection(`keyboards/${makerId}/keyboards`)
+      .get()
+      .then((doc) => {
+        const keyboards = []
+        doc.docs.forEach((d) => {
+          keyboards.push({ ...d.data(), maker })
+        })
+
+        commit('SET_KEYBOARDS', keyboards)
+      })
+      .catch((e) => {
+        console.error(e.message)
+        commit('SET_KEYBOARDS', [])
+      })
   },
-  filterByStatus({ commit }, status = 'live') {
-    commit('FILTER_STATUS', status)
+  getKeyboardsByStatus({ commit, state }, status = 'live') {
+    this.$fire.firestore
+      .collectionGroup('keyboards')
+      .where('status', '==', invert(state.statusMap)[status])
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, ' => ', doc.data())
+        })
+      })
+      .catch((e) => {
+        console.error(e.message)
+        commit('SET_KEYBOARDS', [])
+      })
   },
 }
 
 export const mutations = {
-  FILTER_MAKER(state, maker) {
-    state.keyboards = state.keebs.filter((k) => k.Maker.toLowerCase() === maker)
+  SET_KEYBOARDS(state, keyboards) {
+    state.keyboards = keyboards
   },
-  FILTER_STATUS(state, status) {
-    state.keyboards = state.keebs.filter(
-      (k) => k.Status.toLowerCase() === status
-    )
+  SET_MAKER(state, maker) {
+    state.maker = maker
   },
 }

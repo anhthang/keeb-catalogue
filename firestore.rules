@@ -5,6 +5,10 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+    
+    match /keyboards/{maker}/{document=**} {
+    	allow read: if true;
+    }
 
     match /artisan-makers/{maker} {
       allow read: if true;

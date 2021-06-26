@@ -6,43 +6,43 @@
     :visible="visible"
     @close="onClose"
   >
-    <a-card v-if="keyboard.Image">
-      <img slot="cover" :alt="keyboard.Name" :src="keyboard.Image" />
+    <a-card v-if="keyboard.img">
+      <img slot="cover" :alt="keyboard.name" :src="keyboard.img" />
     </a-card>
 
     <a-divider orientation="left">General Information</a-divider>
-    <a-descriptions :title="keyboard.Name" :column="1">
-      <a-descriptions-item v-if="keyboard.Maker" label="Maker">
-        {{ keyboard.Maker }}
+    <a-descriptions :title="keyboard.name" :column="1">
+      <a-descriptions-item v-if="keyboard.maker" label="Maker">
+        {{ keyboard.maker.name }}
       </a-descriptions-item>
-      <a-descriptions-item v-if="keyboard.Status" label="Status">
-        <a-badge :status="statusMap[keyboard.Status]" :text="keyboard.Status" />
+      <a-descriptions-item v-if="keyboard.status" label="Status">
+        <a-badge :status="statusMap[keyboard.status]" :text="keyboard.status" />
       </a-descriptions-item>
-      <a-descriptions-item v-if="keyboard.Start" label="GB Time">
-        {{ keyboard.Start }} - {{ keyboard.End }}
+      <a-descriptions-item v-if="keyboard.start" label="GB Time">
+        {{ keyboard.start }} - {{ keyboard.end }}
       </a-descriptions-item>
     </a-descriptions>
 
-    <a-divider v-if="keyboard.Description" orientation="left">
+    <a-divider v-if="keyboard.description" orientation="left">
       Description
     </a-divider>
-    {{ keyboard.Description }}
+    {{ keyboard.description }}
 
-    <a-divider v-if="keyboard.Features" orientation="left">Features</a-divider>
-    <vue-markdown :source="keyboard.Features" />
+    <a-divider v-if="keyboard.features" orientation="left">Features</a-divider>
+    <vue-markdown :source="keyboard.features" />
 
-    <a-divider v-if="keyboard.Included" orientation="left">
+    <a-divider v-if="keyboard.included" orientation="left">
       What's Included
     </a-divider>
-    <vue-markdown :source="keyboard.Included" />
+    <vue-markdown :source="keyboard.included" />
 
-    <a-divider v-if="keyboard.Colors" orientation="left">Colors</a-divider>
-    <vue-markdown :source="keyboard.Colors" />
+    <a-divider v-if="keyboard.colors" orientation="left">Colors</a-divider>
+    <vue-markdown :source="keyboard.colors" />
 
-    <a-divider v-if="keyboard.Others" orientation="left">
+    <a-divider v-if="keyboard.others" orientation="left">
       More Information
     </a-divider>
-    <vue-markdown :source="keyboard.Others" />
+    <vue-markdown :source="keyboard.others" />
   </a-drawer>
 </template>
 

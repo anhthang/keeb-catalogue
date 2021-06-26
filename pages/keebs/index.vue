@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     boardByStatus(status) {
-      this.$store.dispatch('keebs/filterByStatus', status)
+      this.$store.dispatch('keebs/getKeyboardsByStatus', status)
     },
   },
 }

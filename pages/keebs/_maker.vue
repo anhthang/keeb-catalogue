@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-page-header :title="maker">
+    <a-page-header :title="maker.name">
       <SubmitNewKeyboard slot="extra" />
       <KeyboardList />
     </a-page-header>
@@ -9,18 +9,17 @@
 
 <script>
 import { mapState } from 'vuex'
-
 export default {
   asyncData({ params }) {
     return {
-      ...params,
+      maker_id: params.maker,
     }
   },
   fetch() {
-    this.$store.dispatch('keebs/filterByMaker', this.maker)
+    this.$store.dispatch('keebs/getKeyboardsByMaker', this.maker_id)
   },
   computed: {
-    ...mapState('keebs', ['statusMap']),
+    ...mapState('keebs', ['maker']),
   },
 }
 </script>
