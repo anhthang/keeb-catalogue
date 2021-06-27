@@ -29,9 +29,10 @@
         <img slot="extra" width="300" :alt="item.name" :src="item.img" />
         <a-list-item-meta :description="item.layout" @click="showDrawer(item)">
           <a slot="title">{{ item.name }}</a>
-          <a-avatar slot="avatar">
+          <a-avatar v-if="makerName(item.maker_id)" slot="avatar">
             {{ makerName(item.maker_id).charAt(0) }}
           </a-avatar>
+          <a-avatar v-else slot="avatar" icon="user" />
         </a-list-item-meta>
         <a-descriptions :column="1" size="small">
           <a-descriptions-item v-if="item.status" label="Status">

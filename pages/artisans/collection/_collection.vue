@@ -1,6 +1,6 @@
 <template>
   <div class="container artisan-container">
-    <a-page-header :title="collectionName">
+    <a-page-header :title="collectionName" @back="() => $router.go(-1)">
       <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
         Add
       </a-button>

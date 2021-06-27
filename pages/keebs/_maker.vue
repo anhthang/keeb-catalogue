@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <a-page-header :title="maker.name">
+    <a-page-header
+      :title="maker.name"
+      :avatar="{
+        props: {
+          src: `${maker.img}`,
+        },
+      }"
+    >
       <template slot="extra">
         <!-- <SubmitNewKeyboard /> -->
         <a v-if="maker.website" :href="maker.website" target="_blank">

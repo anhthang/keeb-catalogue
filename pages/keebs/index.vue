@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-page-header>
+    <a-page-header :title="titleMap[status]">
       <SubmitNewKeyboard slot="extra" />
       <KeyboardList />
     </a-page-header>
@@ -12,6 +12,15 @@ export default {
   asyncData({ query }) {
     return {
       ...query,
+    }
+  },
+  data() {
+    return {
+      titleMap: {
+        live: 'Live GBs',
+        ic: 'Interest Check',
+        closed: 'Previous GBs',
+      },
     }
   },
   watchQuery({ status }) {
