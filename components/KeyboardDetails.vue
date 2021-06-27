@@ -16,7 +16,10 @@
         {{ keyboard.maker.name }}
       </a-descriptions-item>
       <a-descriptions-item v-if="keyboard.status" label="Status">
-        <a-badge :status="statusMap[keyboard.status]" :text="keyboard.status" />
+        <a-badge
+          :status="badgeStatus[keyboard.status]"
+          :text="keyboard.status"
+        />
       </a-descriptions-item>
       <a-descriptions-item v-if="keyboard.start" label="GB Time">
         {{ keyboard.start }} - {{ keyboard.end }}
@@ -57,7 +60,7 @@ export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['visible', 'onClose', 'keyboard'],
   computed: {
-    ...mapState('keebs', ['statusMap']),
+    ...mapState('keebs', ['badgeStatus']),
   },
 }
 </script>

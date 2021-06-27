@@ -6,7 +6,11 @@ service cloud.firestore {
       allow read, write: if false;
     }
     
-    match /keyboards/{maker}/{document=**} {
+    match /keyboards/{keyboardId} {
+    	allow read, write: if true;
+    }
+    
+    match /keyboard-makers/{makerId} {
     	allow read: if true;
     }
 

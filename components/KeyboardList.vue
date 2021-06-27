@@ -9,8 +9,8 @@
         <template slot="actions">
           <span key="user">
             <a-icon type="user" />
-            <nuxt-link :to="`/keebs/${item.maker.name.toLowerCase()}`">
-              {{ item.maker.name }}
+            <nuxt-link :to="`/keebs/${item.maker_id}`">
+              {{ makerName(item.maker_id) }}
             </nuxt-link>
           </span>
         </template>
@@ -29,11 +29,13 @@
         <img slot="extra" width="300" :alt="item.name" :src="item.img" />
         <a-list-item-meta :description="item.layout" @click="showDrawer(item)">
           <a slot="title">{{ item.name }}</a>
-          <a-avatar slot="avatar">{{ item.maker.name.charAt(0) }}</a-avatar>
+          <a-avatar slot="avatar">
+            {{ makerName(item.maker_id).charAt(0) }}
+          </a-avatar>
         </a-list-item-meta>
         <a-descriptions :column="1" size="small">
           <a-descriptions-item v-if="item.status" label="Status">
-            <a-badge :status="statusMap[item.status]" :text="item.status" />
+            <a-badge :status="badgeStatus[item.status]" :text="item.status" />
           </a-descriptions-item>
           <a-descriptions-item v-if="item.start" label="GB Time">
             {{ item.start }} - {{ item.end }}
@@ -66,7 +68,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('keebs', ['statusMap', 'keyboards']),
+    ...mapState('keebs', ['badgeStatus', 'keyboards', 'makers']),
+    makerName() {
+      return (makerId) => this.makers[makerId]?.name
+    },
   },
   methods: {
     showDrawer(item) {

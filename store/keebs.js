@@ -1,15 +1,21 @@
 /* eslint-disable no-console */
-import { invert } from 'lodash'
+import { groupBy, keyBy } from 'lodash'
+import slugify from 'slugify'
+const keyboardStatus = {
+  ic: ['Interest Check'],
+  live: ['Running', 'Live'],
+  closed: ['Closed', 'Shipped'],
+}
 
 export const state = () => {
   return {
-    statusMap: {
+    badgeStatus: {
       Shipped: 'success',
       Live: 'processing',
       Closed: 'default',
     },
     keyboards: [],
-    maker: {},
+    makers: {},
   }
 }
 
@@ -18,20 +24,21 @@ export const actions = {
     console.log('getting keyboards from', makerId)
 
     const maker = await this.$fire.firestore
-      .collection('keyboards')
+      .collection('keyboard-makers')
       .doc(makerId)
       .get()
       .then((d) => d.data())
 
-    commit('SET_MAKER', maker)
+    commit('SET_MAKERS', [maker])
 
-    this.$fire.firestore
-      .collection(`keyboards/${makerId}/keyboards`)
+    await this.$fire.firestore
+      .collection('keyboards')
+      .where('maker_id', '==', makerId)
       .get()
       .then((doc) => {
         const keyboards = []
         doc.docs.forEach((d) => {
-          keyboards.push({ ...d.data(), maker })
+          keyboards.push(d.data())
         })
 
         commit('SET_KEYBOARDS', keyboards)
@@ -41,19 +48,41 @@ export const actions = {
         commit('SET_KEYBOARDS', [])
       })
   },
-  getKeyboardsByStatus({ commit, state }, status = 'live') {
-    this.$fire.firestore
-      .collectionGroup('keyboards')
-      .where('status', '==', invert(state.statusMap)[status])
+  async getKeyboardsByStatus({ commit }, status = 'live') {
+    console.log('getting keyboards', status)
+
+    let makerIds = []
+
+    await this.$fire.firestore
+      .collection('keyboards')
+      .where('status', 'in', keyboardStatus[status])
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data())
+      .then((doc) => {
+        const keyboards = []
+        doc.docs.forEach((d) => {
+          keyboards.push(d.data())
         })
+
+        commit('SET_KEYBOARDS', keyboards)
+
+        makerIds = Object.keys(groupBy(keyboards, 'maker_id'))
       })
       .catch((e) => {
         console.error(e.message)
         commit('SET_KEYBOARDS', [])
+      })
+
+    await this.$fire.firestore
+      .collection('keyboard-makers')
+      .where(this.$fireModule.firestore.FieldPath.documentId(), 'in', makerIds)
+      .get()
+      .then((doc) => {
+        const makers = []
+        doc.docs.forEach((d) => {
+          makers.push(d.data())
+        })
+
+        commit('SET_MAKERS', makers)
       })
   },
 }
@@ -62,7 +91,7 @@ export const mutations = {
   SET_KEYBOARDS(state, keyboards) {
     state.keyboards = keyboards
   },
-  SET_MAKER(state, maker) {
-    state.maker = maker
+  SET_MAKERS(state, makers) {
+    state.makers = keyBy(makers, (m) => slugify(m.name, { lower: true }))
   },
 }
