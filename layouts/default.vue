@@ -59,7 +59,7 @@
       <Nuxt />
     </a-layout-content>
     <a-layout-footer style="text-align: center">
-      Keyboard Calendar ©2021 Created by Anh Thang Bui
+      Keeb Catalogue ©2021 Created by Anh Thang Bui
     </a-layout-footer>
   </a-layout>
 </template>

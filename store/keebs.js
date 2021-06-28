@@ -20,6 +20,19 @@ export const state = () => {
 }
 
 export const actions = {
+  getMakers({ commit }) {
+    this.$fire.firestore
+      .collection('keyboard-makers')
+      .get()
+      .then((doc) => {
+        const makers = []
+        doc.docs.forEach((d) => {
+          makers.push(d.data())
+        })
+
+        commit('SET_MAKERS', makers)
+      })
+  },
   async getKeyboardsByMaker({ commit }, makerId) {
     console.log('getting keyboards from', makerId)
 

@@ -26,8 +26,25 @@
             <a :href="item.geekhack">geekhack</a>
           </span>
         </template>
-        <img slot="extra" width="300" :alt="item.name" :src="item.img" />
-        <a-list-item-meta :description="item.layout" @click="showDrawer(item)">
+        <img
+          v-if="item.img"
+          slot="extra"
+          width="300"
+          :alt="item.name"
+          :src="item.img"
+        />
+        <a-empty
+          v-else
+          slot="extra"
+          class="keyboard-no-img"
+          description="No Image"
+        />
+        <a-list-item-meta @click="showDrawer(item)">
+          <a-badge
+            slot="description"
+            :status="badgeStatus[item.status]"
+            :text="item.status"
+          />
           <a slot="title">{{ item.name }}</a>
           <a-avatar v-if="makerName(item.maker_id)" slot="avatar">
             {{ makerName(item.maker_id).charAt(0) }}
@@ -35,8 +52,8 @@
           <a-avatar v-else slot="avatar" icon="user" />
         </a-list-item-meta>
         <a-descriptions :column="1" size="small">
-          <a-descriptions-item v-if="item.status" label="Status">
-            <a-badge :status="badgeStatus[item.status]" :text="item.status" />
+          <a-descriptions-item v-if="item.layout" label="Layout">
+            {{ item.layout }}
           </a-descriptions-item>
           <a-descriptions-item v-if="item.start" label="GB Time">
             {{ item.start }} - {{ item.end }}
@@ -86,3 +103,15 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.container {
+  .ant-list-item-extra {
+    display: flex;
+    align-items: center;
+  }
+}
+.keyboard-no-img {
+  width: 300px;
+}
+</style>

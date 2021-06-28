@@ -10,9 +10,21 @@
     >
       <template slot="extra">
         <!-- <SubmitNewKeyboard /> -->
+        <a-button key="0" @click="showModal">
+          <a-icon
+            :component="KeyboardSvg"
+            class="discord-icon"
+            style="margin-top: -6px"
+          />
+          Add
+        </a-button>
         <a v-if="maker.website" :href="maker.website" target="_blank">
           <a-button key="1" icon="global" type="primary"> Website </a-button>
         </a>
+
+        <a-modal v-model="visible" title="Add new keyboard">
+          <add-new-keyboard :maker-id="maker_id" />
+        </a-modal>
       </template>
       <KeyboardList />
     </a-page-header>
@@ -21,10 +33,18 @@
 
 <script>
 import { mapState } from 'vuex'
+import KeyboardSvg from '@/components/icons/KeyboardSvg'
+
 export default {
   asyncData({ params }) {
     return {
       maker_id: params.maker,
+    }
+  },
+  data() {
+    return {
+      visible: false,
+      KeyboardSvg,
     }
   },
   fetch() {
@@ -34,6 +54,11 @@ export default {
     ...mapState('keebs', ['makers']),
     maker() {
       return this.makers?.[this.maker_id] || {}
+    },
+  },
+  methods: {
+    showModal() {
+      this.visible = !this.visible
     },
   },
 }
