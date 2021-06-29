@@ -17,18 +17,24 @@
         <a-sub-menu key="2">
           <span slot="title"><a-icon type="desktop" /> Keebs</span>
           <a-menu-item key="3">
-            <nuxt-link to="/keebs?status=live">
+            <nuxt-link to="/keebs/keyboards?status=live">
               <a-icon type="forward" />Live GBs
             </nuxt-link>
           </a-menu-item>
           <a-menu-item key="4">
-            <nuxt-link to="/keebs?status=ic">
+            <nuxt-link to="/keebs/keyboards?status=ic">
               <a-icon type="question-circle" />Interest Check
             </nuxt-link>
           </a-menu-item>
           <a-menu-item key="5">
-            <nuxt-link to="/keebs?status=closed">
+            <nuxt-link to="/keebs/keyboards?status=closed">
               <a-icon type="backward" />Previous GBs
+            </nuxt-link>
+          </a-menu-item>
+          <a-menu-divider />
+          <a-menu-item key="2.1">
+            <nuxt-link to="/keebs">
+              <a-icon type="user-add" />Makers
             </nuxt-link>
           </a-menu-item>
         </a-sub-menu>

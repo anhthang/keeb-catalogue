@@ -10,7 +10,7 @@
     >
       <template slot="extra">
         <!-- <SubmitNewKeyboard /> -->
-        <a-button key="0" @click="showModal">
+        <a-button key="0" type="primary" @click="showModal">
           <a-icon
             :component="KeyboardSvg"
             class="discord-icon"
@@ -19,7 +19,10 @@
           Add
         </a-button>
         <a v-if="maker.website" :href="maker.website" target="_blank">
-          <a-button key="1" icon="global" type="primary"> Website </a-button>
+          <a-button key="1" icon="global"> Website </a-button>
+        </a>
+        <a v-if="maker.instagram" :href="maker.instagram" target="_blank">
+          <a-button key="2" icon="instagram"> Instagram </a-button>
         </a>
 
         <a-modal v-model="visible" title="Add new keyboard">

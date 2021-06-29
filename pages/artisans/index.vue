@@ -12,12 +12,12 @@
       </a-button>
       <a-modal v-model="visible" title="Add new maker" @ok="addMaker">
         <a-form-item label="Name">
-          <a-input v-model="makerName">
+          <a-input v-model="newMaker.name">
             <a-icon slot="prefix" type="user" />
           </a-input>
         </a-form-item>
         <a-form-item label="Id">
-          <a-input v-model="makerId">
+          <a-input v-model="newMaker.id">
             <a-icon slot="prefix" type="solution" />
           </a-input>
         </a-form-item>
@@ -69,8 +69,11 @@ export default {
   data() {
     return {
       visible: false,
-      makerName: undefined,
-      makerId: undefined,
+      newMaker: {
+        name: undefined,
+        id: undefined,
+        slug: undefined,
+      },
     }
   },
   computed: {
@@ -80,6 +83,13 @@ export default {
     },
     otherMakers() {
       return this.makers.filter((m) => !this.favoriteMakers.includes(m.slug))
+    },
+  },
+  watch: {
+    'newMaker.name'(val) {
+      this.newMaker.slug = this.makerName
+        .replaceAll(' ', '-')
+        .replaceAll('.', '-')
     },
   },
   beforeMount() {
@@ -92,12 +102,8 @@ export default {
     addMaker() {
       this.$fire.firestore
         .collection('artisan-makers')
-        .doc()
-        .set({
-          name: this.makerName,
-          id: this.makerId,
-          slug: this.makerName.replaceAll(' ', '-').replaceAll('.', '-'),
-        })
+        .doc(this.newMaker.slug)
+        .set(this.newMaker)
         .then(() => {
           this.visible = false
           this.$message.success('Successfully added new maker.')

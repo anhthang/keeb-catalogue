@@ -11,7 +11,7 @@
     >
       <template slot="extra">
         <a v-if="makerInfo.website" :href="makerInfo.website" target="_blank">
-          <a-button key="3" icon="global" type="primary"> Website </a-button>
+          <a-button key="3" icon="global"> Website </a-button>
         </a>
         <a
           v-if="makerInfo.instagram"
