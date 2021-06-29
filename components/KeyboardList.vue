@@ -14,7 +14,7 @@
             </nuxt-link>
           </span>
         </template>
-        <template slot="actions">
+        <template v-if="item.url" slot="actions">
           <span key="home">
             <a-icon type="home" />
             <a :href="item.url" target="_blank">Home</a>

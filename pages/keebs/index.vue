@@ -1,6 +1,6 @@
 <template>
-  <div class="container artisan-maker-container">
-    <a-page-header title="Keyboard Maker">
+  <div class="container keyboard-maker-container">
+    <a-page-header title="Keyboard Makers">
       <a-button slot="extra" type="primary" icon="user-add" @click="showModal">
         Add
       </a-button>
@@ -70,7 +70,7 @@ export default {
     }
   },
   fetch() {
-    this.getMakers()
+    this.$store.dispatch('keebs/getMakers')
   },
   computed: {
     ...mapState('keebs', ['makers']),
@@ -79,9 +79,6 @@ export default {
     },
   },
   methods: {
-    getMakers() {
-      this.$store.dispatch('keebs/getMakers')
-    },
     showModal() {
       this.visible = !this.visible
     },
@@ -93,7 +90,7 @@ export default {
         .then(() => {
           this.visible = false
           this.$message.success('Successfully added new maker.')
-          this.getMakers()
+          this.$fetch()
         })
         .catch((e) => {
           this.$message.error(e.message)
@@ -102,3 +99,23 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.keyboard-maker-container {
+  .ant-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ant-card-cover {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .ant-card-head-title {
+    text-align: center;
+  }
+}
+</style>

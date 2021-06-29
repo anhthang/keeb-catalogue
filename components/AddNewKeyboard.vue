@@ -47,6 +47,17 @@
         <a-icon slot="prefix" type="link" />
       </a-input>
     </a-form-item>
+    <a-form-item label="Layout">
+      <a-select v-model="keyboard.layout">
+        <a-select-option
+          v-for="layout in layouts"
+          :key="layout"
+          :value="layout"
+        >
+          {{ layout }}
+        </a-select-option>
+      </a-select>
+    </a-form-item>
     <a-form-item label="Status">
       <a-select v-model="keyboard.status">
         <a-select-option
@@ -73,18 +84,20 @@ export default {
   data() {
     return {
       keyboard: {
-        name: undefined,
-        description: undefined,
-        start: undefined,
-        end: undefined,
-        img: undefined,
-        geekhack: undefined,
-        keyboard_id: undefined,
+        name: null,
+        description: null,
+        start: null,
+        end: null,
+        img: null,
+        geekhack: null,
+        keyboard_id: null,
         maker_id: this.makerId,
-        status: undefined,
-        url: undefined,
+        layout: null,
+        status: null,
+        url: null,
       },
       statuses: ['Live', 'Shipped', 'Closed'],
+      layouts: ['40%', 'HHKB', '60%', '65%', '75%', 'TKL'],
       KeyboardSvg,
     }
   },

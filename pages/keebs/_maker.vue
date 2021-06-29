@@ -9,7 +9,6 @@
       }"
     >
       <template slot="extra">
-        <!-- <SubmitNewKeyboard /> -->
         <a-button key="0" type="primary" @click="showModal">
           <a-icon
             :component="KeyboardSvg"
@@ -25,10 +24,11 @@
           <a-button key="2" icon="instagram"> Instagram </a-button>
         </a>
 
-        <a-modal v-model="visible" title="Add new keyboard">
-          <add-new-keyboard :maker-id="maker_id" />
+        <a-modal v-model="visible" title="Add new keyboard" @ok="onOk">
+          <add-new-keyboard ref="addNewKeyboard" :maker-id="makerId" />
         </a-modal>
       </template>
+
       <KeyboardList />
     </a-page-header>
   </div>
@@ -41,27 +41,41 @@ import KeyboardSvg from '@/components/icons/KeyboardSvg'
 export default {
   asyncData({ params }) {
     return {
-      maker_id: params.maker,
+      makerId: params.maker,
     }
   },
   data() {
     return {
       visible: false,
+      confirmLoading: false,
+      isOk: false,
       KeyboardSvg,
     }
   },
   fetch() {
-    this.$store.dispatch('keebs/getKeyboardsByMaker', this.maker_id)
+    if (!this.makers[this.makerId]) {
+      this.$store.dispatch('keebs/getKeyboardsByMaker', this.makerId)
+    }
   },
   computed: {
     ...mapState('keebs', ['makers']),
     maker() {
-      return this.makers?.[this.maker_id] || {}
+      return this.makers?.[this.makerId] || {}
     },
   },
   methods: {
     showModal() {
       this.visible = !this.visible
+    },
+    async onOk() {
+      this.confirmLoading = true
+
+      await this.$refs.addNewKeyboard.addKeyboard()
+
+      this.confirmLoading = false
+      this.visible = false
+
+      this.$fetch()
     },
   },
 }

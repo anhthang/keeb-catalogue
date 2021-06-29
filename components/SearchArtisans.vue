@@ -6,6 +6,7 @@
     placeholder="Search"
     :filter-option="false"
     :not-found-content="fetching ? undefined : null"
+    style="width: 100%"
     @search="fetchKeycaps"
     @change="handleChange"
   >

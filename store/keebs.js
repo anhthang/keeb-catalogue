@@ -105,6 +105,9 @@ export const mutations = {
     state.keyboards = keyboards
   },
   SET_MAKERS(state, makers) {
-    state.makers = keyBy(makers, (m) => slugify(m.name, { lower: true }))
+    state.makers = {
+      ...state.makers,
+      ...keyBy(makers, (m) => slugify(m.name, { lower: true })),
+    }
   },
 }
