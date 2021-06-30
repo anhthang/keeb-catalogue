@@ -33,16 +33,18 @@ export const actions = {
         commit('SET_MAKERS', makers)
       })
   },
-  async getKeyboardsByMaker({ commit }, makerId) {
+  async getKeyboardsByMaker({ commit, state }, makerId) {
     console.log('getting keyboards from', makerId)
 
-    const maker = await this.$fire.firestore
-      .collection('keyboard-makers')
-      .doc(makerId)
-      .get()
-      .then((d) => d.data())
+    if (!state.makers[makerId]) {
+      const maker = await this.$fire.firestore
+        .collection('keyboard-makers')
+        .doc(makerId)
+        .get()
+        .then((d) => d.data())
 
-    commit('SET_MAKERS', [maker])
+      commit('SET_MAKERS', [maker])
+    }
 
     await this.$fire.firestore
       .collection('keyboards')
@@ -61,7 +63,7 @@ export const actions = {
         commit('SET_KEYBOARDS', [])
       })
   },
-  async getKeyboardsByStatus({ commit }, status = 'live') {
+  async getKeyboardsByStatus({ commit, state }, status = 'live') {
     console.log('getting keyboards', status)
 
     let makerIds = []
@@ -85,18 +87,26 @@ export const actions = {
         commit('SET_KEYBOARDS', [])
       })
 
-    await this.$fire.firestore
-      .collection('keyboard-makers')
-      .where(this.$fireModule.firestore.FieldPath.documentId(), 'in', makerIds)
-      .get()
-      .then((doc) => {
-        const makers = []
-        doc.docs.forEach((d) => {
-          makers.push(d.data())
-        })
+    makerIds = makerIds.filter((id) => !state.makers[id])
 
-        commit('SET_MAKERS', makers)
-      })
+    if (makerIds.length) {
+      await this.$fire.firestore
+        .collection('keyboard-makers')
+        .where(
+          this.$fireModule.firestore.FieldPath.documentId(),
+          'in',
+          makerIds
+        )
+        .get()
+        .then((doc) => {
+          const makers = []
+          doc.docs.forEach((d) => {
+            makers.push(d.data())
+          })
+
+          commit('SET_MAKERS', makers)
+        })
+    }
   },
 }
 

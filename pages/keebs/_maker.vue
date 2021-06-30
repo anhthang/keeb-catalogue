@@ -53,9 +53,7 @@ export default {
     }
   },
   fetch() {
-    if (!this.makers[this.makerId]) {
-      this.$store.dispatch('keebs/getKeyboardsByMaker', this.makerId)
-    }
+    this.$store.dispatch('keebs/getKeyboardsByMaker', this.makerId)
   },
   computed: {
     ...mapState('keebs', ['makers']),

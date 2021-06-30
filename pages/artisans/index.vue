@@ -115,3 +115,15 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.artisan-maker-container {
+  text-align: center;
+  flex-direction: initial;
+
+  /** remove this if all maker had cover/logo */
+  .ant-card {
+    height: 100%;
+  }
+}
+</style>
