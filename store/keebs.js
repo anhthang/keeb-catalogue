@@ -13,6 +13,7 @@ export const state = () => {
       Shipped: 'success',
       Live: 'processing',
       Closed: 'default',
+      'Interest Check': 'default',
     },
     keyboards: [],
     makers: {},

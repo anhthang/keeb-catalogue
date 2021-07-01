@@ -28,7 +28,7 @@
       />
     </a-form-item>
     <a-form-item label="Date">
-      <a-range-picker @change="onSelectDate">
+      <a-range-picker format="DD/MM/YYYY" @change="onSelectDate">
         <a-icon slot="suffixIcon" type="calendar" />
       </a-range-picker>
     </a-form-item>
@@ -96,8 +96,8 @@ export default {
         status: null,
         url: null,
       },
-      statuses: ['Live', 'Shipped', 'Closed'],
-      layouts: ['40%', 'HHKB', '60%', '65%', '75%', 'TKL'],
+      statuses: ['Live', 'Interest Check', 'Shipped', 'Closed'],
+      layouts: ['Numpad', '40%', 'HHKB', '60%', '65%', '75%', 'TKL'],
       KeyboardSvg,
     }
   },

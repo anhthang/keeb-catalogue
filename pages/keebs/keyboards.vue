@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-page-header :title="titleMap[status]">
+    <a-page-header :title="pageTitle">
       <SubmitNewKeyboard slot="extra" />
       <KeyboardList />
     </a-page-header>
@@ -16,6 +16,7 @@ export default {
   },
   data() {
     return {
+      pageTitle: undefined,
       titleMap: {
         live: 'Live GBs',
         ic: 'Interest Check',
@@ -23,11 +24,13 @@ export default {
       },
     }
   },
+  fetch() {
+    this.boardByStatus(this.status)
+    this.pageTitle = this.titleMap[this.status]
+  },
   watchQuery({ status }) {
     this.boardByStatus(status)
-  },
-  mounted() {
-    this.boardByStatus(this.status)
+    this.pageTitle = this.titleMap[status]
   },
   methods: {
     boardByStatus(status) {

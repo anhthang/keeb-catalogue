@@ -49,7 +49,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { keyBy } from 'lodash'
+import { keyBy, sortBy } from 'lodash'
 
 export default {
   asyncData({ params }) {
@@ -70,7 +70,7 @@ export default {
       .get()
       .then((doc) => doc.data())
 
-    this.collectionItems = Object.values(doc || {})
+    this.collectionItems = sortBy(Object.values(doc || {}), 'name')
   },
   computed: {
     ...mapState('artisans', ['addToCollectionItems', 'collections']),

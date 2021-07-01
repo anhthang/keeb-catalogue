@@ -11,6 +11,7 @@ Building a catalog for mechanical keyboard community
 - Keyboard comparison
 
 ### Artisan
+- Mark a keycap as owned in collection
 - Show commission keycap or anything is not in keycap-archivist database
 
 ## Build Setup
