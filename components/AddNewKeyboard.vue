@@ -97,7 +97,7 @@ export default {
         url: null,
       },
       statuses: ['Live', 'Interest Check', 'Shipped', 'Closed'],
-      layouts: ['Numpad', '40%', 'HHKB', '60%', '65%', '75%', 'TKL'],
+      layouts: ['Numpad', '40%', 'HHKB', '60%', '65%', '75%', 'TKL', 'Alice'],
       KeyboardSvg,
     }
   },

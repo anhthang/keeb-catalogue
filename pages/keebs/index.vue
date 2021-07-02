@@ -29,7 +29,7 @@
 
       <a-row :gutter="[16, 16]" type="flex">
         <a-col
-          v-for="[makerId, maker] in Object.entries(makers)"
+          v-for="[makerId, maker] in keebMakers"
           :key="makerId"
           :xs="24"
           :sm="12"
@@ -55,6 +55,7 @@
 
 <script>
 import slugify from 'slugify'
+import { sortBy } from 'lodash'
 import { mapState } from 'vuex'
 
 export default {
@@ -74,6 +75,9 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['makers']),
+    keebMakers() {
+      return sortBy(Object.entries(this.makers), (i) => i[0])
+    },
     newMakerId() {
       return slugify(this.newMaker.name, { lower: true })
     },

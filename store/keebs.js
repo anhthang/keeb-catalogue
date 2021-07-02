@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { groupBy, keyBy } from 'lodash'
+import { groupBy, keyBy, chunk } from 'lodash'
 import slugify from 'slugify'
 const keyboardStatus = {
   ic: ['Interest Check'],
@@ -90,14 +90,11 @@ export const actions = {
 
     makerIds = makerIds.filter((id) => !state.makers[id])
 
-    if (makerIds.length) {
+    const chunks = chunk(makerIds, 10)
+    chunks.forEach(async (ids) => {
       await this.$fire.firestore
         .collection('keyboard-makers')
-        .where(
-          this.$fireModule.firestore.FieldPath.documentId(),
-          'in',
-          makerIds
-        )
+        .where(this.$fireModule.firestore.FieldPath.documentId(), 'in', ids)
         .get()
         .then((doc) => {
           const makers = []
@@ -107,7 +104,7 @@ export const actions = {
 
           commit('SET_MAKERS', makers)
         })
-    }
+    })
   },
 }
 

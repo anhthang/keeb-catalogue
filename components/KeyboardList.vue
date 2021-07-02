@@ -39,17 +39,16 @@
           class="keyboard-no-img"
           description="No Image"
         />
-        <a-list-item-meta @click="showDrawer(item)">
+        <a-list-item-meta :title="item.name" @click="showDrawer(item)">
+          <a-avatar
+            slot="avatar"
+            :src="makers[item.maker_id] && makers[item.maker_id].img"
+          />
           <a-badge
             slot="description"
             :status="badgeStatus[item.status]"
             :text="item.status"
           />
-          <a slot="title">{{ item.name }}</a>
-          <a-avatar v-if="makerName(item.maker_id)" slot="avatar">
-            {{ makerName(item.maker_id).charAt(0) }}
-          </a-avatar>
-          <a-avatar v-else slot="avatar" icon="user" />
         </a-list-item-meta>
         <a-descriptions :column="1" size="small">
           <a-descriptions-item v-if="item.layout" label="Layout">
