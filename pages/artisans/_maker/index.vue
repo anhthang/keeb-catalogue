@@ -22,11 +22,7 @@
         </a>
         <a v-if="makerInfo.discord" :href="makerInfo.discord" target="_blank">
           <a-button key="1">
-            <a-icon
-              :component="DiscordSvg"
-              class="discord-icon"
-              style="margin-top: -6px"
-            />
+            <a-icon :component="DiscordSvg" class="custom-icon" />
             Discord
           </a-button>
         </a>

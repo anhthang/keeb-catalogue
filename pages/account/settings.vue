@@ -47,7 +47,7 @@
                     <a-icon
                       slot="prefix"
                       :component="DiscordSvg"
-                      class="discord-icon"
+                      class="custom-icon"
                     />
                   </a-input>
                 </a-form-item>

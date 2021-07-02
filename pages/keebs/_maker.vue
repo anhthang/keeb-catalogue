@@ -10,11 +10,7 @@
     >
       <template slot="extra">
         <a-button key="0" type="primary" @click="showModal">
-          <a-icon
-            :component="KeyboardSvg"
-            class="discord-icon"
-            style="margin-top: -6px"
-          />
+          <a-icon :component="KeyboardSvg" class="custom-icon" />
           Add
         </a-button>
         <a v-if="maker.website" :href="maker.website" target="_blank">

@@ -23,22 +23,40 @@
             :lg="6"
             :xl="4"
           >
-            <a-card hoverable :title="cardTitle(colorway)">
+            <a-card hoverable>
+              <span slot="title" class="collection-title">
+                {{ cardTitle(colorway) }}
+                <a-icon
+                  v-if="colorway.owned"
+                  class="custom-icon"
+                  :component="CheckMarkSealSvg"
+                />
+              </span>
+
               <img
                 slot="cover"
                 loading="lazy"
                 :alt="colorway.name"
                 :src="colorway.img"
               />
-              <a-popconfirm
-                slot="extra"
-                title="Are you sure remove this cap?"
-                ok-text="Yes"
-                cancel-text="No"
-                @confirm="removeCap(colorway)"
-              >
-                <a-icon type="delete" />
-              </a-popconfirm>
+
+              <template slot="extra">
+                <a-dropdown :trigger="['hover']" placement="bottomCenter">
+                  <a-icon type="dash" />
+                  <a-menu slot="overlay">
+                    <a-menu-item key="0" @click="markOwned(colorway)">
+                      <a-icon
+                        class="custom-icon"
+                        :component="CheckMarkSealSvg"
+                      />
+                      Owned
+                    </a-menu-item>
+                    <a-menu-item key="1" @click="removeCap(colorway)">
+                      <a-icon type="delete" /> Remove
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </template>
             </a-card>
           </a-col>
         </a-row>
@@ -50,6 +68,7 @@
 <script>
 import { mapState } from 'vuex'
 import { keyBy, sortBy } from 'lodash'
+import CheckMarkSealSvg from '@/components/icons/CheckMarkSeal.vue'
 
 export default {
   asyncData({ params }) {
@@ -61,6 +80,7 @@ export default {
     return {
       visible: false,
       collectionItems: [],
+      CheckMarkSealSvg,
     }
   },
   async fetch() {
@@ -91,6 +111,21 @@ export default {
     },
     showModal() {
       this.visible = !this.visible
+    },
+    markOwned(clw) {
+      this.$fire.firestore
+        .collection(`users/${this.user.uid}/collections`)
+        .doc(this.collection)
+        .update({
+          [clw.id]: { ...clw, owned: true },
+        })
+        .then(() => {
+          this.$fetch()
+          this.$message.success('Updated successfully.')
+        })
+        .catch((err) => {
+          this.$message.error(err.message)
+        })
     },
     removeCap(clw) {
       this.collectionItems = this.collectionItems.filter((c) => c.id !== clw.id)
@@ -136,3 +171,11 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.collection-title {
+  .custom-icon {
+    color: crimson;
+  }
+}
+</style>

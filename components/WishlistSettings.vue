@@ -51,7 +51,7 @@
     </a-form-item>
     <a-form-item label="Discord">
       <a-input v-model="settings.social.discord" placeholder="Discord#0000">
-        <a-icon slot="prefix" :component="DiscordSvg" class="discord-icon" />
+        <a-icon slot="prefix" :component="DiscordSvg" class="custom-icon" />
       </a-input>
     </a-form-item>
     <a-form-item label="QQ">
