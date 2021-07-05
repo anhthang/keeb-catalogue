@@ -106,7 +106,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['database', 'collections']),
-    ...mapState(['user']),
+    ...mapState(['user', 'authenticated']),
     colorways() {
       return this.sort === 'name'
         ? sortBy(this.sculptInfo.colorways, 'name')
@@ -123,25 +123,48 @@ export default {
   },
   methods: {
     addToCollection(collection, clw) {
-      this.$fire.firestore
-        .collection(`users/${this.user.uid}/collections`)
-        .doc(collection.slug)
-        .update({
-          [clw.id]: {
-            id: clw.id,
-            name: clw.name,
-            img: clw.img,
-            sculpt_name: this.sculptInfo.name,
-          },
-        })
-        .then(() => {
-          this.$message.success(
-            `Successfully added ${clw.name} to the collection!`
-          )
-        })
-        .catch((e) => {
-          this.$message.error('Error adding sculpt to collection: ', e.message)
-        })
+      if (this.authenticated) {
+        this.$fire.firestore
+          .collection(`users/${this.user.uid}/collections`)
+          .doc(collection.slug)
+          .update({
+            [clw.id]: {
+              id: clw.id,
+              name: clw.name,
+              img: clw.img,
+              sculpt_name: this.sculptInfo.name,
+            },
+          })
+          .then(() => {
+            this.$message.success(
+              `Successfully added ${clw.name} to the collection!`
+            )
+          })
+          .catch((e) => {
+            this.$message.error('Adding sculpt to collection err: ', e.message)
+          })
+      } else {
+        const collectionMap =
+          JSON.parse(
+            localStorage.getItem(`KeebCatalogue_${collection.slug}`)
+          ) || {}
+
+        collectionMap[clw.id] = {
+          id: clw.id,
+          name: clw.name,
+          img: clw.img,
+          sculpt_name: this.sculptInfo.name,
+        }
+
+        localStorage.setItem(
+          `KeebCatalogue_${collection.slug}`,
+          JSON.stringify(collectionMap)
+        )
+
+        this.$message.success(
+          `Successfully added ${clw.name} to the collection!`
+        )
+      }
     },
     onChangeSortType(e) {
       this.sort = e.key

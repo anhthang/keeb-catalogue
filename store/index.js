@@ -36,7 +36,16 @@ export const mutations = {
       // perform logout operations
       state.authenticated = false
       state.user = {}
-      state.artisans.collections = []
+      state.artisans.collections = [
+        {
+          name: 'Wish',
+          slug: 'wish',
+        },
+        {
+          name: 'Trade',
+          slug: 'trade',
+        },
+      ]
       state.artisans.favoriteMakers = []
     } else {
       const { uid, email, emailVerified, displayName, photoURL } = authUser

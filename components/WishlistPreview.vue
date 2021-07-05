@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['wishlistSettings']),
-    ...mapState(['user']),
+    ...mapState(['user', 'authenticated']),
     kaSettings() {
       return {
         capsPerLine: this.wishlistSettings.caps_per_line,
@@ -148,14 +148,23 @@ export default {
       return `${clw.name} ${clw.sculpt_name}`
     },
     getUserCollections() {
-      this.$fire.firestore
-        .collection(`users/${this.user.uid}/collections`)
-        .get()
-        .then((doc) => {
-          doc.docs.forEach((d) => {
-            this.collection[d.id] = Object.values(d.data())
+      if (this.authenticated) {
+        this.$fire.firestore
+          .collection(`users/${this.user.uid}/collections`)
+          .get()
+          .then((doc) => {
+            doc.docs.forEach((d) => {
+              this.collection[d.id] = Object.values(d.data())
+            })
           })
-        })
+      } else {
+        const wish = JSON.parse(localStorage.getItem(`KeebCatalogue_wish`))
+        const trade = JSON.parse(localStorage.getItem(`KeebCatalogue_trade`))
+        this.collection = {
+          wish: Object.values(wish || {}),
+          trade: Object.values(trade || {}),
+        }
+      }
     },
     removeCap(colorway, type) {
       const vm = this

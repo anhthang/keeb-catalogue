@@ -2,8 +2,8 @@
   <div class="container artisan-container">
     <a-page-header title="Collection">
       <a-button
+        v-if="authenticated"
         slot="extra"
-        :disabled="!authenticated"
         type="primary"
         icon="file-add"
         @click="showModal"
@@ -17,7 +17,7 @@
       <a-row v-if="!authenticated" type="flex">
         <a-alert
           class="collection-alert"
-          message="You must log in before using this feature."
+          message="You must log in to sync the collections across devices. The current saved ones in local will not be synced."
           banner
         />
       </a-row>
@@ -35,6 +35,7 @@
           <nuxt-link :to="`/artisans/collection/${collection.slug}`">
             <a-card hoverable :title="collection.name">
               <a-popconfirm
+                v-if="authenticated"
                 slot="extra"
                 title="Are you sure delete this collection?"
                 ok-text="Yes"
@@ -125,5 +126,6 @@ export default {
 <style lang="less">
 .collection-alert {
   margin: 0 auto;
+  margin-bottom: 16px;
 }
 </style>

@@ -1,7 +1,13 @@
 <template>
   <div class="container artisan-container">
     <a-page-header :title="collectionName" @back="() => $router.go(-1)">
-      <a-button slot="extra" type="primary" icon="file-add" @click="showModal">
+      <a-button
+        v-if="authenticated"
+        slot="extra"
+        type="primary"
+        icon="file-add"
+        @click="showModal"
+      >
         Add
       </a-button>
       <a-modal
@@ -84,17 +90,22 @@ export default {
     }
   },
   async fetch() {
-    const doc = await this.$fire.firestore
-      .collection(`users/${this.user.uid}/collections`)
-      .doc(this.collection)
-      .get()
-      .then((doc) => doc.data())
+    let doc
+    if (this.authenticated) {
+      doc = await this.$fire.firestore
+        .collection(`users/${this.user.uid}/collections`)
+        .doc(this.collection)
+        .get()
+        .then((doc) => doc.data())
+    } else {
+      doc = JSON.parse(localStorage.getItem(`KeebCatalogue_${this.collection}`))
+    }
 
     this.collectionItems = sortBy(Object.values(doc || {}), 'name')
   },
   computed: {
     ...mapState('artisans', ['addToCollectionItems', 'collections']),
-    ...mapState(['user']),
+    ...mapState(['user', 'authenticated']),
     selectedIds() {
       return this.collectionItems.map((c) => c.id)
     },
@@ -113,37 +124,56 @@ export default {
       this.visible = !this.visible
     },
     markOwned(clw) {
-      this.$fire.firestore
-        .collection(`users/${this.user.uid}/collections`)
-        .doc(this.collection)
-        .update({
-          [clw.id]: { ...clw, owned: true },
-        })
-        .then(() => {
-          this.$fetch()
-          this.$message.success('Updated successfully.')
-        })
-        .catch((err) => {
-          this.$message.error(err.message)
-        })
+      if (this.authenticated) {
+        this.$fire.firestore
+          .collection(`users/${this.user.uid}/collections`)
+          .doc(this.collection)
+          .update({
+            [clw.id]: { ...clw, owned: true },
+          })
+          .then(() => {
+            this.$fetch()
+            this.$message.success('Updated successfully.')
+          })
+          .catch((err) => {
+            this.$message.error(err.message)
+          })
+      } else {
+        const collectionMap = keyBy(this.collectionItems, 'id')
+        collectionMap[clw.id].owned = true
+
+        localStorage.setItem(
+          `KeebCatalogue_${this.collection}`,
+          JSON.stringify(collectionMap)
+        )
+
+        this.collectionItems = Object.values(collectionMap)
+      }
     },
     removeCap(clw) {
       this.collectionItems = this.collectionItems.filter((c) => c.id !== clw.id)
 
-      const docRef = this.$fire.firestore
-        .collection(`users/${this.user.uid}/collections`)
-        .doc(this.collection)
+      if (this.authenticated) {
+        this.$fire.firestore
+          .collection(`users/${this.user.uid}/collections`)
+          .doc(this.collection)
+          .update({
+            [clw.id]: this.$fireModule.firestore.FieldValue.delete(),
+          })
+          .then(() => {
+            this.$message.success(`${clw.name} removed from the collection.`)
+          })
+          .catch((err) => {
+            this.$message.error(err.message)
+          })
+      } else {
+        localStorage.setItem(
+          `KeebCatalogue_${this.collection}`,
+          JSON.stringify(keyBy(this.collectionItems, 'id'))
+        )
 
-      docRef
-        .update({
-          [clw.id]: this.$fireModule.firestore.FieldValue.delete(),
-        })
-        .then(() => {
-          this.$message.success(`${clw.name} removed from the collection.`)
-        })
-        .catch((err) => {
-          this.$message.error(err.message)
-        })
+        this.$message.success(`${clw.name} removed from the collection.`)
+      }
     },
     async addToCollection() {
       const caps = await this.$store.dispatch(
