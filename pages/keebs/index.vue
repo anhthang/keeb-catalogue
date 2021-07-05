@@ -1,7 +1,13 @@
 <template>
   <div class="container keyboard-maker-container">
     <a-page-header title="Keyboard Makers">
-      <a-button slot="extra" type="primary" icon="user-add" @click="showModal">
+      <a-button
+        v-if="authenticated"
+        slot="extra"
+        type="primary"
+        icon="user-add"
+        @click="showModal"
+      >
         Add
       </a-button>
       <a-modal v-model="visible" title="Add new maker" @ok="addMaker">
@@ -75,6 +81,7 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['makers']),
+    ...mapState(['authenticated']),
     keebMakers() {
       return sortBy(Object.entries(this.makers), (i) => i[0])
     },

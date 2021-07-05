@@ -9,7 +9,12 @@
       }"
     >
       <template slot="extra">
-        <a-button key="0" type="primary" @click="showModal">
+        <a-button
+          v-if="authenticated"
+          key="0"
+          type="primary"
+          @click="showModal"
+        >
           <a-icon :component="KeyboardSvg" class="custom-icon" />
           Add
         </a-button>
@@ -53,6 +58,7 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['makers']),
+    ...mapState(['authenticated']),
     maker() {
       return this.makers?.[this.makerId] || {}
     },

@@ -15,7 +15,9 @@
         </a-menu-item>
 
         <a-sub-menu key="2">
-          <span slot="title"><a-icon type="desktop" /> Keebs</span>
+          <span slot="title">
+            <a-icon :component="KeyboardSvg" class="custom-icon" /> Keebs
+          </span>
           <a-menu-item key="3">
             <nuxt-link to="/keebs/keyboards?status=live">
               <a-icon type="forward" />Live GBs
@@ -69,3 +71,15 @@
     </a-layout-footer>
   </a-layout>
 </template>
+
+<script>
+import KeyboardSvg from '@/components/icons/KeyboardSvg.vue'
+
+export default {
+  data() {
+    return {
+      KeyboardSvg,
+    }
+  },
+}
+</script>
