@@ -50,7 +50,7 @@
     <a-form-item label="Layout">
       <a-select v-model="keyboard.layout">
         <a-select-option
-          v-for="layout in layouts"
+          v-for="layout in Object.values(layoutMap)"
           :key="layout"
           :value="layout"
         >
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import slugify from 'slugify'
 import KeyboardSvg from './icons/KeyboardSvg.vue'
 
@@ -97,9 +98,11 @@ export default {
         url: null,
       },
       statuses: ['Live', 'Interest Check', 'Shipped', 'Closed'],
-      layouts: ['Numpad', '40%', 'HHKB', '60%', '65%', '75%', 'TKL', 'Alice'],
       KeyboardSvg,
     }
+  },
+  computed: {
+    ...mapState('keebs', ['layoutMap']),
   },
   watch: {
     'keyboard.name'(val) {

@@ -52,7 +52,9 @@
         </a-list-item-meta>
         <a-descriptions :column="1" size="small">
           <a-descriptions-item v-if="item.layout" label="Layout">
-            {{ item.layout }}
+            <nuxt-link :to="`/keebs/layout/${layoutSlug(item.layout)}`">
+              {{ item.layout }}
+            </nuxt-link>
           </a-descriptions-item>
           <a-descriptions-item v-if="item.start" label="GB Time">
             {{ item.start }} - {{ item.end }}
@@ -73,6 +75,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import slugify from 'slugify'
 
 export default {
   data() {
@@ -88,6 +91,9 @@ export default {
     ...mapState('keebs', ['badgeStatus', 'keyboards', 'makers']),
     makerName() {
       return (makerId) => this.makers[makerId]?.name
+    },
+    layoutSlug() {
+      return (layout) => slugify(layout, { lower: true })
     },
   },
   methods: {

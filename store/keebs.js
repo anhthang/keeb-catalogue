@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { groupBy, keyBy, chunk } from 'lodash'
 import slugify from 'slugify'
+
 const keyboardStatus = {
   ic: ['Interest Check'],
   live: ['Running', 'Live'],
@@ -14,6 +15,18 @@ export const state = () => {
       Live: 'processing',
       Closed: 'default',
       'Interest Check': 'default',
+    },
+    layoutMap: {
+      '40percent': '40%',
+      '60percent': '60%',
+      '65percent': '65%',
+      '75percent': '75%',
+      1800: '1800',
+      alice: 'Alice',
+      hhkb: 'HHKB',
+      numpad: 'Numpad',
+      tkl: 'TKL',
+      fullsize: 'Full-size',
     },
     keyboards: [],
     makers: {},
@@ -72,6 +85,48 @@ export const actions = {
     await this.$fire.firestore
       .collection('keyboards')
       .where('status', 'in', keyboardStatus[status])
+      .get()
+      .then((doc) => {
+        const keyboards = []
+        doc.docs.forEach((d) => {
+          keyboards.push(d.data())
+        })
+
+        commit('SET_KEYBOARDS', keyboards)
+
+        makerIds = Object.keys(groupBy(keyboards, 'maker_id'))
+      })
+      .catch((e) => {
+        console.error(e.message)
+        commit('SET_KEYBOARDS', [])
+      })
+
+    makerIds = makerIds.filter((id) => !state.makers[id])
+
+    const chunks = chunk(makerIds, 10)
+    chunks.forEach(async (ids) => {
+      await this.$fire.firestore
+        .collection('keyboard-makers')
+        .where(this.$fireModule.firestore.FieldPath.documentId(), 'in', ids)
+        .get()
+        .then((doc) => {
+          const makers = []
+          doc.docs.forEach((d) => {
+            makers.push(d.data())
+          })
+
+          commit('SET_MAKERS', makers)
+        })
+    })
+  },
+  async getKeyboardsByLayout({ commit, state }, layout) {
+    console.log('getting keyboards by layout', layout)
+
+    let makerIds = []
+
+    await this.$fire.firestore
+      .collection('keyboards')
+      .where('layout', '==', state.layoutMap[layout])
       .get()
       .then((doc) => {
         const keyboards = []

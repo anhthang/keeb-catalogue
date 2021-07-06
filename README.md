@@ -5,13 +5,11 @@ Building a catalog for mechanical keyboard community
 - Fix dark mode
 
 ### Keyboard
-- Layout view
 - Calendar view
 - Favorite/Wishlist page
 - Keyboard comparison
 
 ### Artisan
-- Mark a keycap as owned in collection
 - Show commission keycap or anything is not in keycap-archivist database
 
 ## Build Setup
