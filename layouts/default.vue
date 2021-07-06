@@ -19,23 +19,23 @@
             <a-icon :component="KeyboardSvg" class="custom-icon" /> Keebs
           </span>
           <a-menu-item key="3">
-            <nuxt-link to="/keebs/keyboards?status=live">
+            <nuxt-link to="/keebs">
               <a-icon type="forward" />Live GBs
             </nuxt-link>
           </a-menu-item>
           <a-menu-item key="4">
-            <nuxt-link to="/keebs/keyboards?status=ic">
+            <nuxt-link to="/keebs?status=ic">
               <a-icon type="question-circle" />Interest Check
             </nuxt-link>
           </a-menu-item>
           <a-menu-item key="5">
-            <nuxt-link to="/keebs/keyboards?status=closed">
+            <nuxt-link to="/keebs?status=closed">
               <a-icon type="backward" />Previous GBs
             </nuxt-link>
           </a-menu-item>
           <a-menu-divider />
           <a-menu-item key="2.1">
-            <nuxt-link to="/keebs">
+            <nuxt-link to="/keebs/maker">
               <a-icon type="user-add" />Makers
             </nuxt-link>
           </a-menu-item>
@@ -44,7 +44,7 @@
         <a-sub-menu key="6">
           <span slot="title"><a-icon type="user" /> Artisans </span>
           <a-menu-item key="7">
-            <nuxt-link to="/artisans">
+            <nuxt-link to="/artisans/maker">
               <a-icon type="user-add" />Makers
             </nuxt-link>
           </a-menu-item>

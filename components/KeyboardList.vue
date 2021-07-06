@@ -9,7 +9,7 @@
         <template slot="actions">
           <span key="user">
             <a-icon type="user" />
-            <nuxt-link :to="`/keebs/${item.maker_id}`">
+            <nuxt-link :to="`/keebs/maker/${item.maker_id}`">
               {{ makerName(item.maker_id) }}
             </nuxt-link>
           </span>
