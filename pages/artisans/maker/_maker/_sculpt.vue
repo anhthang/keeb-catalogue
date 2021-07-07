@@ -72,6 +72,8 @@
             </a-col>
           </a-row>
         </a-spin>
+
+        <conflict-sync-modal />
       </div>
     </a-page-header>
   </div>

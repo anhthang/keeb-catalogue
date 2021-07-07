@@ -14,6 +14,8 @@
         <a-input v-model="collectionName" placeholder="Enter collection name" />
       </a-modal>
 
+      <conflict-sync-modal />
+
       <a-row v-if="!authenticated" type="flex">
         <a-alert
           class="collection-alert"
@@ -55,8 +57,10 @@
 <script>
 import { mapState } from 'vuex'
 import slugify from 'slugify'
+import ConflictSyncModal from '~/components/ConflictSyncModal.vue'
 
 export default {
+  components: { ConflictSyncModal },
   data() {
     return {
       visible: false,

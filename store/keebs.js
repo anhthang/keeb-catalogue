@@ -26,7 +26,7 @@ export const state = () => {
       hhkb: 'HHKB',
       numpad: 'Numpad',
       tkl: 'TKL',
-      fullsize: 'Full-size',
+      fullsize: 'Fullsize',
     },
     keyboards: [],
     makers: {},

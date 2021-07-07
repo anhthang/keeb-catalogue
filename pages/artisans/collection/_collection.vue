@@ -18,6 +18,8 @@
         <search-artisans :selected="selectedIds" :visible="visible" />
       </a-modal>
 
+      <conflict-sync-modal />
+
       <div>
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
