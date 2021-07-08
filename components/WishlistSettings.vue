@@ -1,5 +1,8 @@
 <template>
   <a-card title="Settings" size="small" class="wishlist-settings">
+    <template #extra>
+      <a-button type="link" />
+    </template>
     <!-- <a-form-item label="Caps per Line">
       <a-input-number v-model="settings.caps_per_line" :min="1" :max="10" />
     </a-form-item> -->

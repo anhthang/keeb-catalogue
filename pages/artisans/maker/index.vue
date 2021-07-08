@@ -10,7 +10,12 @@
       >
         Add
       </a-button>
-      <a-modal v-model="visible" title="Add new maker" @ok="addMaker">
+      <a-modal
+        v-model="visible"
+        title="Add new maker"
+        :confirm-loading="confirmLoading"
+        @ok="addMaker"
+      >
         <a-form-item label="Name">
           <a-input v-model="newMaker.name">
             <a-icon slot="prefix" type="user" />
@@ -69,6 +74,7 @@ export default {
   data() {
     return {
       visible: false,
+      confirmLoading: false,
       newMaker: {
         name: undefined,
         id: undefined,
@@ -101,15 +107,18 @@ export default {
       this.visible = true
     },
     addMaker() {
+      this.confirmLoading = true
       this.$fire.firestore
         .collection('artisan-makers')
         .doc(this.newMaker.slug)
         .set(this.newMaker)
         .then(() => {
+          this.confirmLoading = false
           this.visible = false
           this.$message.success('Successfully added new maker.')
         })
         .catch((e) => {
+          this.confirmLoading = false
           this.$message.error(e.message)
         })
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <a-page-header :title="`${layoutMap[layout]} Keyboards`">
-      <KeyboardList />
+      <keyboard-list :loading="loading" />
     </a-page-header>
   </div>
 </template>
@@ -18,11 +18,15 @@ export default {
   },
   data() {
     return {
+      loading: false,
       KeyboardSvg,
     }
   },
   fetch() {
-    this.$store.dispatch('keebs/getKeyboardsByLayout', this.layout)
+    this.loading = true
+    this.$store.dispatch('keebs/getKeyboardsByLayout', this.layout).then(() => {
+      this.loading = false
+    })
   },
   computed: {
     ...mapState('keebs', ['makers', 'layoutMap']),

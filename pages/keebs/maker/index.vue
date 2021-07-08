@@ -10,7 +10,12 @@
       >
         Add
       </a-button>
-      <a-modal v-model="visible" title="Add new maker" @ok="addMaker">
+      <a-modal
+        v-model="visible"
+        title="Add new maker"
+        :confirm-loading="confirmLoading"
+        @ok="addMaker"
+      >
         <a-form-item label="Name">
           <a-input v-model="newMaker.name">
             <a-icon slot="prefix" type="file-text" />
@@ -68,6 +73,7 @@ export default {
   data() {
     return {
       visible: false,
+      confirmLoading: false,
       newMaker: {
         name: null,
         img: null,
@@ -94,16 +100,19 @@ export default {
       this.visible = !this.visible
     },
     addMaker() {
+      this.confirmLoading = true
       this.$fire.firestore
         .collection('keyboard-makers')
         .doc(this.newMakerId)
         .set(this.newMaker)
         .then(() => {
+          this.confirmLoading = false
           this.visible = false
           this.$message.success('Successfully added new maker.')
           this.$fetch()
         })
         .catch((e) => {
+          this.confirmLoading = false
           this.$message.error(e.message)
         })
     },

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <a-page-header :title="pageTitle">
-      <SubmitNewKeyboard slot="extra" />
-      <KeyboardList />
+      <submit-new-keyboard slot="extra" />
+      <keyboard-list :loading="loading" />
     </a-page-header>
   </div>
 </template>
@@ -17,6 +17,7 @@ export default {
   data() {
     return {
       pageTitle: undefined,
+      loading: false,
       titleMap: {
         live: 'Live GBs',
         ic: 'Interest Check',
@@ -34,7 +35,10 @@ export default {
   },
   methods: {
     boardByStatus(status) {
-      this.$store.dispatch('keebs/getKeyboardsByStatus', status)
+      this.loading = true
+      this.$store.dispatch('keebs/getKeyboardsByStatus', status).then(() => {
+        this.loading = false
+      })
     },
   },
 }

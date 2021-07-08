@@ -25,12 +25,17 @@
           <a-button key="2" icon="instagram"> Instagram </a-button>
         </a>
 
-        <a-modal v-model="visible" title="Add new keyboard" @ok="onOk">
+        <a-modal
+          v-model="visible"
+          title="Add new keyboard"
+          :confirm-loading="confirmLoading"
+          @ok="onOk"
+        >
           <add-new-keyboard ref="addNewKeyboard" :maker-id="makerId" />
         </a-modal>
       </template>
 
-      <KeyboardList />
+      <keyboard-list :loading="loading" />
     </a-page-header>
   </div>
 </template>
@@ -48,13 +53,17 @@ export default {
   data() {
     return {
       visible: false,
+      loading: false,
       confirmLoading: false,
       isOk: false,
       KeyboardSvg,
     }
   },
   fetch() {
-    this.$store.dispatch('keebs/getKeyboardsByMaker', this.makerId)
+    this.loading = true
+    this.$store.dispatch('keebs/getKeyboardsByMaker', this.makerId).then(() => {
+      this.loading = false
+    })
   },
   computed: {
     ...mapState('keebs', ['makers']),

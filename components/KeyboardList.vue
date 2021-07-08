@@ -4,6 +4,7 @@
       item-layout="vertical"
       :data-source="keyboards"
       :pagination="pagination"
+      :loading="loading"
     >
       <a-list-item slot="renderItem" key="item.name" slot-scope="item">
         <template slot="actions">
@@ -65,7 +66,8 @@
         </a-descriptions>
       </a-list-item>
     </a-list>
-    <KeyboardDetails
+
+    <keyboard-details
       :visible="visible"
       :on-close="onClose"
       :keyboard="currentKeyboard"
@@ -78,6 +80,8 @@ import { mapState } from 'vuex'
 import slugify from 'slugify'
 
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['loading'],
   data() {
     return {
       currentKeyboard: {},
