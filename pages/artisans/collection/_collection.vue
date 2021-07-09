@@ -20,7 +20,7 @@
 
       <conflict-sync-modal />
 
-      <div>
+      <a-spin :spinning="loading">
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
             v-for="colorway in collectionItems"
@@ -68,7 +68,7 @@
             </a-card>
           </a-col>
         </a-row>
-      </div>
+      </a-spin>
     </a-page-header>
   </div>
 </template>
@@ -87,11 +87,13 @@ export default {
   data() {
     return {
       visible: false,
+      loading: false,
       collectionItems: [],
       CheckMarkSealSvg,
     }
   },
   async fetch() {
+    this.loading = true
     let doc
     if (this.authenticated) {
       doc = await this.$fire.firestore
@@ -104,6 +106,8 @@ export default {
     }
 
     this.collectionItems = sortBy(Object.values(doc || {}), 'name')
+
+    this.loading = false
   },
   computed: {
     ...mapState('artisans', ['addToCollectionItems', 'collections']),

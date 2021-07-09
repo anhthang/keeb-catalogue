@@ -3,7 +3,7 @@
     <a-list
       item-layout="vertical"
       :data-source="keyboards"
-      :pagination="pagination"
+      :pagination="keyboards.length > pageSize ? { pageSize } : false"
       :loading="loading"
     >
       <a-list-item slot="renderItem" key="item.name" slot-scope="item">
@@ -80,15 +80,14 @@ import { mapState } from 'vuex'
 import slugify from 'slugify'
 
 export default {
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['loading'],
+  props: {
+    loading: Boolean,
+  },
   data() {
     return {
       currentKeyboard: {},
       visible: false,
-      pagination: {
-        pageSize: 5,
-      },
+      pageSize: 5,
     }
   },
   computed: {

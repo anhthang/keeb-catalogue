@@ -17,64 +17,63 @@
           <a-button :icon="sortIcon"> Sort By </a-button>
         </a-dropdown>
       </template>
-      <div>
-        <a-spin tip="Loading..." :spinning="loading">
-          <a-row :gutter="[16, 16]" type="flex">
-            <a-col
-              v-for="colorway in colorways"
-              :key="colorway.id"
-              :xs="24"
-              :sm="12"
-              :md="8"
-              :lg="6"
-              :xl="4"
-            >
-              <a-card hoverable :title="colorway.name">
-                <img
-                  slot="cover"
-                  loading="lazy"
-                  :alt="colorway.name"
-                  :src="colorway.img"
-                />
-                <template slot="extra">
-                  <a-dropdown :trigger="['hover']" placement="bottomCenter">
-                    <a-icon type="dash" />
-                    <a-menu slot="overlay">
-                      <a-menu-item key="0">Report</a-menu-item>
-                    </a-menu>
-                  </a-dropdown>
-                </template>
-                <template slot="actions" class="ant-card-actions">
-                  <a-dropdown :trigger="['click']" placement="topCenter">
-                    <a-icon type="save" />
-                    <a-menu slot="overlay">
-                      <a-sub-menu
-                        title="Add to Collection"
-                        :disabled="!collections.length"
-                      >
-                        <a-menu-item
-                          v-for="collection in collections"
-                          :key="collection.slug"
-                          @click="addToCollection(collection, colorway)"
-                        >
-                          {{ collection.name }}
-                        </a-menu-item>
-                      </a-sub-menu>
-                    </a-menu>
-                  </a-dropdown>
-                </template>
-                <a-card-meta v-if="colorway.releaseDate">
-                  <template slot="description">
-                    {{ colorway.releaseDate }}
-                  </template>
-                </a-card-meta>
-              </a-card>
-            </a-col>
-          </a-row>
-        </a-spin>
 
-        <conflict-sync-modal />
-      </div>
+      <a-spin :spinning="loading">
+        <a-row :gutter="[16, 16]" type="flex">
+          <a-col
+            v-for="colorway in colorways"
+            :key="colorway.id"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+            :xl="4"
+          >
+            <a-card hoverable :title="colorway.name">
+              <img
+                slot="cover"
+                loading="lazy"
+                :alt="colorway.name"
+                :src="colorway.img"
+              />
+              <template slot="extra">
+                <a-dropdown :trigger="['hover']" placement="bottomCenter">
+                  <a-icon type="dash" />
+                  <a-menu slot="overlay">
+                    <a-menu-item key="0">Report</a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </template>
+              <template slot="actions" class="ant-card-actions">
+                <a-dropdown :trigger="['click']" placement="topCenter">
+                  <a-icon type="save" />
+                  <a-menu slot="overlay">
+                    <a-sub-menu
+                      title="Add to Collection"
+                      :disabled="!collections.length"
+                    >
+                      <a-menu-item
+                        v-for="collection in collections"
+                        :key="collection.slug"
+                        @click="addToCollection(collection, colorway)"
+                      >
+                        {{ collection.name }}
+                      </a-menu-item>
+                    </a-sub-menu>
+                  </a-menu>
+                </a-dropdown>
+              </template>
+              <a-card-meta v-if="colorway.releaseDate">
+                <template slot="description">
+                  {{ colorway.releaseDate }}
+                </template>
+              </a-card-meta>
+            </a-card>
+          </a-col>
+        </a-row>
+      </a-spin>
+
+      <conflict-sync-modal />
     </a-page-header>
   </div>
 </template>

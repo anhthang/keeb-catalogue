@@ -28,41 +28,37 @@
         </a-form-item>
       </a-modal>
 
-      <div>
-        <a-divider v-if="favorite.length" orientation="left">
-          Favorite
-        </a-divider>
-        <a-row :gutter="[16, 16]" type="flex">
-          <a-col
-            v-for="maker in favorite"
-            :key="maker.id"
-            :xs="24"
-            :sm="12"
-            :md="8"
-            :lg="6"
-            :xl="4"
-          >
-            <maker-card :favorite="true" :maker="maker" />
-          </a-col>
-        </a-row>
+      <a-divider v-if="favorite.length" orientation="left">
+        Favorite
+      </a-divider>
+      <a-row :gutter="[16, 16]" type="flex">
+        <a-col
+          v-for="maker in favorite"
+          :key="maker.id"
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+          :xl="4"
+        >
+          <maker-card :favorite="true" :maker="maker" />
+        </a-col>
+      </a-row>
 
-        <a-divider v-if="favorite.length" orientation="left">
-          Makers
-        </a-divider>
-        <a-row :gutter="[16, 16]" type="flex">
-          <a-col
-            v-for="maker in otherMakers"
-            :key="maker.id"
-            :xs="24"
-            :sm="12"
-            :md="8"
-            :lg="6"
-            :xl="4"
-          >
-            <maker-card :maker="maker" />
-          </a-col>
-        </a-row>
-      </div>
+      <a-divider v-if="favorite.length" orientation="left"> Makers </a-divider>
+      <a-row :gutter="[16, 16]" type="flex">
+        <a-col
+          v-for="maker in otherMakers"
+          :key="maker.id"
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+          :xl="4"
+        >
+          <maker-card :maker="maker" />
+        </a-col>
+      </a-row>
     </a-page-header>
   </div>
 </template>
@@ -82,6 +78,9 @@ export default {
       },
     }
   },
+  fetch() {
+    this.$store.dispatch('artisans/getArtisanMakers')
+  },
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     ...mapState(['authenticated']),
@@ -94,13 +93,11 @@ export default {
   },
   watch: {
     'newMaker.name'() {
-      this.newMaker.slug = this.makerName
+      this.newMaker.slug = this.newMaker.name
         .replaceAll(' ', '-')
         .replaceAll('.', '-')
+        .toLowerCase()
     },
-  },
-  beforeMount() {
-    this.$store.dispatch('artisans/getArtisanMakers')
   },
   methods: {
     showModal() {
@@ -115,6 +112,7 @@ export default {
         .then(() => {
           this.confirmLoading = false
           this.visible = false
+          this.$fetch()
           this.$message.success('Successfully added new maker.')
         })
         .catch((e) => {

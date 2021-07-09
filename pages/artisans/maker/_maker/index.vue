@@ -32,32 +32,31 @@
           </a-button>
         </a>
       </template>
-      <div>
-        <a-spin tip="Loading..." :spinning="loading">
-          <a-row :gutter="[16, 16]" type="flex">
-            <a-col
-              v-for="sculpt in sculpts"
-              :key="sculpt.id"
-              :xs="24"
-              :sm="12"
-              :md="8"
-              :lg="6"
-              :xl="4"
-            >
-              <nuxt-link :to="`/artisans/maker/${maker}/${sculpt.slug}`">
-                <a-card hoverable :title="sculpt.name">
-                  <img
-                    slot="cover"
-                    loading="lazy"
-                    :alt="sculpt.name"
-                    :src="sculpt.preview"
-                  />
-                </a-card>
-              </nuxt-link>
-            </a-col>
-          </a-row>
-        </a-spin>
-      </div>
+
+      <a-spin :spinning="loading">
+        <a-row :gutter="[16, 16]" type="flex">
+          <a-col
+            v-for="sculpt in sculpts"
+            :key="sculpt.id"
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+            :xl="4"
+          >
+            <nuxt-link :to="`/artisans/maker/${maker}/${sculpt.slug}`">
+              <a-card hoverable :title="sculpt.name">
+                <img
+                  slot="cover"
+                  loading="lazy"
+                  :alt="sculpt.name"
+                  :src="sculpt.preview"
+                />
+              </a-card>
+            </nuxt-link>
+          </a-col>
+        </a-row>
+      </a-spin>
     </a-page-header>
   </div>
 </template>
