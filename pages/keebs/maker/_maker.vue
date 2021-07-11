@@ -24,6 +24,12 @@
         <a v-if="maker.instagram" :href="maker.instagram" target="_blank">
           <a-button key="2" icon="instagram"> Instagram </a-button>
         </a>
+        <a v-if="maker.discord" :href="maker.discord" target="_blank">
+          <a-button key="3">
+            <a-icon :component="DiscordSvg" class="custom-icon" />
+            Discord
+          </a-button>
+        </a>
 
         <a-modal
           v-model="visible"
@@ -43,6 +49,7 @@
 <script>
 import { mapState } from 'vuex'
 import KeyboardSvg from '@/components/icons/KeyboardSvg'
+import DiscordSvg from '@/components/icons/DiscordSvg'
 
 export default {
   asyncData({ params }) {
@@ -57,6 +64,7 @@ export default {
       confirmLoading: false,
       isOk: false,
       KeyboardSvg,
+      DiscordSvg,
     }
   },
   fetch() {

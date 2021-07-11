@@ -52,13 +52,19 @@
           />
         </a-list-item-meta>
         <a-descriptions :column="1" size="small">
+          <a-descriptions-item v-if="item.price" label="Price">
+            ${{ item.price }}
+          </a-descriptions-item>
           <a-descriptions-item v-if="item.layout" label="Layout">
             <nuxt-link :to="`/keebs/layout/${layoutSlug(item.layout)}`">
               {{ item.layout }}
             </nuxt-link>
           </a-descriptions-item>
-          <a-descriptions-item v-if="item.start" label="GB Time">
+          <a-descriptions-item v-if="item.start && item.end" label="GB Time">
             {{ item.start }} - {{ item.end }}
+          </a-descriptions-item>
+          <a-descriptions-item v-else-if="item.start" label="GB Date">
+            {{ item.start }}
           </a-descriptions-item>
           <a-descriptions-item>
             {{ item.description }}

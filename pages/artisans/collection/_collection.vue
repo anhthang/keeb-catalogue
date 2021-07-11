@@ -76,7 +76,7 @@
 <script>
 import { mapState } from 'vuex'
 import { keyBy, sortBy } from 'lodash'
-import CheckMarkSealSvg from '@/components/icons/CheckMarkSealSvg.vue'
+import CheckMarkSealSvg from '@/components/icons/CheckMarkSealSvg'
 
 export default {
   asyncData({ params }) {

@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import KeyboardSvg from '@/components/icons/KeyboardSvg.vue'
+import KeyboardSvg from '@/components/icons/KeyboardSvg'
 
 export default {
   data() {

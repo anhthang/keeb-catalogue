@@ -31,6 +31,11 @@
             <a-icon slot="prefix" type="instagram" />
           </a-input>
         </a-form-item>
+        <a-form-item label="Discord">
+          <a-input v-model="newMaker.discord">
+            <a-icon slot="prefix" :component="DiscordSvg" />
+          </a-input>
+        </a-form-item>
         <a-form-item label="Logo">
           <a-input v-model="newMaker.img">
             <a-icon slot="prefix" type="file-image" />
@@ -68,17 +73,20 @@
 import slugify from 'slugify'
 import { sortBy } from 'lodash'
 import { mapState } from 'vuex'
+import DiscordSvg from '@/components/icons/DiscordSvg'
 
 export default {
   data() {
     return {
       visible: false,
       confirmLoading: false,
+      DiscordSvg,
       newMaker: {
         name: null,
         img: null,
         website: null,
         instagram: null,
+        discord: null,
       },
     }
   },

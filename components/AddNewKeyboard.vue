@@ -5,6 +5,17 @@
         <a-icon slot="prefix" type="font-size" />
       </a-input>
     </a-form-item>
+    <a-form-item label="Price">
+      <a-input-number
+        v-model="keyboard.price"
+        :formatter="
+          (value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        "
+        :parser="(value) => value.replace(/\$\s?|(,*)/g, '')"
+      >
+        <a-icon slot="prefix" type="number" />
+      </a-input-number>
+    </a-form-item>
     <a-form-item label="Identity">
       <a-input-group>
         <a-row :gutter="8">
@@ -75,7 +86,7 @@
 <script>
 import { mapState } from 'vuex'
 import slugify from 'slugify'
-import KeyboardSvg from './icons/KeyboardSvg.vue'
+import KeyboardSvg from './icons/KeyboardSvg'
 
 export default {
   props: {
@@ -96,6 +107,7 @@ export default {
         layout: null,
         status: null,
         url: null,
+        price: null,
       },
       statuses: ['Live', 'Interest Check', 'Shipped', 'Closed'],
       KeyboardSvg,
@@ -133,6 +145,7 @@ export default {
 <style lang="less">
 .add-new-keyboard {
   .ant-calendar-picker,
+  .ant-input-number,
   .ant-select {
     width: 100%;
   }
