@@ -79,6 +79,12 @@ import { mapState } from 'vuex'
 import DiscordSvg from '@/components/icons/DiscordSvg'
 
 export default {
+  middleware({ store, redirect }) {
+    // If the user is not authenticated
+    if (!store.state.authenticated) {
+      return redirect('/login')
+    }
+  },
   data() {
     return {
       DiscordSvg,
