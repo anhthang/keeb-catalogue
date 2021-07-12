@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-form-item label="Name">
-      <a-input v-model="maker.name">
+      <a-input v-model="maker.name" :disabled="isEdit">
         <a-icon slot="prefix" type="file-text" />
       </a-input>
     </a-form-item>
@@ -34,7 +34,7 @@ import DiscordSvg from '@/components/icons/DiscordSvg'
 
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['metadata'],
+  props: ['metadata', 'isEdit'],
   data() {
     return {
       DiscordSvg,
@@ -48,8 +48,8 @@ export default {
     }
   },
   computed: {
-    newMakerId() {
-      return slugify(this.newMaker.name, { lower: true })
+    makerId() {
+      return slugify(this.maker.name, { lower: true })
     },
   },
   created() {
@@ -59,8 +59,8 @@ export default {
     addMaker() {
       this.$fire.firestore
         .collection('keyboard-makers')
-        .doc(this.newMakerId)
-        .set(this.newMaker)
+        .doc(this.makerId)
+        .set(this.maker)
         .then(() => {
           this.$message.success('Successfully added new maker.')
         })

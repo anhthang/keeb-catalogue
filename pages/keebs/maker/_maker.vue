@@ -10,13 +10,21 @@
     >
       <template slot="extra">
         <a-button
+          key="edit"
+          type="primary"
+          icon="edit"
+          @click="showEditMakerModal"
+        >
+          Edit
+        </a-button>
+        <a-button
           v-if="authenticated"
           key="0"
           type="primary"
-          @click="showModal"
+          @click="showAddKeebModal"
         >
           <a-icon :component="KeyboardSvg" class="custom-icon" />
-          Add
+          Add Keeb
         </a-button>
         <a v-if="maker.website" :href="maker.website" target="_blank">
           <a-button key="1" icon="global"> Website </a-button>
@@ -32,8 +40,19 @@
         </a>
 
         <a-modal
-          v-model="visible"
-          title="Add new keyboard"
+          v-model="showEditMaker"
+          title="Edit keyboard maker"
+          @ok="updateKeebMaker"
+        >
+          <keyboard-maker-form
+            ref="keyboardMaker"
+            :is-edit="true"
+            :metadata="maker"
+          />
+        </a-modal>
+        <a-modal
+          v-model="showAddKeeb"
+          title="Add new keeb"
           :confirm-loading="confirmLoading"
           @ok="addKeyboard"
         >
@@ -51,9 +70,10 @@ import { mapState } from 'vuex'
 import KeyboardSvg from '@/components/icons/KeyboardSvg'
 import DiscordSvg from '@/components/icons/DiscordSvg'
 import KeyboardForm from '~/components/modals/KeyboardForm.vue'
+import KeyboardMakerForm from '~/components/modals/KeyboardMakerForm.vue'
 
 export default {
-  components: { KeyboardForm },
+  components: { KeyboardForm, KeyboardMakerForm },
   asyncData({ params }) {
     return {
       makerId: params.maker,
@@ -61,7 +81,8 @@ export default {
   },
   data() {
     return {
-      visible: false,
+      showAddKeeb: false,
+      showEditMaker: false,
       loading: false,
       confirmLoading: false,
       isOk: false,
@@ -83,8 +104,19 @@ export default {
     },
   },
   methods: {
-    showModal() {
-      this.visible = !this.visible
+    showAddKeebModal() {
+      this.showAddKeeb = !this.showAddKeeb
+    },
+    showEditMakerModal() {
+      this.showEditMaker = !this.showEditMaker
+    },
+    async updateKeebMaker() {
+      this.confirmLoading = true
+
+      await this.$refs.keyboardMaker.addMaker()
+
+      this.confirmLoading = false
+      this.showEditMaker = false
     },
     async addKeyboard() {
       this.confirmLoading = true
@@ -92,7 +124,7 @@ export default {
       await this.$refs.keyboardModal.addKeyboard()
 
       this.confirmLoading = false
-      this.visible = false
+      this.showAddKeeb = false
 
       this.$fetch()
     },

@@ -3,7 +3,7 @@
     <a-row :gutter="8">
       <a-col :span="12">
         <a-form-item label="Name">
-          <a-input v-model="keyboard.name">
+          <a-input v-model="keyboard.name" :disabled="isEdit">
             <a-icon slot="prefix" type="font-size" />
           </a-input>
         </a-form-item>
@@ -106,7 +106,7 @@ import KeyboardSvg from '../icons/KeyboardSvg'
 
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['makerId', 'metadata'],
+  props: ['makerId', 'metadata', 'isEdit'],
   data() {
     return {
       keyboard: {
