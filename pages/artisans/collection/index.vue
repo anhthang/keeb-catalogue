@@ -57,8 +57,10 @@
 <script>
 import { mapState } from 'vuex'
 import slugify from 'slugify'
+import ConflictSyncModal from '~/components/modals/ConflictSyncModal.vue'
 
 export default {
+  components: { ConflictSyncModal },
   data() {
     return {
       visible: false,

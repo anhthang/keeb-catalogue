@@ -35,9 +35,9 @@
           v-model="visible"
           title="Add new keyboard"
           :confirm-loading="confirmLoading"
-          @ok="onOk"
+          @ok="addKeyboard"
         >
-          <add-new-keyboard ref="addNewKeyboard" :maker-id="makerId" />
+          <keyboard-form ref="keyboardModal" :maker-id="makerId" />
         </a-modal>
       </template>
 
@@ -50,8 +50,10 @@
 import { mapState } from 'vuex'
 import KeyboardSvg from '@/components/icons/KeyboardSvg'
 import DiscordSvg from '@/components/icons/DiscordSvg'
+import KeyboardForm from '~/components/modals/KeyboardForm.vue'
 
 export default {
+  components: { KeyboardForm },
   asyncData({ params }) {
     return {
       makerId: params.maker,
@@ -84,10 +86,10 @@ export default {
     showModal() {
       this.visible = !this.visible
     },
-    async onOk() {
+    async addKeyboard() {
       this.confirmLoading = true
 
-      await this.$refs.addNewKeyboard.addKeyboard()
+      await this.$refs.keyboardModal.addKeyboard()
 
       this.confirmLoading = false
       this.visible = false

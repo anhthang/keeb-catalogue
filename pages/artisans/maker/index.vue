@@ -16,16 +16,7 @@
         :confirm-loading="confirmLoading"
         @ok="addMaker"
       >
-        <a-form-item label="Name">
-          <a-input v-model="newMaker.name">
-            <a-icon slot="prefix" type="user" />
-          </a-input>
-        </a-form-item>
-        <a-form-item label="Id">
-          <a-input v-model="newMaker.id">
-            <a-icon slot="prefix" type="solution" />
-          </a-input>
-        </a-form-item>
+        <artisan-maker-form ref="artisanMaker" />
       </a-modal>
 
       <a-divider v-if="favorite.length" orientation="left">
@@ -65,17 +56,14 @@
 
 <script>
 import { mapState } from 'vuex'
+import ArtisanMakerForm from '~/components/modals/ArtisanMakerForm.vue'
 
 export default {
+  components: { ArtisanMakerForm },
   data() {
     return {
       visible: false,
       confirmLoading: false,
-      newMaker: {
-        name: undefined,
-        id: undefined,
-        slug: undefined,
-      },
     }
   },
   fetch() {
@@ -91,34 +79,19 @@ export default {
       return this.makers.filter((m) => !this.favoriteMakers.includes(m.slug))
     },
   },
-  watch: {
-    'newMaker.name'() {
-      this.newMaker.slug = this.newMaker.name
-        .replaceAll(' ', '-')
-        .replaceAll('.', '-')
-        .toLowerCase()
-    },
-  },
   methods: {
     showModal() {
       this.visible = true
     },
-    addMaker() {
+    async addMaker() {
       this.confirmLoading = true
-      this.$fire.firestore
-        .collection('artisan-makers')
-        .doc(this.newMaker.slug)
-        .set(this.newMaker)
-        .then(() => {
-          this.confirmLoading = false
-          this.visible = false
-          this.$fetch()
-          this.$message.success('Successfully added new maker.')
-        })
-        .catch((e) => {
-          this.confirmLoading = false
-          this.$message.error(e.message)
-        })
+
+      await this.$refs.artisanMaker.addMaker()
+
+      this.confirmLoading = false
+      this.visible = false
+
+      this.$fetch()
     },
   },
 }

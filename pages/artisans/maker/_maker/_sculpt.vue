@@ -81,8 +81,10 @@
 <script>
 import { mapState } from 'vuex'
 import { sortBy } from 'lodash'
+import ConflictSyncModal from '~/components/modals/ConflictSyncModal.vue'
 
 export default {
+  components: { ConflictSyncModal },
   asyncData({ params }) {
     return {
       ...params,

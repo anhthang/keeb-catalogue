@@ -77,8 +77,10 @@
 import { mapState } from 'vuex'
 import { keyBy, sortBy } from 'lodash'
 import CheckMarkSealSvg from '@/components/icons/CheckMarkSealSvg'
+import SearchArtisans from '~/components/modals/SearchArtisans.vue'
 
 export default {
+  components: { SearchArtisans },
   asyncData({ params }) {
     return {
       ...params,

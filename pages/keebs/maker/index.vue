@@ -16,31 +16,7 @@
         :confirm-loading="confirmLoading"
         @ok="addMaker"
       >
-        <a-form-item label="Name">
-          <a-input v-model="newMaker.name">
-            <a-icon slot="prefix" type="file-text" />
-          </a-input>
-        </a-form-item>
-        <a-form-item label="Website">
-          <a-input v-model="newMaker.website">
-            <a-icon slot="prefix" type="global" />
-          </a-input>
-        </a-form-item>
-        <a-form-item label="Instagram">
-          <a-input v-model="newMaker.instagram">
-            <a-icon slot="prefix" type="instagram" />
-          </a-input>
-        </a-form-item>
-        <a-form-item label="Discord">
-          <a-input v-model="newMaker.discord">
-            <a-icon slot="prefix" :component="DiscordSvg" />
-          </a-input>
-        </a-form-item>
-        <a-form-item label="Logo">
-          <a-input v-model="newMaker.img">
-            <a-icon slot="prefix" type="file-image" />
-          </a-input>
-        </a-form-item>
+        <keyboard-maker-form ref="keyboardMaker" />
       </a-modal>
 
       <a-row :gutter="[16, 16]" type="flex">
@@ -70,24 +46,16 @@
 </template>
 
 <script>
-import slugify from 'slugify'
 import { sortBy } from 'lodash'
 import { mapState } from 'vuex'
-import DiscordSvg from '@/components/icons/DiscordSvg'
+import KeyboardMakerForm from '~/components/modals/KeyboardMakerForm.vue'
 
 export default {
+  components: { KeyboardMakerForm },
   data() {
     return {
       visible: false,
       confirmLoading: false,
-      DiscordSvg,
-      newMaker: {
-        name: null,
-        img: null,
-        website: null,
-        instagram: null,
-        discord: null,
-      },
     }
   },
   fetch() {
@@ -99,30 +67,20 @@ export default {
     keebMakers() {
       return sortBy(Object.entries(this.makers), (i) => i[0])
     },
-    newMakerId() {
-      return slugify(this.newMaker.name, { lower: true })
-    },
   },
   methods: {
     showModal() {
       this.visible = !this.visible
     },
-    addMaker() {
+    async addMaker() {
       this.confirmLoading = true
-      this.$fire.firestore
-        .collection('keyboard-makers')
-        .doc(this.newMakerId)
-        .set(this.newMaker)
-        .then(() => {
-          this.confirmLoading = false
-          this.visible = false
-          this.$message.success('Successfully added new maker.')
-          this.$fetch()
-        })
-        .catch((e) => {
-          this.confirmLoading = false
-          this.$message.error(e.message)
-        })
+
+      await this.$refs.keyboardMaker.addMaker()
+
+      this.confirmLoading = false
+      this.visible = false
+
+      this.$fetch()
     },
   },
 }
