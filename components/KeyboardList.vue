@@ -7,26 +7,39 @@
       :loading="loading"
     >
       <a-list-item slot="renderItem" key="item.name" slot-scope="item">
-        <template slot="actions">
-          <span key="user">
-            <a-icon type="user" />
-            <nuxt-link :to="`/keebs/maker/${item.maker_id}`">
-              {{ makerName(item.maker_id) }}
-            </nuxt-link>
-          </span>
-        </template>
-        <template v-if="item.url" slot="actions">
-          <span key="home">
-            <a-icon type="home" />
-            <a :href="item.url" target="_blank">Home</a>
-          </span>
-        </template>
-        <template v-if="item.geekhack" slot="actions">
-          <span key="global">
-            <a-icon type="global" />
-            <a :href="item.geekhack">geekhack</a>
-          </span>
-        </template>
+        <nuxt-link slot="actions" :to="`/keebs/maker/${item.maker_id}`">
+          <a-button key="user" size="small" type="link" icon="user">
+            {{ makerName(item.maker_id) }}
+          </a-button>
+        </nuxt-link>
+
+        <a v-if="item.url" slot="actions" :href="item.url" target="_blank">
+          <a-button key="website" size="small" type="link" icon="global">
+            Website
+          </a-button>
+        </a>
+
+        <a
+          v-if="item.geekhack"
+          slot="actions"
+          :href="item.geekhack"
+          target="_blank"
+        >
+          <a-button key="geekhack" size="small" type="link" icon="link">
+            geekhack
+          </a-button>
+        </a>
+
+        <a-button
+          slot="actions"
+          size="small"
+          type="link"
+          icon="edit"
+          @click="showEditKeyboard(item)"
+        >
+          Edit
+        </a-button>
+
         <img
           v-if="item.img"
           slot="extra"
@@ -75,17 +88,32 @@
 
     <keyboard-details
       :visible="visible"
-      :on-close="onClose"
+      :on-close="closeDrawer"
       :keyboard="currentKeyboard"
     />
+
+    <a-modal
+      v-model="showEditKeyboardModal"
+      title="Edit keyboard"
+      @ok="updateKeeb"
+    >
+      <keyboard-form
+        ref="keyboardModal"
+        :metadata="currentKeyboard"
+        :maker-id="currentKeyboard.maker_id"
+        :is-edit="true"
+      />
+    </a-modal>
   </a-card>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import slugify from 'slugify'
+import KeyboardForm from './modals/KeyboardForm.vue'
 
 export default {
+  components: { KeyboardForm },
   props: {
     loading: Boolean,
   },
@@ -93,6 +121,8 @@ export default {
     return {
       currentKeyboard: {},
       visible: false,
+      showEditKeyboardModal: false,
+      confirmLoading: false,
       pageSize: 5,
     }
   },
@@ -110,9 +140,21 @@ export default {
       this.visible = true
       this.currentKeyboard = item
     },
-    onClose() {
+    closeDrawer() {
       this.visible = false
       this.currentKeyboard = {}
+    },
+    showEditKeyboard(keyboard) {
+      this.currentKeyboard = keyboard
+      this.showEditKeyboardModal = !this.showEditKeyboardModal
+    },
+    async updateKeeb() {
+      this.confirmLoading = true
+
+      await this.$refs.keyboardModal.addKeyboard()
+
+      this.confirmLoading = false
+      this.showEditKeyboardModal = false
     },
   },
 }
