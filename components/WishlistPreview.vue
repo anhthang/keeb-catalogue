@@ -1,7 +1,14 @@
 <template>
   <a-card title="Preview" size="small" class="wishlist-preview">
     <template slot="extra">
-      <a-button disabled type="primary" icon="copy"> Copy </a-button>
+      <a-button
+        v-clipboard:copy="wishlistToText"
+        v-clipboard:success="onCopy"
+        type="primary"
+        icon="copy"
+      >
+        Copy Text
+      </a-button>
       <a-button
         :loading="loading"
         type="primary"
@@ -126,6 +133,24 @@ export default {
         },
       }
     },
+    wishlistToText() {
+      let text =
+        `**${this.wishlistSettings.wish.title}**\n` +
+        `${this.draggableWishList
+          .map((c) => `- ${c.name} ${c.sculpt_name}`)
+          .join('\n')}`
+
+      if (this.wishlistSettings.want_to_trade) {
+        text +=
+          `\n\n` +
+          `**${this.wishlistSettings.trade.title}**\n` +
+          `${this.draggableTradeList
+            .map((c) => `- ${c.name} ${c.sculpt_name}`)
+            .join('\n')}`
+      }
+
+      return text
+    },
   },
   watch: {
     wishlistSettings: {
@@ -146,6 +171,9 @@ export default {
   methods: {
     cardTitle(clw) {
       return `${clw.name} ${clw.sculpt_name}`
+    },
+    onCopy() {
+      this.$message.success('Wishlist text copied!')
     },
     getUserCollections() {
       if (this.authenticated) {
