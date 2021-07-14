@@ -95,6 +95,7 @@
     <a-modal
       v-model="showEditKeyboardModal"
       title="Edit keyboard"
+      destroy-on-close
       @ok="updateKeeb"
     >
       <keyboard-form

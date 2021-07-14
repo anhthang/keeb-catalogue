@@ -42,6 +42,7 @@
         <a-modal
           v-model="showEditMaker"
           title="Edit keyboard maker"
+          destroy-on-close
           @ok="updateKeebMaker"
         >
           <keyboard-maker-form
@@ -54,6 +55,7 @@
           v-model="showAddKeeb"
           title="Add new keeb"
           :confirm-loading="confirmLoading"
+          destroy-on-close
           @ok="addKeyboard"
         >
           <keyboard-form ref="keyboardModal" :maker-id="makerId" />

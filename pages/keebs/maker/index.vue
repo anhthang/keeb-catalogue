@@ -14,6 +14,7 @@
         v-model="visible"
         title="Add keyboard maker"
         :confirm-loading="confirmLoading"
+        destroy-on-close
         @ok="addMaker"
       >
         <keyboard-maker-form ref="keyboardMaker" />

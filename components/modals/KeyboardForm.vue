@@ -74,10 +74,28 @@
       />
     </a-form-item>
 
-    <a-form-item label="Date">
-      <a-range-picker format="DD/MM/YYYY" @change="onSelectDate">
-        <a-icon slot="suffixIcon" type="calendar" />
-      </a-range-picker>
+    <a-form-item label="GB Time">
+      <a-row :gutter="8">
+        <a-col :span="12">
+          <a-date-picker
+            v-model="startValue"
+            :disabled-date="disabledStartDate"
+            :format="dateFormat"
+            placeholder="Start"
+            @openChange="handleStartOpenChange"
+          />
+        </a-col>
+        <a-col :span="12">
+          <a-date-picker
+            v-model="endValue"
+            :disabled-date="disabledEndDate"
+            :format="dateFormat"
+            placeholder="End"
+            :open="endOpen"
+            @openChange="handleEndOpenChange"
+          />
+        </a-col>
+      </a-row>
     </a-form-item>
 
     <a-form-item label="Url">
@@ -123,6 +141,10 @@ export default {
         url: null,
         price: null,
       },
+      dateFormat: 'DD/MM/YYYY',
+      startValue: null,
+      endValue: null,
+      endOpen: false,
       statuses: ['Live', 'Interest Check', 'Shipped', 'Closed'],
       KeyboardSvg,
     }
@@ -134,6 +156,12 @@ export default {
     'keyboard.name'(val) {
       this.keyboard.keyboard_id = slugify(val, { lower: true })
     },
+    startValue(val) {
+      this.keyboard.start = val ? val.format(this.dateFormat) : null
+    },
+    endValue(val) {
+      this.keyboard.end = val ? val.format(this.dateFormat) : null
+    },
   },
   created() {
     if (!isEmpty(this.metadata)) {
@@ -141,9 +169,27 @@ export default {
     }
   },
   methods: {
-    onSelectDate(date, dateString) {
-      this.keyboard.start = dateString[0]
-      this.keyboard.end = dateString[1]
+    disabledStartDate(startValue) {
+      const endValue = this.endValue
+      if (!startValue || !endValue) {
+        return false
+      }
+      return startValue.valueOf() > endValue.valueOf()
+    },
+    disabledEndDate(endValue) {
+      const startValue = this.startValue
+      if (!endValue || !startValue) {
+        return false
+      }
+      return startValue.valueOf() >= endValue.valueOf()
+    },
+    handleStartOpenChange(open) {
+      if (!open) {
+        this.endOpen = true
+      }
+    },
+    handleEndOpenChange(open) {
+      this.endOpen = open
     },
     addKeyboard() {
       this.$fire.firestore
