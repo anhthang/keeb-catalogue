@@ -7,7 +7,6 @@ Building a catalog for mechanical keyboard community
 ### Keyboard
 - Calendar view
 - Favorite/Wishlist page
-- Keyboard comparison
 
 ### Artisan
 - Show commission keycap or anything is not in keycap-archivist database

@@ -39,6 +39,11 @@
               <a-icon type="user-add" />Makers
             </nuxt-link>
           </a-menu-item>
+          <a-menu-item key="2.2">
+            <nuxt-link to="/keebs/compare">
+              <a-icon type="swap" />Compare Keebs
+            </nuxt-link>
+          </a-menu-item>
         </a-sub-menu>
 
         <a-sub-menu key="6">
