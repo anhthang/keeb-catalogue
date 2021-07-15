@@ -10,6 +10,7 @@
     >
       <template slot="extra">
         <a-button
+          v-if="authenticated"
           key="edit"
           type="primary"
           icon="edit"

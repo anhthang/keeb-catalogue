@@ -31,6 +31,7 @@
         </a>
 
         <a-button
+          v-if="authenticated"
           slot="actions"
           size="small"
           type="link"
@@ -129,6 +130,7 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['badgeStatus', 'keyboards', 'makers']),
+    ...mapState(['authenticated']),
     makerName() {
       return (makerId) => this.makers[makerId]?.name
     },
