@@ -6,7 +6,7 @@
       </a-input>
     </a-form-item>
     <a-form-item label="Id">
-      <a-input v-model="maker.id">
+      <a-input v-model="maker.id" disabled>
         <a-icon slot="prefix" type="solution" />
       </a-input>
     </a-form-item>
@@ -15,6 +15,7 @@
 
 <script>
 import { isEmpty } from 'lodash'
+import crc32 from 'crc/crc32'
 
 export default {
   // eslint-disable-next-line vue/require-prop-types
@@ -34,6 +35,8 @@ export default {
         .replaceAll(' ', '-')
         .replaceAll('.', '-')
         .toLowerCase()
+
+      this.maker.id = crc32(this.maker.name).toString(16)
     },
   },
   created() {

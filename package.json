@@ -1,5 +1,5 @@
 {
-  "name": "keyboard-calendar",
+  "name": "keeb-catalogue",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -28,6 +28,7 @@
     "@nuxtjs/style-resources": "^1.1.0",
     "ant-design-vue": "^1.7.5",
     "core-js": "^3.14.0",
+    "crc": "^3.8.0",
     "firebase": "^8.6.7",
     "less": "^4.1.1",
     "less-loader": "6.2.0",

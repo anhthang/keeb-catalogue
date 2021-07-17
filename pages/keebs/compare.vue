@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <a-page-header title="Comparison">
+    <a-page-header title="Keeb Comparison">
       <div class="add-to-compare">
         <a-alert
           class="collection-alert"
-          message="Compare keyboards still in development. If you encouter any issue, please let us know."
+          message="Keeb comparison still in development. If you encouter any issue, please let us know."
           banner
         />
         <a-button>Add to Compare</a-button>
