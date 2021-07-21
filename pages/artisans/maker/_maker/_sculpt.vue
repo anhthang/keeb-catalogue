@@ -36,30 +36,19 @@
                 :alt="colorway.name"
                 :src="colorway.img"
               />
-              <template slot="extra">
-                <a-dropdown :trigger="['hover']" placement="bottomCenter">
-                  <a-icon type="dash" />
-                  <a-menu slot="overlay">
-                    <a-menu-item key="0">Report</a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </template>
-              <template slot="actions" class="ant-card-actions">
+
+              <template slot="actions">
                 <a-dropdown :trigger="['click']" placement="topCenter">
-                  <a-icon type="save" />
+                  <div><a-icon type="save" /> Add to Collection</div>
                   <a-menu slot="overlay">
-                    <a-sub-menu
-                      title="Add to Collection"
+                    <a-menu-item
+                      v-for="collection in collections"
+                      :key="collection.slug"
                       :disabled="!collections.length"
+                      @click="addToCollection(collection, colorway)"
                     >
-                      <a-menu-item
-                        v-for="collection in collections"
-                        :key="collection.slug"
-                        @click="addToCollection(collection, colorway)"
-                      >
-                        {{ collection.name }}
-                      </a-menu-item>
-                    </a-sub-menu>
+                      {{ collection.name }}
+                    </a-menu-item>
                   </a-menu>
                 </a-dropdown>
               </template>
