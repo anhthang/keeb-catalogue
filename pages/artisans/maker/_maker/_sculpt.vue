@@ -84,6 +84,7 @@ export default {
       sort: 'date',
       sortIcon: 'clock-circle',
       sculptInfo: {},
+      makerInfo: {},
       loading: true,
     }
   },
@@ -111,21 +112,25 @@ export default {
     },
     loading() {
       this.sculptInfo = this.database[this.maker].sculpts[this.sculpt]
+      this.makerInfo = this.database[this.maker].maker
     },
   },
   methods: {
     addToCollection(collection, clw) {
+      const colorway = {
+        id: clw.id,
+        name: clw.name,
+        img: clw.img,
+        sculpt_name: this.sculptInfo.name,
+        maker_name: this.makerInfo.name,
+      }
+
       if (this.authenticated) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
           .doc(collection.slug)
           .update({
-            [clw.id]: {
-              id: clw.id,
-              name: clw.name,
-              img: clw.img,
-              sculpt_name: this.sculptInfo.name,
-            },
+            [clw.id]: colorway,
           })
           .then(() => {
             this.$message.success(
@@ -141,12 +146,7 @@ export default {
             localStorage.getItem(`KeebCatalogue_${collection.slug}`)
           ) || {}
 
-        collectionMap[clw.id] = {
-          id: clw.id,
-          name: clw.name,
-          img: clw.img,
-          sculpt_name: this.sculptInfo.name,
-        }
+        collectionMap[clw.id] = colorway
 
         localStorage.setItem(
           `KeebCatalogue_${collection.slug}`,

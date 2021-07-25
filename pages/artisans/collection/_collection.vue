@@ -23,7 +23,7 @@
       <a-spin :spinning="loading">
         <a-row :gutter="[16, 16]" type="flex">
           <a-col
-            v-for="colorway in collectionItems"
+            v-for="colorway in sortedCollections"
             :key="colorway.id"
             :xs="24"
             :sm="12"
@@ -122,6 +122,9 @@ export default {
         (c) => c.slug === this.collection
       )
       return collection?.name
+    },
+    sortedCollections() {
+      return sortBy(this.collectionItems, ['maker_name', 'sculpt_name'])
     },
   },
   methods: {

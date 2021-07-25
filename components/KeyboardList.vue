@@ -65,7 +65,7 @@
             :text="item.status"
           />
         </a-list-item-meta>
-        <a-descriptions :column="1" size="small">
+        <a-descriptions size="small">
           <a-descriptions-item v-if="item.price" label="Price">
             ${{ item.price }}
           </a-descriptions-item>
@@ -80,6 +80,8 @@
           <a-descriptions-item v-else-if="item.start" label="GB Date">
             {{ item.start }}
           </a-descriptions-item>
+        </a-descriptions>
+        <a-descriptions>
           <a-descriptions-item>
             {{ item.description }}
           </a-descriptions-item>

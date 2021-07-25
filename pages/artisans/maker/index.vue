@@ -13,6 +13,7 @@
       <a-modal
         v-model="visible"
         title="Add new maker"
+        destroy-on-close
         :confirm-loading="confirmLoading"
         @ok="addMaker"
       >
