@@ -30,6 +30,19 @@
           </a-button>
         </a>
 
+        <a-popover slot="actions" title="Selected Keebs" trigger="click">
+          <compare-keeb-popover slot="content" />
+
+          <a-button
+            size="small"
+            type="link"
+            icon="diff"
+            @click="addToCompare(item)"
+          >
+            Compare
+          </a-button>
+        </a-popover>
+
         <a-button
           v-if="authenticated"
           slot="actions"
@@ -54,7 +67,8 @@
           class="keyboard-no-img"
           description="No Image"
         />
-        <a-list-item-meta :title="item.name" @click="showDrawer(item)">
+        <!-- <a-list-item-meta :title="item.name" @click="showDrawer(item)"> -->
+        <a-list-item-meta :title="item.name">
           <a-avatar
             slot="avatar"
             :src="makers[item.maker_id] && makers[item.maker_id].img"
@@ -160,6 +174,9 @@ export default {
 
       this.confirmLoading = false
       this.showEditKeyboardModal = false
+    },
+    addToCompare(keeb) {
+      this.$store.dispatch('keebs/addToCompare', keeb)
     },
   },
 }

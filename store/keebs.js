@@ -30,6 +30,7 @@ export const state = () => {
     },
     keyboards: [],
     makers: {},
+    compareKeebs: [],
   }
 }
 
@@ -161,6 +162,22 @@ export const actions = {
         })
     })
   },
+  addToCompare({ commit, state }, keeb) {
+    const compareKeebs = [...state.compareKeebs]
+    const exist = compareKeebs.find((k) => k.keyboard_id === keeb.keyboard_id)
+    if (!exist && compareKeebs.length < 3) {
+      compareKeebs.push(keeb)
+
+      commit('SET_COMPARE_KEEBS', compareKeebs)
+    }
+  },
+  removeFromCompare({ commit, state }, keeb) {
+    const keebs = state.compareKeebs.filter(
+      (k) => k.keyboard_id !== keeb.keyboard_id
+    )
+
+    commit('SET_COMPARE_KEEBS', keebs)
+  },
 }
 
 export const mutations = {
@@ -172,5 +189,8 @@ export const mutations = {
       ...state.makers,
       ...keyBy(makers, (m) => slugify(m.name, { lower: true })),
     }
+  },
+  SET_COMPARE_KEEBS(state, keebs) {
+    state.compareKeebs = keebs
   },
 }

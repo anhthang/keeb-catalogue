@@ -1,14 +1,6 @@
 <template>
   <div class="container">
-    <a-page-header title="Keeb Comparison">
-      <div class="add-to-compare">
-        <a-alert
-          class="collection-alert"
-          message="Keeb comparison still in development. If you encouter any issue, please let us know."
-          banner
-        />
-        <a-button>Add to Compare</a-button>
-      </div>
+    <a-page-header title="Keeb Comparison" @back="() => $router.go(-1)">
       <a-table
         bordered
         :columns="columns"
@@ -23,20 +15,18 @@
 import { mapState } from 'vuex'
 
 export default {
-  fetch() {
-    this.$store.dispatch('keebs/getKeyboardsByMaker', 'gok-design')
-  },
   computed: {
-    ...mapState('keebs', ['keyboards']),
+    ...mapState('keebs', ['compareKeebs']),
     columns() {
-      const cols = [{ title: 'Name', key: 'display', dataIndex: 'display' }]
+      const cols = [{ title: '', key: 'display', dataIndex: 'display' }]
+      const width = this.compareKeebs.length === 2 ? '45%' : '30%'
 
-      this.keyboards.forEach((keyboard) => {
+      this.compareKeebs.forEach((keyboard) => {
         cols.push({
           title: keyboard.name,
           key: keyboard.keyboard_id,
           dataIndex: keyboard.keyboard_id,
-          width: '45%',
+          width,
         })
       })
 
@@ -44,7 +34,6 @@ export default {
     },
     dataSource() {
       const data = [
-        // { key: 'name', display: 'Name' },
         { key: 'price', display: 'Price' },
         { key: 'status', display: 'Status' },
         { key: 'description', display: 'Description' },
@@ -54,7 +43,7 @@ export default {
       ]
 
       return data.map((row) => {
-        this.keyboards.forEach((keyboard) => {
+        this.compareKeebs.forEach((keyboard) => {
           row[keyboard.keyboard_id] = keyboard[row.key]
         })
 
