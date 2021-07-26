@@ -29,7 +29,7 @@
             :lg="6"
             :xl="4"
           >
-            <a-card hoverable :title="colorway.name">
+            <a-card hoverable :title="colorway.name || '-'">
               <img
                 slot="cover"
                 loading="lazy"

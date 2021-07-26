@@ -7,30 +7,18 @@
       :loading="loading"
     >
       <a-list-item slot="renderItem" key="item.name" slot-scope="item">
-        <nuxt-link slot="actions" :to="`/keebs/maker/${item.maker_id}`">
-          <a-button key="user" size="small" type="link" icon="user">
-            {{ makerName(item.maker_id) }}
-          </a-button>
-        </nuxt-link>
-
         <a v-if="item.url" slot="actions" :href="item.url" target="_blank">
           <a-button key="website" size="small" type="link" icon="global">
             Website
           </a-button>
         </a>
-
-        <a
-          v-if="item.geekhack"
-          slot="actions"
-          :href="item.geekhack"
-          target="_blank"
-        >
+        <a v-else slot="actions" :href="item.geekhack" target="_blank">
           <a-button key="geekhack" size="small" type="link" icon="link">
             geekhack
           </a-button>
         </a>
 
-        <a-popover slot="actions" title="Selected Keebs" trigger="click">
+        <a-popover slot="actions" title="Selected Keebs">
           <compare-keeb-popover slot="content" />
 
           <a-button
@@ -73,11 +61,10 @@
             slot="avatar"
             :src="makers[item.maker_id] && makers[item.maker_id].img"
           />
-          <a-badge
-            slot="description"
-            :status="badgeStatus[item.status]"
-            :text="item.status"
-          />
+          <nuxt-link slot="description" :to="`/keebs/maker/${item.maker_id}`">
+            {{ makerName(item.maker_id) }}
+          </nuxt-link>
+          <a-badge :status="badgeStatus[item.status]" :text="item.status" />
         </a-list-item-meta>
         <a-descriptions size="small">
           <a-descriptions-item v-if="item.price" label="Price">
