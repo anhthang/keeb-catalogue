@@ -12,7 +12,7 @@
       </a-button>
       <a-modal
         v-model="visible"
-        title="Add keyboard maker"
+        title="Add Maker"
         :confirm-loading="confirmLoading"
         destroy-on-close
         @ok="addMaker"

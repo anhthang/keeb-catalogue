@@ -133,9 +133,7 @@ export default {
             [clw.id]: colorway,
           })
           .then(() => {
-            this.$message.success(
-              `Successfully added ${clw.name} to the collection!`
-            )
+            this.$message.success(`Added ${clw.name} to ${collection.name}`)
           })
           .catch((e) => {
             this.$message.error('Adding sculpt to collection err: ', e.message)
@@ -153,9 +151,7 @@ export default {
           JSON.stringify(collectionMap)
         )
 
-        this.$message.success(
-          `Successfully added ${clw.name} to the collection!`
-        )
+        this.$message.success(`Added ${clw.name} to ${collection.name}`)
       }
     },
     onChangeSortType(e) {

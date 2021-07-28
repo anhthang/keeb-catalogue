@@ -16,7 +16,7 @@
           icon="edit"
           @click="showEditMakerModal"
         >
-          Edit
+          Edit Maker
         </a-button>
         <a-button
           v-if="authenticated"
@@ -42,7 +42,7 @@
 
         <a-modal
           v-model="showEditMaker"
-          title="Edit keyboard maker"
+          title="Edit Maker"
           destroy-on-close
           @ok="updateKeebMaker"
         >
@@ -54,7 +54,7 @@
         </a-modal>
         <a-modal
           v-model="showAddKeeb"
-          title="Add new keeb"
+          title="New Keeb"
           :confirm-loading="confirmLoading"
           destroy-on-close
           @ok="addKeyboard"

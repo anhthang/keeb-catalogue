@@ -10,8 +10,8 @@
       >
         Add
       </a-button>
-      <a-modal v-model="visible" title="Add new collection" @ok="addCollection">
-        <a-input v-model="collectionName" placeholder="Enter collection name" />
+      <a-modal v-model="visible" title="New Collection" @ok="addCollection">
+        <a-input v-model="collectionName" placeholder="Collection Name" />
       </a-modal>
 
       <conflict-sync-modal />
@@ -35,18 +35,7 @@
           :xl="4"
         >
           <nuxt-link :to="`/artisans/collection/${collection.slug}`">
-            <a-card hoverable :title="collection.name">
-              <a-popconfirm
-                v-if="authenticated"
-                slot="extra"
-                title="Are you sure delete this collection?"
-                ok-text="Yes"
-                cancel-text="No"
-                @confirm="delCollection(collection.slug)"
-              >
-                <a-icon type="delete" />
-              </a-popconfirm>
-            </a-card>
+            <a-card hoverable :title="collection.name" />
           </nuxt-link>
         </a-col>
       </a-row>
@@ -103,24 +92,6 @@ export default {
         })
         .catch((error) => {
           this.$message.error('Error adding collection: ', error.message)
-        })
-    },
-    delCollection(slug) {
-      this.$store.dispatch('artisans/delCollection', slug)
-
-      this.$fire.firestore.collection('users').doc(this.user.uid).update({
-        collections: this.collections,
-      })
-
-      this.$fire.firestore
-        .collection(`users/${this.user.uid}/collections`)
-        .doc(slug)
-        .delete()
-        .then(() => {
-          this.$message.success('Collection successfully deleted!')
-        })
-        .catch((error) => {
-          this.$message.error('Error removing collection: ', error.message)
         })
     },
   },

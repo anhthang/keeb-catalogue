@@ -10,6 +10,17 @@
       >
         Add
       </a-button>
+
+      <a-button
+        v-if="authenticated"
+        slot="extra"
+        type="danger"
+        icon="delete"
+        @click="deleteCollection"
+      >
+        Delete
+      </a-button>
+
       <a-modal
         v-model="visible"
         title="Add keycap to collection"
@@ -31,16 +42,7 @@
             :lg="6"
             :xl="4"
           >
-            <a-card hoverable>
-              <span slot="title" class="collection-title">
-                {{ cardTitle(colorway) }}
-                <a-icon
-                  v-if="colorway.owned"
-                  class="custom-icon"
-                  :component="CheckMarkSealSvg"
-                />
-              </span>
-
+            <a-card hoverable :title="cardTitle(colorway)">
               <img
                 slot="cover"
                 loading="lazy"
@@ -48,22 +50,22 @@
                 :src="colorway.img"
               />
 
-              <template slot="extra">
-                <a-dropdown :trigger="['hover']" placement="bottomCenter">
-                  <a-icon type="dash" />
-                  <a-menu slot="overlay">
-                    <a-menu-item key="0" @click="markOwned(colorway)">
-                      <a-icon
-                        class="custom-icon"
-                        :component="CheckMarkSealSvg"
-                      />
-                      Owned
-                    </a-menu-item>
-                    <a-menu-item key="1" @click="removeCap(colorway)">
-                      <a-icon type="delete" /> Remove
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
+              <template slot="actions">
+                <div
+                  v-if="colorway.owned"
+                  class="owned-cap"
+                  @click="markOwned(colorway)"
+                >
+                  <a-icon class="custom-icon" :component="CheckMarkSealSvg" />
+                  Owned
+                </div>
+                <div v-else @click="markOwned(colorway)">
+                  <a-icon class="custom-icon" :component="CheckMarkSealSvg" />
+                  Owned
+                </div>
+                <div class="remove-cap" @click="removeCap(colorway)">
+                  <a-icon type="delete" /> Remove
+                </div>
               </template>
             </a-card>
           </a-col>
@@ -209,14 +211,43 @@ export default {
 
       this.visible = false
     },
+    deleteCollection() {
+      const _this = this
+      this.$confirm({
+        title: 'Delete Collection?',
+        content: 'When you delete this collection, the items will be deleted.',
+        okText: 'Delete',
+        onOk() {
+          _this.$store.dispatch('artisans/delCollection', _this.collection)
+
+          _this.$fire.firestore.collection('users').doc(_this.user.uid).update({
+            collections: _this.collections,
+          })
+
+          _this.$fire.firestore
+            .collection(`users/${_this.user.uid}/collections`)
+            .doc(_this.collection)
+            .delete()
+            .then(() => {
+              _this.$message.success('Collection successfully deleted!')
+              _this.$router.go(-1)
+            })
+            .catch((error) => {
+              _this.$message.error('Error removing collection: ', error.message)
+            })
+        },
+      })
+    },
   },
 }
 </script>
 
 <style lang="less">
-.collection-title {
-  .custom-icon {
-    color: crimson;
-  }
+.owned-cap {
+  color: #52c41a;
+}
+
+.remove-cap:hover {
+  color: #d32029;
 }
 </style>
