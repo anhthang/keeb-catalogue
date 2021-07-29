@@ -6,7 +6,7 @@ Building a catalog for mechanical keyboard community
 
 ### Keyboard
 - Calendar view
-- Favorite/Wishlist page
+- Add more information like: sale type, units...
 
 ### Artisan
 - Show commission keycap or anything is not in keycap-archivist database

@@ -67,8 +67,8 @@
           <a-badge :status="badgeStatus[item.status]" :text="item.status" />
         </a-list-item-meta>
         <a-descriptions size="small">
-          <a-descriptions-item v-if="item.price" label="Price">
-            ${{ item.price }}
+          <a-descriptions-item label="Price">
+            {{ keebPrice(item) }}
           </a-descriptions-item>
           <a-descriptions-item v-if="item.layout" label="Layout">
             <nuxt-link :to="`/keebs/layout/${layoutSlug(item.layout)}`">
@@ -139,6 +139,9 @@ export default {
     },
     layoutSlug() {
       return (layout) => slugify(layout, { lower: true })
+    },
+    keebPrice() {
+      return (kb) => (kb.price ? `${kb.currency} ${kb.price}` : 'TBD')
     },
   },
   methods: {

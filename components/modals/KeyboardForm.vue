@@ -10,13 +10,22 @@
       </a-col>
       <a-col :span="12">
         <a-form-item label="Price">
-          <a-input-number
-            v-model="keyboard.price"
-            :formatter="(v) => `$ ${v}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-            :parser="(v) => v.replace(/\$\s?|(,*)/g, '')"
-          >
-            <a-icon slot="prefix" type="number" />
-          </a-input-number>
+          <a-input-group class="price-input-group" compact>
+            <a-select v-model="keyboard.currency" style="width: 30%">
+              <a-select-option
+                v-for="currency in currencies"
+                :key="currency"
+                :value="currency"
+              >
+                {{ currency }}
+              </a-select-option>
+            </a-select>
+            <a-input-number
+              v-model="keyboard.price"
+              :parser="(v) => v.replace(/\$\s?|(,*)/g, '')"
+              style="width: 70%"
+            />
+          </a-input-group>
         </a-form-item>
       </a-col>
     </a-row>
@@ -140,12 +149,14 @@ export default {
         status: null,
         url: null,
         price: null,
+        currency: 'USD',
       },
       dateFormat: 'DD/MM/YYYY',
       startValue: null,
       endValue: null,
       endOpen: false,
       statuses: ['Live', 'Interest Check', 'Shipped', 'Closed'],
+      currencies: ['USD', 'EUR', 'SGD', 'MYR', 'CNY'],
       KeyboardSvg,
     }
   },
@@ -197,7 +208,11 @@ export default {
         .doc(`${this.keyboard.maker_id}|${this.keyboard.keyboard_id}`)
         .set(this.keyboard)
         .then(() => {
-          this.$message.success('New keyboard added successfully.')
+          const msg = this.isEdit
+            ? 'Updated successfully.'
+            : 'Added successfully'
+
+          this.$message.success(msg)
         })
         .catch((e) => {
           this.$message.error('Error adding new keyboard:', e.message)
@@ -214,5 +229,9 @@ export default {
   .ant-select {
     width: 100%;
   }
+}
+
+.price-input-group {
+  padding: 4px 0;
 }
 </style>

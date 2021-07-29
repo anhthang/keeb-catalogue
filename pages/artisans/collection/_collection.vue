@@ -145,8 +145,8 @@ export default {
             [clw.id]: { ...clw, owned: true },
           })
           .then(() => {
-            this.$fetch()
             this.$message.success('Updated successfully.')
+            this.$fetch()
           })
           .catch((err) => {
             this.$message.error(err.message)
