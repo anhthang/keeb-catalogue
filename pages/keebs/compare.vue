@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-page-header title="Keeb Comparison" @back="() => $router.go(-1)">
+    <a-page-header title="Keeb Comparison">
       <a-table
         bordered
         :columns="columns"

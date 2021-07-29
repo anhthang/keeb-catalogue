@@ -1,6 +1,6 @@
 <template>
   <div class="container artisan-container">
-    <a-page-header :title="sculptInfo.name" @back="() => $router.go(-1)">
+    <a-page-header :title="sculptInfo.name">
       <template slot="extra">
         <a-button key="1" disabled icon="file-add" type="primary">
           Submit new Colorway

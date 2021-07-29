@@ -1,6 +1,6 @@
 <template>
   <div class="container artisan-container">
-    <a-page-header :title="collectionName" @back="() => $router.go(-1)">
+    <a-page-header :title="collectionName">
       <a-button
         v-if="authenticated"
         slot="extra"
@@ -174,7 +174,9 @@ export default {
             [clw.id]: this.$fireModule.firestore.FieldValue.delete(),
           })
           .then(() => {
-            this.$message.success(`${clw.name} removed from the collection.`)
+            this.$message.success(
+              `${this.cardTitle(clw)} removed from the collection.`
+            )
           })
           .catch((err) => {
             this.$message.error(err.message)
@@ -185,7 +187,9 @@ export default {
           JSON.stringify(keyBy(this.collectionItems, 'id'))
         )
 
-        this.$message.success(`${clw.name} removed from the collection.`)
+        this.$message.success(
+          `${this.cardTitle(clw)} removed from the collection.`
+        )
       }
     },
     async addToCollection() {
@@ -244,7 +248,7 @@ export default {
 
 <style lang="less">
 .owned-cap {
-  color: #52c41a;
+  color: #22863a;
 }
 
 .remove-cap:hover {

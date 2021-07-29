@@ -7,7 +7,6 @@
           src: `https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${makerInfo.id}.jpg`,
         },
       }"
-      @back="() => $router.go(-1)"
     >
       <template slot="extra">
         <a v-if="makerInfo.website" :href="makerInfo.website" target="_blank">
