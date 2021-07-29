@@ -30,7 +30,6 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['makers', 'layoutMap']),
-    ...mapState(['authenticated']),
     maker() {
       return this.makers?.[this.makerId] || {}
     },

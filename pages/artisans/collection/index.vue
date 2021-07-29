@@ -2,7 +2,7 @@
   <div class="container artisan-container">
     <a-page-header title="Collection">
       <a-button
-        v-if="authenticated"
+        v-if="user.emailVerified"
         slot="extra"
         type="primary"
         icon="file-add"
@@ -16,7 +16,7 @@
 
       <conflict-sync-modal />
 
-      <a-row v-if="!authenticated" type="flex">
+      <a-row v-if="!user.emailVerified" type="flex">
         <a-alert
           class="collection-alert"
           message="You must log in to sync the collections across devices. The current saved ones in local will not be synced."
@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['collections']),
-    ...mapState(['user', 'authenticated']),
+    ...mapState(['user']),
   },
   methods: {
     showModal() {

@@ -32,7 +32,7 @@
         </a-popover>
 
         <a-button
-          v-if="authenticated"
+          v-if="user.isEditor"
           slot="actions"
           size="small"
           type="link"
@@ -133,7 +133,7 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['badgeStatus', 'keyboards', 'makers']),
-    ...mapState(['authenticated']),
+    ...mapState(['user']),
     makerName() {
       return (makerId) => this.makers[makerId]?.name
     },

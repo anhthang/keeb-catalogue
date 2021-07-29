@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['database', 'collections']),
-    ...mapState(['user', 'authenticated']),
+    ...mapState(['user']),
     colorways() {
       return this.sort === 'name'
         ? sortBy(this.sculptInfo.colorways, 'name')
@@ -125,7 +125,7 @@ export default {
         maker_name: this.makerInfo.name,
       }
 
-      if (this.authenticated) {
+      if (this.user.emailVerified) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
           .doc(collection.slug)

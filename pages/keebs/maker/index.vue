@@ -2,7 +2,7 @@
   <div class="container keyboard-maker-container">
     <a-page-header title="Keyboard Makers">
       <a-button
-        v-if="authenticated"
+        v-if="user.isAdmin"
         slot="extra"
         type="primary"
         icon="user-add"
@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['makers']),
-    ...mapState(['authenticated']),
+    ...mapState(['user']),
     keebMakers() {
       return sortBy(Object.entries(this.makers), (i) => i[0])
     },

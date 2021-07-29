@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['wishlistSettings']),
-    ...mapState(['user', 'authenticated']),
+    ...mapState(['user']),
     kaSettings() {
       return {
         capsPerLine: this.wishlistSettings.caps_per_line,
@@ -176,7 +176,7 @@ export default {
       this.$message.success('Wishlist text copied!')
     },
     getUserCollections() {
-      if (this.authenticated) {
+      if (this.user.emailVerified) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
           .get()

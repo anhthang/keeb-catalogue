@@ -10,7 +10,7 @@
     >
       <template slot="extra">
         <a-button
-          v-if="authenticated"
+          v-if="user.isEditor"
           key="edit"
           type="primary"
           icon="edit"
@@ -19,7 +19,7 @@
           Edit Maker
         </a-button>
         <a-button
-          v-if="authenticated"
+          v-if="user.isEditor"
           key="0"
           type="primary"
           @click="showAddKeebModal"
@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     ...mapState('keebs', ['makers']),
-    ...mapState(['authenticated']),
+    ...mapState(['user']),
     maker() {
       return this.makers?.[this.makerId] || {}
     },

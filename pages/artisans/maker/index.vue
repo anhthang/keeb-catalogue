@@ -2,7 +2,7 @@
   <div class="container artisan-maker-container">
     <a-page-header title="Artisan Makers">
       <a-button
-        v-if="authenticated"
+        v-if="user.isAdmin"
         slot="extra"
         type="primary"
         icon="user-add"
@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
-    ...mapState(['authenticated']),
+    ...mapState(['user']),
     favorite() {
       return this.makers.filter((m) => this.favoriteMakers.includes(m.slug))
     },

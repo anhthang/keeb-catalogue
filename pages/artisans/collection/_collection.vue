@@ -2,7 +2,7 @@
   <div class="container artisan-container">
     <a-page-header :title="collectionName">
       <a-button
-        v-if="authenticated"
+        v-if="user.emailVerified"
         slot="extra"
         type="primary"
         icon="file-add"
@@ -12,7 +12,7 @@
       </a-button>
 
       <a-button
-        v-if="authenticated"
+        v-if="user.emailVerified"
         slot="extra"
         type="danger"
         icon="delete"
@@ -99,7 +99,7 @@ export default {
   async fetch() {
     this.loading = true
     let doc
-    if (this.authenticated) {
+    if (this.user.emailVerified) {
       doc = await this.$fire.firestore
         .collection(`users/${this.user.uid}/collections`)
         .doc(this.collection)
@@ -115,7 +115,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['addToCollectionItems', 'collections']),
-    ...mapState(['user', 'authenticated']),
+    ...mapState(['user']),
     selectedIds() {
       return this.collectionItems.map((c) => c.id)
     },
@@ -137,7 +137,7 @@ export default {
       this.visible = !this.visible
     },
     markOwned(clw) {
-      if (this.authenticated) {
+      if (this.user.emailVerified) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
           .doc(this.collection)
@@ -166,7 +166,7 @@ export default {
     removeCap(clw) {
       this.collectionItems = this.collectionItems.filter((c) => c.id !== clw.id)
 
-      if (this.authenticated) {
+      if (this.user.emailVerified) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
           .doc(this.collection)

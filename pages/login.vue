@@ -16,7 +16,7 @@ export default {
   layout: 'login',
   middleware({ store, redirect }) {
     // If the user is not authenticated
-    if (store.state.authenticated) {
+    if (store.state.user.emailVerified) {
       return redirect('/')
     }
   },

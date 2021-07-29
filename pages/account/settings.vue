@@ -81,7 +81,7 @@ import DiscordSvg from '@/components/icons/DiscordSvg'
 export default {
   middleware({ store, redirect }) {
     // If the user is not authenticated
-    if (!store.state.authenticated) {
+    if (!store.state.user.emailVerified) {
       return redirect('/login')
     }
   },

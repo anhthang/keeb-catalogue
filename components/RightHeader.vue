@@ -1,6 +1,6 @@
 <template>
   <div class="right-header">
-    <a-dropdown v-if="authenticated">
+    <a-dropdown v-if="user.emailVerified">
       <div>
         <a-avatar :src="user.photoURL" />
         {{ user.displayName }}
@@ -38,7 +38,7 @@ import { mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['user', 'authenticated']),
+    ...mapState(['user']),
   },
   methods: {
     async loginWithGoogle() {
