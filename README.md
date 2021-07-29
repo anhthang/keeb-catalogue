@@ -1,4 +1,4 @@
-# keyboard-calendar
+# keeb-catalogue
 Building a catalog for mechanical keyboard community
 
 ## TODO
