@@ -28,7 +28,7 @@
         <a-col
           v-for="collection in collections"
           :key="collection.slug"
-          :xs="24"
+          :xs="12"
           :sm="12"
           :md="8"
           :lg="6"

@@ -1,5 +1,5 @@
 <template>
-  <div class="container artisan-maker-container">
+  <div class="container maker-container">
     <a-page-header title="Artisan Makers">
       <a-button
         v-if="user.isAdmin"
@@ -27,7 +27,7 @@
         <a-col
           v-for="maker in favorite"
           :key="maker.id"
-          :xs="24"
+          :xs="12"
           :sm="12"
           :md="8"
           :lg="6"
@@ -42,7 +42,7 @@
         <a-col
           v-for="maker in otherMakers"
           :key="maker.id"
-          :xs="24"
+          :xs="12"
           :sm="12"
           :md="8"
           :lg="6"
@@ -97,15 +97,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.artisan-maker-container {
-  text-align: center;
-  flex-direction: initial;
-
-  /** remove this if all maker had cover/logo */
-  .ant-card {
-    height: 100%;
-  }
-}
-</style>

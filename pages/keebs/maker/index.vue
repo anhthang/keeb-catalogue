@@ -1,5 +1,5 @@
 <template>
-  <div class="container keyboard-maker-container">
+  <div class="container maker-container">
     <a-page-header title="Keyboard Makers">
       <a-button
         v-if="user.isAdmin"
@@ -24,7 +24,7 @@
         <a-col
           v-for="[makerId, maker] in keebMakers"
           :key="makerId"
-          :xs="24"
+          :xs="12"
           :sm="12"
           :md="8"
           :lg="6"
@@ -88,24 +88,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.keyboard-maker-container {
-  .ant-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .ant-card-cover {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    background: white;
-  }
-
-  .ant-card-head-title {
-    text-align: center;
-  }
-}
-</style>

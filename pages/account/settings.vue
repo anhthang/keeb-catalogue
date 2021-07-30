@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <a-page-header title="Settings">
-      <a-tabs default-active-key="general" tab-position="left">
+      <a-tabs default-active-key="general" :tab-position="tabPosition">
         <a-tab-pane key="general" tab="General">
           <a-row>
-            <a-col span="16">
+            <a-col :xs="24" :sm="16">
               <a-form-item label="Name">
                 <a-input v-model="user.displayName" disabled>
                   <a-icon slot="prefix" type="user" />
@@ -22,7 +22,7 @@
                 </a-input>
               </a-form-item>
             </a-col>
-            <a-col span="8">
+            <a-col :xs="0" :sm="8">
               <img class="avatar" :src="user.photoURL" />
             </a-col>
           </a-row>
@@ -30,7 +30,7 @@
         <a-tab-pane key="social" tab="Social Profiles">
           <a-spin :spinning="loading">
             <a-row>
-              <a-col span="16">
+              <a-col :xs="24" :sm="16">
                 <a-form-item label="Reddit">
                   <a-input
                     v-model="settings.social.reddit"
@@ -87,6 +87,7 @@ export default {
   },
   data() {
     return {
+      tabPosition: this.$device.isMobile ? 'top' : 'left',
       DiscordSvg,
       loading: false,
       settings: {

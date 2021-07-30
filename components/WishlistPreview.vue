@@ -28,7 +28,9 @@
           <a-col
             v-for="colorway in draggableWishList"
             :key="colorway.id"
-            :span="6"
+            :xs="12"
+            :md="8"
+            :xl="6"
           >
             <a-card :title="cardTitle(colorway)" size="small" :bordered="false">
               <img
@@ -57,7 +59,9 @@
           <a-col
             v-for="colorway in draggableTradeList"
             :key="colorway.id"
-            :span="6"
+            :xs="12"
+            :md="8"
+            :xl="6"
           >
             <a-card :title="cardTitle(colorway)" size="small" :bordered="false">
               <img
@@ -259,5 +263,15 @@ export default {
 <style lang="less">
 .wishlist-preview {
   height: 100%;
+
+  .ant-card-cover {
+    @media (max-width: 1200px) {
+      height: 220px;
+    }
+
+    @media (max-width: 992px) {
+      height: 150px;
+    }
+  }
 }
 </style>
