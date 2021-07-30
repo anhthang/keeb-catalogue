@@ -1,7 +1,10 @@
 <template>
   <div class="right-header">
     <a-dropdown v-if="user.emailVerified">
-      <div>
+      <div v-if="$device.isMobile">
+        <a-avatar :src="user.photoURL" />
+      </div>
+      <div v-else>
         <a-avatar :src="user.photoURL" />
         {{ user.displayName }}
       </div>

@@ -1,71 +1,36 @@
 <template>
-  <a-layout id="components-layout-demo-top" class="layout">
-    <a-layout-header>
+  <a-layout>
+    <a-layout-header :class="isMobile ? 'mobile' : ''">
+      <a-button
+        v-if="isMobile"
+        type="link"
+        :icon="collapsed ? 'menu-unfold' : 'menu-fold'"
+        @click="toogleSidebar"
+      />
+
       <nuxt-link to="/">
         <div class="logo">Keeb Catalogue</div>
       </nuxt-link>
-      <a-menu
-        theme="dark"
-        mode="horizontal"
-        :default-selected-keys="['1']"
-        :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1">
-          <nuxt-link to="/"><a-icon type="calendar" />Calendar </nuxt-link>
-        </a-menu-item>
 
-        <a-sub-menu key="2">
-          <span slot="title">
-            <a-icon :component="KeyboardSvg" class="custom-icon" /> Keebs
-          </span>
-          <a-menu-item key="3">
-            <nuxt-link to="/keebs">
-              <a-icon type="forward" />Live GBs
-            </nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="4">
-            <nuxt-link to="/keebs?status=ic">
-              <a-icon type="question-circle" />Interest Check
-            </nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="5">
-            <nuxt-link to="/keebs?status=closed">
-              <a-icon type="backward" />Previous GBs
-            </nuxt-link>
-          </a-menu-item>
-          <a-menu-divider />
-          <a-menu-item key="2.1">
-            <nuxt-link to="/keebs/maker">
-              <a-icon type="user-add" />Makers
-            </nuxt-link>
-          </a-menu-item>
-        </a-sub-menu>
-
-        <a-sub-menu key="6">
-          <span slot="title"><a-icon type="user" /> Artisans </span>
-          <a-menu-item key="7">
-            <nuxt-link to="/artisans/maker">
-              <a-icon type="user-add" />Makers
-            </nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="8">
-            <nuxt-link to="/artisans/collection">
-              <a-icon type="book" />Collection
-            </nuxt-link>
-          </a-menu-item>
-          <a-menu-item key="9">
-            <nuxt-link to="/artisans/wishlist">
-              <a-icon type="shopping-cart" />Wishlist
-            </nuxt-link>
-          </a-menu-item>
-        </a-sub-menu>
-      </a-menu>
+      <menu-tree v-if="!isMobile" mode="horizontal" />
 
       <right-header />
     </a-layout-header>
-    <a-layout-content>
-      <Nuxt />
-    </a-layout-content>
+
+    <a-layout>
+      <a-layout-sider
+        v-if="isMobile"
+        :collapsed="collapsed"
+        collapsed-width="0"
+      >
+        <menu-tree mode="inline" />
+      </a-layout-sider>
+
+      <a-layout-content>
+        <Nuxt />
+      </a-layout-content>
+    </a-layout>
+
     <a-layout-footer style="text-align: center">
       Keeb Catalogue ©2021 Created by Anh Thang Bui
     </a-layout-footer>
@@ -73,13 +38,21 @@
 </template>
 
 <script>
-import KeyboardSvg from '@/components/icons/KeyboardSvg'
+import MenuTree from '~/components/layouts/MenuTree.vue'
+import RightHeader from '~/components/layouts/RightHeader.vue'
 
 export default {
+  components: { MenuTree, RightHeader },
   data() {
     return {
-      KeyboardSvg,
+      isMobile: this.$device.isMobile,
+      collapsed: true,
     }
+  },
+  methods: {
+    toogleSidebar() {
+      this.collapsed = !this.collapsed
+    },
   },
 }
 </script>

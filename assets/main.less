@@ -11,12 +11,20 @@
   color: @text-color-dark; // as we are using dark theme for navbar
 }
 
+.sidebar-header {
+  height: 100px;
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: @text-color-dark;
+}
+
 .logo {
   height: 100%;
   font-size: 24px;
   color: @text-color-dark;
-  display: flex;
-  align-items: center;
   margin-right: 24px;
   font-weight: 700;
 }
@@ -66,6 +74,17 @@
 
 .ant-layout-header {
   display: flex;
+  align-items: center;
+  padding: 0 24px;
+
+  &.mobile {
+    justify-content: space-between;
+
+    .logo {
+      margin-right: 0;
+    }
+  }
+
   .ant-menu {
     flex: 1;
   }
