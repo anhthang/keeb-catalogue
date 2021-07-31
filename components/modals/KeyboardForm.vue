@@ -1,14 +1,14 @@
 <template>
   <div class="add-new-keyboard">
     <a-row :gutter="8">
-      <a-col :span="12">
+      <a-col :xs="24" :md="12">
         <a-form-item label="Name">
           <a-input v-model="keyboard.name" :disabled="isEdit">
             <a-icon slot="prefix" type="font-size" />
           </a-input>
         </a-form-item>
       </a-col>
-      <a-col :span="12">
+      <a-col :xs="24" :md="12">
         <a-form-item label="Price">
           <a-input-group class="price-input-group" compact>
             <a-select v-model="keyboard.currency" style="width: 30%">
@@ -31,14 +31,14 @@
     </a-row>
 
     <a-row :gutter="8">
-      <a-col :span="12">
+      <a-col :xs="24" :md="12">
         <a-form-item label="Maker Id">
           <a-input v-model="keyboard.maker_id" disabled>
             <a-icon slot="prefix" type="user" />
           </a-input>
         </a-form-item>
       </a-col>
-      <a-col :span="12">
+      <a-col :xs="24" :md="12">
         <a-form-item label="Keyboard Id">
           <a-input v-model="keyboard.keyboard_id" disabled>
             <a-icon slot="prefix" :component="KeyboardSvg" />
@@ -48,7 +48,7 @@
     </a-row>
 
     <a-row :gutter="8">
-      <a-col :span="12">
+      <a-col :xs="24" :md="12">
         <a-form-item label="Layout">
           <a-select v-model="keyboard.layout">
             <a-select-option
@@ -61,7 +61,7 @@
           </a-select>
         </a-form-item>
       </a-col>
-      <a-col :span="12">
+      <a-col :xs="24" :md="12">
         <a-form-item label="Status">
           <a-select v-model="keyboard.status">
             <a-select-option
@@ -85,7 +85,7 @@
 
     <a-form-item label="GB Time">
       <a-row :gutter="8">
-        <a-col :span="12">
+        <a-col :xs="24" :md="12">
           <a-date-picker
             v-model="startValue"
             :disabled-date="disabledStartDate"
@@ -94,7 +94,7 @@
             @openChange="handleStartOpenChange"
           />
         </a-col>
-        <a-col :span="12">
+        <a-col :xs="24" :md="12">
           <a-date-picker
             v-model="endValue"
             :disabled-date="disabledEndDate"

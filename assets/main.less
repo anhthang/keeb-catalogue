@@ -11,16 +11,6 @@
   color: @text-color-dark; // as we are using dark theme for navbar
 }
 
-.sidebar-header {
-  height: 100px;
-  font-size: medium;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  color: @text-color-dark;
-}
-
 .logo {
   height: 100%;
   font-size: 24px;
@@ -116,5 +106,13 @@
 .anticon-delete:hover {
   svg {
     fill: @btn-danger-bg;
+  }
+}
+
+@media (max-width: 768px) {
+  .ant-page-header-heading-extra {
+    button > span {
+      display: none;
+    }
   }
 }

@@ -33,13 +33,11 @@
           <nuxt-link :to="`/keebs/maker/${makerId}`">
             <a-card hoverable :title="maker.name">
               <img
-                v-if="maker.img"
                 slot="cover"
                 loading="lazy"
                 :alt="maker.name"
-                :src="maker.img"
+                :src="maker.img || 'https://i.imgur.com/wYMcZiI.png'"
               />
-              <a-empty v-else description="No Logo" />
             </a-card>
           </nuxt-link>
         </a-col>

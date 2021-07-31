@@ -7,14 +7,26 @@
       :loading="loading"
     >
       <a-list-item slot="renderItem" key="item.name" slot-scope="item">
-        <a v-if="item.url" slot="actions" :href="item.url" target="_blank">
-          <a-button key="website" size="small" type="link" icon="global">
+        <a slot="actions" :href="item.url" target="_blank">
+          <a-button
+            key="website"
+            :disabled="!item.url"
+            size="small"
+            type="link"
+            icon="global"
+          >
             Website
           </a-button>
         </a>
-        <a v-else slot="actions" :href="item.geekhack" target="_blank">
-          <a-button key="geekhack" size="small" type="link" icon="link">
-            geekhack
+        <a slot="actions" :href="item.geekhack" target="_blank">
+          <a-button
+            key="geekhack"
+            :disabled="!item.geekhack"
+            size="small"
+            type="link"
+            icon="message"
+          >
+            Discuss
           </a-button>
         </a>
 
@@ -177,6 +189,26 @@ export default {
   .ant-list-item-extra {
     display: flex;
     align-items: center;
+
+    @media (max-width: 992px) {
+      img {
+        max-width: 30vw;
+      }
+    }
+
+    @media (max-width: 576px) {
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ant-list-item-action {
+      button > span {
+        display: none;
+      }
+    }
   }
 }
 .keyboard-no-img {

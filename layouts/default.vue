@@ -4,8 +4,9 @@
       <a-button
         v-if="isMobile"
         type="link"
+        ghost
         :icon="collapsed ? 'menu-unfold' : 'menu-fold'"
-        @click="toogleSidebar"
+        @click="sidebarToogle"
       />
 
       <nuxt-link to="/">
@@ -50,7 +51,7 @@ export default {
     }
   },
   methods: {
-    toogleSidebar() {
+    sidebarToogle() {
       this.collapsed = !this.collapsed
     },
   },
