@@ -44,7 +44,7 @@
             :xl="4"
           >
             <nuxt-link :to="`/artisans/maker/${maker}/${sculpt.slug}`">
-              <a-card hoverable :title="sculpt.name">
+              <a-card hoverable :title="sculpt.name" :size="size">
                 <img
                   slot="cover"
                   loading="lazy"
@@ -72,6 +72,7 @@ export default {
   },
   data() {
     return {
+      size: this.$device.isMobile ? 'small' : 'default',
       makerInfo: {},
       sculpts: [],
       loading: true,

@@ -31,7 +31,7 @@
           :xl="4"
         >
           <nuxt-link :to="`/keebs/maker/${makerId}`">
-            <a-card hoverable :title="maker.name">
+            <a-card hoverable :title="maker.name" :size="size">
               <img
                 slot="cover"
                 loading="lazy"
@@ -55,6 +55,7 @@ export default {
   components: { KeyboardMakerForm },
   data() {
     return {
+      size: this.$device.isMobile ? 'small' : 'default',
       visible: false,
       confirmLoading: false,
     }

@@ -42,7 +42,7 @@
             :lg="6"
             :xl="4"
           >
-            <a-card hoverable :title="cardTitle(colorway)">
+            <a-card hoverable :title="cardTitle(colorway)" :size="size">
               <img
                 slot="cover"
                 loading="lazy"
@@ -90,6 +90,7 @@ export default {
   },
   data() {
     return {
+      size: this.$device.isMobile ? 'small' : 'default',
       visible: false,
       loading: false,
       collectionItems: [],

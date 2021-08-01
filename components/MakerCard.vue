@@ -1,6 +1,6 @@
 <template>
   <nuxt-link :to="`/artisans/maker/${maker.slug}`">
-    <a-card hoverable :title="maker.name">
+    <a-card hoverable :title="maker.name" :size="size">
       <a-icon
         v-if="user && user.uid"
         slot="extra"
@@ -29,6 +29,11 @@ import { mapState } from 'vuex'
 export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['maker', 'favorite'],
+  data() {
+    return {
+      size: this.$device.isMobile ? 'small' : 'default',
+    }
+  },
   computed: {
     ...mapState(['user']),
   },

@@ -1,7 +1,21 @@
 <template>
   <div class="container">
     <a-page-header title="Calendar">
-      <a-calendar @panelChange="onPanelChange" />
+      <a-result
+        v-if="$device.isMobile"
+        status="warning"
+        sub-title="Calendar is not compatible for mobile. Please use tablet or desktop."
+      >
+        <template #extra>
+          <nuxt-link to="/keebs">
+            <a-button type="primary"> Go Keebs </a-button>
+          </nuxt-link>
+          <nuxt-link to="/artisans/maker">
+            <a-button type="primary"> Go Artisans </a-button>
+          </nuxt-link>
+        </template>
+      </a-result>
+      <a-calendar v-else @panelChange="onPanelChange" />
     </a-page-header>
   </div>
 </template>

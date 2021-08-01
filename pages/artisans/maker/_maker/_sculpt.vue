@@ -29,7 +29,7 @@
             :lg="6"
             :xl="4"
           >
-            <a-card hoverable :title="colorway.name || '-'">
+            <a-card hoverable :title="colorway.name || '-'" :size="size">
               <img
                 slot="cover"
                 loading="lazy"
@@ -81,6 +81,7 @@ export default {
   },
   data() {
     return {
+      size: this.$device.isMobile ? 'small' : 'default',
       sort: 'date',
       sortIcon: 'clock-circle',
       sculptInfo: {},
