@@ -6,6 +6,7 @@
         type="link"
         ghost
         :icon="collapsed ? 'menu-unfold' : 'menu-fold'"
+        class="sidebar-toggle"
         @click="sidebarToogle"
       />
 

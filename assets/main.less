@@ -4,11 +4,13 @@
 
 @font-family: 'Dosis', sans-serif;
 
-
 /* Below style applied for both light & dark */
 
-.right-header {
-  color: @text-color-dark; // as we are using dark theme for navbar
+/* Layout */
+.sidebar-toggle {
+  svg {
+    fill: @text-color-dark;
+  }
 }
 
 .logo {
@@ -19,6 +21,11 @@
   font-weight: 700;
 }
 
+.right-header {
+  color: @text-color-dark; // as we are using dark theme for navbar
+}
+
+/* Pages */
 .container {
   margin: 0 auto;
   min-height: 100vh;

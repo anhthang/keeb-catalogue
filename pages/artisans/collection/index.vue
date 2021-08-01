@@ -24,7 +24,7 @@
         />
       </a-row>
 
-      <a-row :gutter="[16, 16]" type="flex">
+      <a-row :gutter="[8, 8]" type="flex">
         <a-col
           v-for="collection in collections"
           :key="collection.slug"

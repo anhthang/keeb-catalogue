@@ -23,7 +23,7 @@
       <a-divider v-if="favorite.length" orientation="left">
         Favorite
       </a-divider>
-      <a-row :gutter="[16, 16]" type="flex">
+      <a-row :gutter="[8, 8]" type="flex">
         <a-col
           v-for="maker in favorite"
           :key="maker.id"
@@ -38,7 +38,7 @@
       </a-row>
 
       <a-divider v-if="favorite.length" orientation="left"> Makers </a-divider>
-      <a-row :gutter="[16, 16]" type="flex">
+      <a-row :gutter="[8, 8]" type="flex">
         <a-col
           v-for="maker in otherMakers"
           :key="maker.id"
