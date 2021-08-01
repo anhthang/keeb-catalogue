@@ -50,7 +50,8 @@ export const actions = {
         })
 
         const db = {
-          maker: { ...rest, slug: name },
+          id: name,
+          maker: rest,
           sculpts: keyBy(sortBy(sculpts, 'name'), 'slug'),
         }
 
@@ -80,19 +81,20 @@ export const actions = {
         commit('FAVORITE_MAKERS', favoriteMakers)
       })
   },
-  getArtisanMakers({ commit }) {
-    // eslint-disable-next-line no-console
-    console.log('getting artisan makers')
+  getMakers({ commit }) {
     this.$fire.firestore
       .collection('artisan-makers')
       .get()
-      .then((snapshots) => {
+      .then((docs) => {
         const makers = []
-        snapshots.forEach((doc) => {
-          makers.push(doc.data())
+        docs.forEach((doc) => {
+          makers.push({
+            id: doc.id,
+            ...doc.data(),
+          })
         })
 
-        commit('ARTISAN_MAKERS', makers)
+        commit('SET_MAKERS', makers)
       })
   },
   addCollection({ commit, state }, data) {
@@ -109,11 +111,11 @@ export const actions = {
 }
 
 export const mutations = {
-  ARTISAN_MAKERS(state, makers) {
+  SET_MAKERS(state, makers) {
     state.makers = makers
   },
   MAKER_DB(state, data) {
-    state.database[data.maker.slug] = data
+    state.database[data.id] = data
   },
   WISHLIST_SETTINGS(state, data) {
     state.wishlistSettings = data

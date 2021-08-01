@@ -30,16 +30,7 @@
           :lg="6"
           :xl="4"
         >
-          <nuxt-link :to="`/keebs/maker/${makerId}`">
-            <a-card hoverable :title="maker.name" :size="size">
-              <img
-                slot="cover"
-                loading="lazy"
-                :alt="maker.name"
-                :src="maker.img || 'https://i.imgur.com/wYMcZiI.png'"
-              />
-            </a-card>
-          </nuxt-link>
+          <maker-card type="keebs" :maker="maker" />
         </a-col>
       </a-row>
     </a-page-header>
@@ -50,9 +41,10 @@
 import { sortBy } from 'lodash'
 import { mapState } from 'vuex'
 import KeyboardMakerForm from '~/components/modals/KeyboardMakerForm.vue'
+import MakerCard from '~/components/MakerCard.vue'
 
 export default {
-  components: { KeyboardMakerForm },
+  components: { KeyboardMakerForm, MakerCard },
   data() {
     return {
       size: this.$device.isMobile ? 'small' : 'default',

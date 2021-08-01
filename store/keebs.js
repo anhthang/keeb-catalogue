@@ -39,10 +39,13 @@ export const actions = {
     this.$fire.firestore
       .collection('keyboard-makers')
       .get()
-      .then((doc) => {
+      .then((docs) => {
         const makers = []
-        doc.docs.forEach((d) => {
-          makers.push(d.data())
+        docs.forEach((doc) => {
+          makers.push({
+            id: doc.id,
+            ...doc.data(),
+          })
         })
 
         commit('SET_MAKERS', makers)

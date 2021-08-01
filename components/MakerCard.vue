@@ -1,15 +1,15 @@
 <template>
-  <nuxt-link :to="`/artisans/maker/${maker.slug}`">
+  <nuxt-link :to="`/${type}/maker/${maker.id}`">
     <a-card hoverable :title="maker.name" :size="size">
       <a-icon
-        v-if="user && user.uid"
+        v-if="user.emailVerified && type === 'artisans'"
         slot="extra"
         type="star"
         :class="favorite ? 'favorite-maker' : ''"
         @click="
           (e) => {
             e.preventDefault()
-            addFavoriteMaker(maker.slug)
+            addFavoriteMaker(maker.id)
           }
         "
       />
@@ -17,7 +17,7 @@
         slot="cover"
         loading="lazy"
         :alt="maker.name"
-        :src="`https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${maker.id}.jpg`"
+        :src="maker.img || nologo"
       />
     </a-card>
   </nuxt-link>
@@ -28,9 +28,10 @@ import { mapState } from 'vuex'
 
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['maker', 'favorite'],
+  props: ['type', 'maker', 'favorite'],
   data() {
     return {
+      nologo: 'https://i.imgur.com/wYMcZiI.png',
       size: this.$device.isMobile ? 'small' : 'default',
     }
   },

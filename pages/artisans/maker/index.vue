@@ -33,7 +33,7 @@
           :lg="6"
           :xl="4"
         >
-          <maker-card :favorite="true" :maker="maker" />
+          <maker-card type="artisans" :favorite="true" :maker="maker" />
         </a-col>
       </a-row>
 
@@ -48,7 +48,7 @@
           :lg="6"
           :xl="4"
         >
-          <maker-card :maker="maker" />
+          <maker-card type="artisans" :maker="maker" />
         </a-col>
       </a-row>
     </a-page-header>
@@ -68,16 +68,16 @@ export default {
     }
   },
   fetch() {
-    this.$store.dispatch('artisans/getArtisanMakers')
+    this.$store.dispatch('artisans/getMakers')
   },
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     ...mapState(['user']),
     favorite() {
-      return this.makers.filter((m) => this.favoriteMakers.includes(m.slug))
+      return this.makers.filter((m) => this.favoriteMakers.includes(m.id))
     },
     otherMakers() {
-      return this.makers.filter((m) => !this.favoriteMakers.includes(m.slug))
+      return this.makers.filter((m) => !this.favoriteMakers.includes(m.id))
     },
   },
   methods: {
