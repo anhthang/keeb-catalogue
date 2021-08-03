@@ -4,30 +4,12 @@
       <a-button
         v-if="user.emailVerified"
         slot="extra"
-        type="primary"
-        icon="file-add"
-        @click="showModal"
-      >
-        Add
-      </a-button>
-
-      <a-button
-        v-if="user.emailVerified"
-        slot="extra"
         type="danger"
         icon="delete"
         @click="deleteCollection"
       >
         Delete
       </a-button>
-
-      <a-modal
-        v-model="visible"
-        title="Add keycap to collection"
-        @ok="addToCollection"
-      >
-        <search-artisans :selected="selectedIds" :visible="visible" />
-      </a-modal>
 
       <conflict-sync-modal />
 
@@ -79,11 +61,10 @@
 import { mapState } from 'vuex'
 import { keyBy, sortBy } from 'lodash'
 import CheckMarkSealSvg from '@/components/icons/CheckMarkSealSvg'
-import SearchArtisans from '~/components/modals/SearchArtisans.vue'
 import ConflictSyncModal from '~/components/modals/ConflictSyncModal.vue'
 
 export default {
-  components: { SearchArtisans, ConflictSyncModal },
+  components: { ConflictSyncModal },
   asyncData({ params }) {
     return {
       ...params,
@@ -92,7 +73,6 @@ export default {
   data() {
     return {
       size: this.$device.isMobile ? 'small' : 'default',
-      visible: false,
       loading: false,
       collectionItems: [],
       CheckMarkSealSvg,
@@ -116,11 +96,8 @@ export default {
     this.loading = false
   },
   computed: {
-    ...mapState('artisans', ['addToCollectionItems', 'collections']),
+    ...mapState('artisans', ['collections']),
     ...mapState(['user']),
-    selectedIds() {
-      return this.collectionItems.map((c) => c.id)
-    },
     collectionName() {
       const collection = this.collections.find(
         (c) => c.slug === this.collection
@@ -134,9 +111,6 @@ export default {
   methods: {
     cardTitle(clw) {
       return `${clw.name} ${clw.sculpt_name}`
-    },
-    showModal() {
-      this.visible = !this.visible
     },
     markOwned(clw) {
       if (this.user.emailVerified) {
@@ -193,29 +167,6 @@ export default {
           `${this.cardTitle(clw)} removed from the collection.`
         )
       }
-    },
-    async addToCollection() {
-      const caps = await this.$store.dispatch(
-        'artisans/fetchCaps',
-        this.addToCollectionItems.map((i) => i.key)
-      )
-
-      const collectionMap = keyBy(this.collectionItems, 'id')
-
-      this.$fire.firestore
-        .collection(`users/${this.user.uid}/collections`)
-        .doc(this.collection)
-        .set(collectionMap)
-        .then(() => {
-          this.$message.success('Successfully added to collection.')
-        })
-        .catch((err) => {
-          this.$message.error(err.message)
-        })
-
-      this.collectionItems.push(...caps)
-
-      this.visible = false
     },
     deleteCollection() {
       const _this = this

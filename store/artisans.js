@@ -1,4 +1,3 @@
-import * as qs from 'querystring'
 import { sortBy, sample, keyBy } from 'lodash'
 import slugify from 'slugify'
 
@@ -8,7 +7,6 @@ export const state = () => {
     database: {},
     collections: [],
     favoriteMakers: [],
-    addToCollectionItems: [],
     wishlistSettings: {
       caps_per_line: 4,
       want_to_trade: false,
@@ -57,11 +55,6 @@ export const actions = {
 
         commit('MAKER_DB', db)
       })
-  },
-  async fetchCaps({ commit }, id) {
-    return await fetch(
-      `http://localhost:4000/keycaps?${qs.stringify({ id })}`
-    ).then((res) => res.json())
   },
   async updateFavoriteMakers({ commit, state, rootState }, name) {
     let favoriteMakers = [...state.favoriteMakers]
@@ -122,9 +115,6 @@ export const mutations = {
   },
   FAVORITE_MAKERS(state, data) {
     state.favoriteMakers = data
-  },
-  ADD_TO_COLLECTION(state, data) {
-    state.addToCollectionItems = data
   },
   USER_COLLECTIONS(state, data) {
     state.collections = data
