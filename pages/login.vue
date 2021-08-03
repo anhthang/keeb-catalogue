@@ -1,13 +1,9 @@
 <template>
   <div class="container login-container">
-    <a-row type="flex">
-      <a-col>
-        <span class="logo">Keeb Catalogue</span>
-        <a-button icon="google" type="primary" @click="loginWithGoogle">
-          Login with Google
-        </a-button>
-      </a-col>
-    </a-row>
+    <h1>Keeb Catalogue</h1>
+    <a-button icon="google" type="primary" @click="loginWithGoogle">
+      Login with Google
+    </a-button>
   </div>
 </template>
 
@@ -47,13 +43,11 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100%;
-  // position: relative;
-  // display: flex;
   align-items: center;
   justify-content: center;
 
-  .logo {
-    color: #40a9ff;
+  button {
+    margin-bottom: 8px;
   }
 }
 </style>

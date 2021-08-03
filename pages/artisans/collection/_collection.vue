@@ -80,9 +80,10 @@ import { mapState } from 'vuex'
 import { keyBy, sortBy } from 'lodash'
 import CheckMarkSealSvg from '@/components/icons/CheckMarkSealSvg'
 import SearchArtisans from '~/components/modals/SearchArtisans.vue'
+import ConflictSyncModal from '~/components/modals/ConflictSyncModal.vue'
 
 export default {
-  components: { SearchArtisans },
+  components: { SearchArtisans, ConflictSyncModal },
   asyncData({ params }) {
     return {
       ...params,
@@ -246,13 +247,3 @@ export default {
   },
 }
 </script>
-
-<style lang="less">
-.owned-cap {
-  color: #22863a;
-}
-
-.remove-cap:hover {
-  color: #d32029;
-}
-</style>

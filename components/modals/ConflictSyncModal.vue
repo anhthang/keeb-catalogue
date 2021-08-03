@@ -28,12 +28,16 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['collections']),
+    ...mapState(['user']),
   },
   beforeMount() {
     const hasLocalCollections =
       localStorage.getItem('KeebCatalogue_wish') ||
       localStorage.getItem('KeebCatalogue_trade')
-    this.visible = this.collections.length && !!hasLocalCollections
+    this.visible =
+      this.user.emailVerified &&
+      this.collections.length &&
+      !!hasLocalCollections
   },
   methods: {
     onConfirmSync() {

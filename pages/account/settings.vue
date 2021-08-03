@@ -17,7 +17,7 @@
                     v-if="user.emailVerified"
                     slot="suffix"
                     type="check-circle"
-                    style="color: green"
+                    class="email-verified"
                   />
                 </a-input>
               </a-form-item>
@@ -28,46 +28,45 @@
           </a-row>
         </a-tab-pane>
         <a-tab-pane key="social" tab="Social Profiles">
-          <a-spin :spinning="loading">
-            <a-row>
-              <a-col :xs="24" :sm="16">
-                <a-form-item label="Reddit">
-                  <a-input
-                    v-model="settings.social.reddit"
-                    placeholder="u/username"
-                  >
-                    <a-icon slot="prefix" type="reddit" />
-                  </a-input>
-                </a-form-item>
-                <a-form-item label="Discord">
-                  <a-input
-                    v-model="settings.social.discord"
-                    placeholder="Discord#0000"
-                  >
-                    <a-icon
-                      slot="prefix"
-                      :component="DiscordSvg"
-                      class="custom-icon"
-                    />
-                  </a-input>
-                </a-form-item>
-                <a-form-item label="QQ">
-                  <a-input v-model="settings.social.qq" placeholder="00000000">
-                    <a-icon slot="prefix" type="qq" />
-                  </a-input>
-                </a-form-item>
-                <a-form-item>
-                  <a-button
-                    icon="save"
-                    type="primary"
-                    @click="saveSettings('social')"
-                  >
-                    Save
-                  </a-button>
-                </a-form-item>
-              </a-col>
-            </a-row>
-          </a-spin>
+          <a-row>
+            <a-col :xs="24" :sm="16">
+              <a-form-item label="Reddit">
+                <a-input
+                  v-model="settings.social.reddit"
+                  placeholder="u/username"
+                >
+                  <a-icon slot="prefix" type="reddit" />
+                </a-input>
+              </a-form-item>
+              <a-form-item label="Discord">
+                <a-input
+                  v-model="settings.social.discord"
+                  placeholder="Discord#0000"
+                >
+                  <a-icon
+                    slot="prefix"
+                    :component="DiscordSvg"
+                    class="custom-icon"
+                  />
+                </a-input>
+              </a-form-item>
+              <a-form-item label="QQ">
+                <a-input v-model="settings.social.qq" placeholder="00000000">
+                  <a-icon slot="prefix" type="qq" />
+                </a-input>
+              </a-form-item>
+              <a-form-item>
+                <a-button
+                  icon="save"
+                  type="primary"
+                  :loading="loading"
+                  @click="saveSettings('social')"
+                >
+                  Save
+                </a-button>
+              </a-form-item>
+            </a-col>
+          </a-row>
         </a-tab-pane>
       </a-tabs>
     </a-page-header>
