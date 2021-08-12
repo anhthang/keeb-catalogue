@@ -19,6 +19,13 @@
       </a-button>
     </template>
 
+    <div v-if="base64Img && !$device.isDesktop" class="preview-img">
+      <a-card-meta
+        description="Place your finger on the photo and hold it on the image until a menu
+      appears on the screen. Tap Save to download it."
+      />
+      <img :src="`data:image/png;base64,${base64Img}`" alt="" />
+    </div>
     <div class="artisan-container">
       <a-divider v-if="draggableWishList.length">
         {{ wishlistSettings.wish.title }}
@@ -97,6 +104,7 @@ export default {
       collection: {},
       draggableTradeList: [],
       draggableWishList: [],
+      base64Img: null,
     }
   },
   computed: {
@@ -237,7 +245,7 @@ export default {
           : [],
       }
 
-      const base64Img = await this.$axios
+      this.base64Img = await this.$axios
         .post('https://app.keycap-archivist.com/api/v2/wishlist', json, {
           responseType: 'arraybuffer',
         })
@@ -249,10 +257,12 @@ export default {
           this.loading = false
         })
 
-      const link = document.createElement('a')
-      link.setAttribute('download', 'wishlist.png')
-      link.setAttribute('href', `data:image/png;base64,${base64Img}`)
-      link.click()
+      if (this.$device.isDesktop) {
+        const link = document.createElement('a')
+        link.setAttribute('download', 'wishlist.png')
+        link.setAttribute('href', `data:image/png;base64,${this.base64Img}`)
+        link.click()
+      }
 
       this.loading = false
     },
@@ -272,6 +282,13 @@ export default {
     @media (max-width: 992px) {
       height: 150px;
     }
+  }
+}
+
+.preview-img {
+  img {
+    width: 100%;
+    margin-top: 12px;
   }
 }
 </style>
