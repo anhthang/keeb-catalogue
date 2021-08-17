@@ -30,5 +30,6 @@ $ yarn generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-## Credit
+## Credits
+- The Artisan database is collected from [Keycap Archivist Database](https://github.com/keycap-archivist/database)
 - Icons made by [Freepik](https://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/free-icon/keyboard-key_3538101)
