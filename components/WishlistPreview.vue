@@ -56,12 +56,10 @@
         </draggable>
       </a-row>
 
-      <a-divider
-        v-if="draggableTradeList.length && wishlistSettings.want_to_trade"
-      >
+      <a-divider v-if="draggableTradeList.length && wantToTrade">
         {{ wishlistSettings.trade.title }}
       </a-divider>
-      <a-row v-if="wishlistSettings.want_to_trade" :gutter="[8, 8]">
+      <a-row v-if="wantToTrade" :gutter="[8, 8]">
         <draggable :list="draggableTradeList" group="group">
           <a-col
             v-for="colorway in draggableTradeList"
@@ -110,6 +108,9 @@ export default {
   computed: {
     ...mapState('artisans', ['wishlistSettings']),
     ...mapState(['user']),
+    wantToTrade() {
+      return this.wishlistSettings.want_to === 'trade'
+    },
     kaSettings() {
       return {
         capsPerLine: this.wishlistSettings.caps_per_line,
@@ -152,7 +153,7 @@ export default {
           .map((c) => `- ${c.name} ${c.sculpt_name}`)
           .join('\n')}`
 
-      if (this.wishlistSettings.want_to_trade) {
+      if (this.wantToTrade) {
         text +=
           `\n\n` +
           `**${this.wishlistSettings.trade.title}**\n` +
@@ -236,7 +237,7 @@ export default {
           isPriority: false,
           legendColor: 'Crimson',
         })),
-        tradeCaps: this.wishlistSettings.want_to_trade
+        tradeCaps: this.wantToTrade
           ? this.draggableTradeList.map((i) => ({
               id: i.id,
               isPriority: false,
@@ -282,6 +283,10 @@ export default {
     @media (max-width: 992px) {
       height: 150px;
     }
+  }
+
+  @media (max-width: 576px) {
+    margin-top: 12px;
   }
 }
 

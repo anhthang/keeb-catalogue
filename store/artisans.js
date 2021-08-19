@@ -9,7 +9,7 @@ export const state = () => {
     favoriteMakers: [],
     wishlistSettings: {
       caps_per_line: 4,
-      want_to_trade: false,
+      want_to: 'buy',
       wish: {
         title: 'Want',
         collection: undefined,
