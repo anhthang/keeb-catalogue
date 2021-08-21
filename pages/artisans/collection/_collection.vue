@@ -34,19 +34,19 @@
 
               <template slot="actions">
                 <div
-                  v-if="colorway.owned"
-                  class="owned-cap"
-                  @click="markOwned(colorway)"
+                  v-if="colorway.gotcha"
+                  class="gotcha-cap"
+                  @click="markGotcha(colorway)"
                 >
                   <a-icon class="custom-icon" :component="CheckMarkSealSvg" />
-                  Owned
+                  Gotcha
                 </div>
-                <div v-else @click="markOwned(colorway)">
+                <div v-else @click="markGotcha(colorway)">
                   <a-icon class="custom-icon" :component="CheckMarkSealSvg" />
-                  Owned
+                  Gotcha
                 </div>
-                <div class="remove-cap" @click="removeCap(colorway)">
-                  <a-icon type="delete" /> Remove
+                <div class="release-cap" @click="releaseCap(colorway)">
+                  <a-icon type="delete" /> Release
                 </div>
               </template>
             </a-card>
@@ -112,13 +112,13 @@ export default {
     cardTitle(clw) {
       return `${clw.name} ${clw.sculpt_name}`
     },
-    markOwned(clw) {
+    markGotcha(clw) {
       if (this.user.emailVerified) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
           .doc(this.collection)
           .update({
-            [clw.id]: { ...clw, owned: true },
+            [clw.id]: { ...clw, gotcha: true },
           })
           .then(() => {
             this.$message.success('Updated successfully.')
@@ -129,7 +129,7 @@ export default {
           })
       } else {
         const collectionMap = keyBy(this.collectionItems, 'id')
-        collectionMap[clw.id].owned = true
+        collectionMap[clw.id].gotcha = true
 
         localStorage.setItem(
           `KeebCatalogue_${this.collection}`,
@@ -139,7 +139,7 @@ export default {
         this.collectionItems = Object.values(collectionMap)
       }
     },
-    removeCap(clw) {
+    releaseCap(clw) {
       this.collectionItems = this.collectionItems.filter((c) => c.id !== clw.id)
 
       if (this.user.emailVerified) {

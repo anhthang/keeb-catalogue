@@ -33,18 +33,19 @@
       </a-layout-content>
     </a-layout>
 
-    <a-layout-footer style="text-align: center">
-      Keeb Catalogue ©2021 Created by Anh Thang Bui
+    <a-layout-footer>
+      <layout-footer />
     </a-layout-footer>
   </a-layout>
 </template>
 
 <script>
+import LayoutFooter from '~/components/layouts/Footer.vue'
 import MenuTree from '~/components/layouts/MenuTree.vue'
 import RightHeader from '~/components/layouts/RightHeader.vue'
 
 export default {
-  components: { MenuTree, RightHeader },
+  components: { MenuTree, RightHeader, LayoutFooter },
   data() {
     return {
       isMobile: this.$device.isMobile,
