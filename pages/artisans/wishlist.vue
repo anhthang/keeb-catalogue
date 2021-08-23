@@ -12,3 +12,13 @@
     </a-page-header>
   </div>
 </template>
+
+<script>
+export default {
+  head() {
+    return {
+      title: `Wishlist - ${process.env.appName}`,
+    }
+  },
+}
+</script>

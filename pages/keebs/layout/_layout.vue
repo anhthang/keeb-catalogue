@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a-page-header :title="`${layoutMap[layout]} Keyboards`">
+    <a-page-header :title="pageTitle">
       <keyboard-list :loading="loading" />
     </a-page-header>
   </div>
@@ -28,10 +28,18 @@ export default {
       this.loading = false
     })
   },
+  head() {
+    return {
+      title: `${this.pageTitle} - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('keebs', ['makers', 'layoutMap']),
     maker() {
       return this.makers?.[this.makerId] || {}
+    },
+    pageTitle() {
+      return `${this.layoutMap[this.layout]} Keyboards`
     },
   },
 }

@@ -55,6 +55,11 @@ export default {
   fetch() {
     this.$store.dispatch('keebs/getMakers')
   },
+  head() {
+    return {
+      title: `Keyboard Makers - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('keebs', ['makers']),
     ...mapState(['user']),

@@ -70,6 +70,11 @@ export default {
   fetch() {
     this.$store.dispatch('artisans/getMakers')
   },
+  head() {
+    return {
+      title: `Artisan Makers - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     ...mapState(['user']),

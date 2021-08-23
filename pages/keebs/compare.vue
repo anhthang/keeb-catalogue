@@ -15,6 +15,11 @@
 import { mapState } from 'vuex'
 
 export default {
+  head() {
+    return {
+      title: `Keeb Comparison - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('keebs', ['compareKeebs']),
     columns() {

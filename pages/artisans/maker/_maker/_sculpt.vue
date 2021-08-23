@@ -98,6 +98,11 @@ export default {
       this.loading = false
     }
   },
+  head() {
+    return {
+      title: `${this.sculptInfo.name} • ${this.makerInfo.name} - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('artisans', ['database', 'collections']),
     ...mapState(['user']),

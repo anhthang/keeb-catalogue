@@ -88,6 +88,11 @@ export default {
       this.loading = false
     }
   },
+  head() {
+    return {
+      title: `${this.makerInfo.name} - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('artisans', ['database']),
   },

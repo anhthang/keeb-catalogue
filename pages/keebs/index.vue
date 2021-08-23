@@ -16,7 +16,6 @@ export default {
   },
   data() {
     return {
-      pageTitle: undefined,
       loading: false,
       titleMap: {
         live: 'Live GBs',
@@ -27,7 +26,16 @@ export default {
   },
   fetch() {
     this.boardByStatus(this.status)
-    this.pageTitle = this.titleMap[this.status]
+  },
+  head() {
+    return {
+      title: `${this.pageTitle} - ${process.env.appName}`,
+    }
+  },
+  computed: {
+    pageTitle() {
+      return this.titleMap[this.status]
+    },
   },
   watchQuery({ status = 'live' }) {
     this.boardByStatus(status)

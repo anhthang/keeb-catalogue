@@ -95,6 +95,11 @@ export default {
 
     this.loading = false
   },
+  head() {
+    return {
+      title: `${this.collectionName} • Collection - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('artisans', ['collections']),
     ...mapState(['user']),

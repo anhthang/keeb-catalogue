@@ -56,6 +56,11 @@ export default {
       collectionName: undefined,
     }
   },
+  head() {
+    return {
+      title: `Collection - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('artisans', ['collections']),
     ...mapState(['user']),

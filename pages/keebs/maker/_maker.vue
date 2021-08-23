@@ -99,6 +99,11 @@ export default {
       this.loading = false
     })
   },
+  head() {
+    return {
+      title: `${this.maker.name} - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState('keebs', ['makers']),
     ...mapState(['user']),

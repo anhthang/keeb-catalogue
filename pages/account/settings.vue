@@ -94,6 +94,11 @@ export default {
       },
     }
   },
+  head() {
+    return {
+      title: `Account Settings - ${process.env.appName}`,
+    }
+  },
   computed: {
     ...mapState(['user']),
   },
