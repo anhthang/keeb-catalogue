@@ -2,7 +2,7 @@
 Building a catalog for mechanical keyboard community
 
 ## TODO
-- Fix dark mode
+- Use dark mode from ant-design-vue v2 once Nuxt.js support Vue 3
 
 ### Keyboard
 - Calendar view

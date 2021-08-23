@@ -42,10 +42,14 @@ export default {
 
 <style lang="less">
 .global-footer {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footer-links {
+  display: flex;
+  text-align: center;
   margin-bottom: 8px;
 
   a:not(:last-child) {
