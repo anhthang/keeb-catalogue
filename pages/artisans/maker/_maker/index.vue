@@ -9,6 +9,15 @@
       }"
     >
       <template slot="extra">
+        <a-button
+          v-if="user.isEditor"
+          key="edit"
+          type="primary"
+          icon="edit"
+          @click="showEditMakerModal"
+        >
+          Edit Maker
+        </a-button>
         <a v-if="maker.website" :href="maker.website" target="_blank">
           <a-button key="3" icon="global"> Website </a-button>
         </a>
@@ -52,6 +61,19 @@
           </a-col>
         </a-row>
       </a-spin>
+
+      <a-modal
+        v-model="showEditMaker"
+        title="Edit Maker"
+        destroy-on-close
+        @ok="updateArtisanMaker"
+      >
+        <artisan-maker-form
+          ref="artisanMaker"
+          :is-edit="true"
+          :metadata="maker"
+        />
+      </a-modal>
     </a-page-header>
   </div>
 </template>
@@ -60,8 +82,10 @@
 import { mapState } from 'vuex'
 import { isEmpty } from 'lodash'
 import DiscordSvg from '@/components/icons/DiscordSvg'
+import ArtisanMakerForm from '~/components/modals/ArtisanMakerForm.vue'
 
 export default {
+  components: { ArtisanMakerForm },
   asyncData({ params }) {
     return {
       makerId: params.maker,
@@ -73,6 +97,8 @@ export default {
       sculpts: {},
       loading: true,
       DiscordSvg,
+      showEditMaker: false,
+      confirmLoading: false,
     }
   },
   async fetch() {
@@ -95,6 +121,7 @@ export default {
   },
   computed: {
     ...mapState('artisans', ['makers']),
+    ...mapState(['user']),
     maker() {
       return this.makers[this.makerId] || {}
     },
@@ -102,6 +129,19 @@ export default {
   watch: {
     loading() {
       this.sculpts = this.makers[this.makerId]?.sculpts || {}
+    },
+  },
+  methods: {
+    showEditMakerModal() {
+      this.showEditMaker = !this.showEditMaker
+    },
+    async updateArtisanMaker() {
+      this.confirmLoading = true
+
+      await this.$refs.artisanMaker.addMaker()
+
+      this.confirmLoading = false
+      this.showEditMaker = false
     },
   },
 }

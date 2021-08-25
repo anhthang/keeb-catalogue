@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-form-item label="Name">
-      <a-input v-model="maker.name" :disabled="isEdit">
+      <a-input v-model="maker.name" placeholder="Maker Name" :disabled="isEdit">
         <a-icon slot="prefix" type="file-text" />
       </a-input>
     </a-form-item>
