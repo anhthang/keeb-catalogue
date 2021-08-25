@@ -1,6 +1,6 @@
 <template>
   <div class="container artisan-container">
-    <a-page-header :title="sculptInfo.name">
+    <a-page-header :title="sculpt.name">
       <template slot="extra">
         <a-button key="1" disabled icon="file-add" type="primary">
           Submit new Colorway
@@ -69,14 +69,15 @@
 
 <script>
 import { mapState } from 'vuex'
-import { sortBy } from 'lodash'
+import { isEmpty, sortBy } from 'lodash'
 import ConflictSyncModal from '~/components/modals/ConflictSyncModal.vue'
 
 export default {
   components: { ConflictSyncModal },
   asyncData({ params }) {
     return {
-      ...params,
+      makerId: params.maker,
+      sculptId: params.sculpt,
     }
   },
   data() {
@@ -84,15 +85,18 @@ export default {
       size: this.$device.isMobile ? 'small' : 'default',
       sort: 'date',
       sortIcon: 'clock-circle',
-      sculptInfo: {},
-      makerInfo: {},
+      sculpt: {},
       loading: true,
     }
   },
   async fetch() {
-    if (!this.database[this.maker]) {
+    if (!this.makers[this.makerId]) {
+      await this.$store.dispatch('artisans/getMaker', this.makerId)
+    }
+
+    if (isEmpty(this.makers[this.makerId].sculpts)) {
       await this.$store
-        .dispatch('artisans/fetchMakerDatabase', this.maker)
+        .dispatch('artisans/fetchMakerDatabase', this.makerId)
         .then(() => (this.loading = false))
     } else {
       this.loading = false
@@ -100,16 +104,19 @@ export default {
   },
   head() {
     return {
-      title: `${this.sculptInfo.name} • ${this.makerInfo.name} - ${process.env.appName}`,
+      title: `${this.sculpt.name} • ${this.maker.name} - ${process.env.appName}`,
     }
   },
   computed: {
-    ...mapState('artisans', ['database', 'collections']),
+    ...mapState('artisans', ['makers', 'collections']),
     ...mapState(['user']),
     colorways() {
       return this.sort === 'name'
-        ? sortBy(this.sculptInfo.colorways, 'name')
-        : this.sculptInfo.colorways
+        ? sortBy(this.sculpt.colorways, 'name')
+        : this.sculpt.colorways
+    },
+    maker() {
+      return this.makers[this.makerId] || {}
     },
   },
   watch: {
@@ -117,8 +124,7 @@ export default {
       this.sortIcon = this.sort === 'name' ? 'sort-ascending' : 'clock-circle'
     },
     loading() {
-      this.sculptInfo = this.database[this.maker].sculpts[this.sculpt]
-      this.makerInfo = this.database[this.maker].maker
+      this.sculpt = this.makers[this.makerId].sculpts[this.sculptId]
     },
   },
   methods: {
@@ -127,8 +133,8 @@ export default {
         id: clw.id,
         name: clw.name,
         img: clw.img,
-        sculpt_name: this.sculptInfo.name,
-        maker_name: this.makerInfo.name,
+        sculpt_name: this.sculpt.name,
+        maker_name: this.maker.name,
       }
 
       if (this.user.emailVerified) {

@@ -3,7 +3,7 @@ import slugify from 'slugify'
 
 export const state = () => {
   return {
-    makers: [],
+    makers: {},
     database: {},
     collections: [],
     favoriteMakers: [],
@@ -28,14 +28,14 @@ export const state = () => {
 }
 
 export const actions = {
-  async fetchMakerDatabase({ commit }, name) {
+  async fetchMakerDatabase({ commit }, id) {
     await fetch(
-      `https://raw.githubusercontent.com/keycap-archivist/database/master/db/${name}.json`
+      `https://raw.githubusercontent.com/keycap-archivist/database/master/db/${id}.json`
     )
       .then((res) => res.json())
       .then((data) => {
         // eslint-disable-next-line prefer-const
-        let { sculpts, ...rest } = data
+        let { sculpts } = data
 
         sculpts = sculpts.map((sculpt) => {
           const random = sample(sculpt.colorways)
@@ -47,13 +47,9 @@ export const actions = {
           }
         })
 
-        const db = {
-          id: name,
-          maker: rest,
-          sculpts: keyBy(sortBy(sculpts, 'name'), 'slug'),
-        }
+        sculpts = keyBy(sortBy(sculpts, 'name'), 'slug')
 
-        commit('MAKER_DB', db)
+        commit('MAKER_DB', { id, sculpts })
       })
   },
   async updateFavoriteMakers({ commit, state, rootState }, name) {
@@ -90,6 +86,18 @@ export const actions = {
         commit('SET_MAKERS', makers)
       })
   },
+  async getMaker({ commit }, makerId) {
+    await this.$fire.firestore
+      .collection('artisan-makers')
+      .doc(makerId)
+      .get()
+      .then((doc) => {
+        commit('SET_MAKER', {
+          id: doc.id,
+          ...doc.data(),
+        })
+      })
+  },
   addCollection({ commit, state }, data) {
     const collections = [...state.collections]
     collections.push(data)
@@ -105,10 +113,15 @@ export const actions = {
 
 export const mutations = {
   SET_MAKERS(state, makers) {
-    state.makers = makers
+    state.makers = keyBy(makers, 'id')
   },
-  MAKER_DB(state, data) {
-    state.database[data.id] = data
+  SET_MAKER(state, maker) {
+    state.makers = {
+      [maker.id]: maker,
+    }
+  },
+  MAKER_DB(state, { id, sculpts }) {
+    state.makers[id].sculpts = sculpts
   },
   WISHLIST_SETTINGS(state, data) {
     state.wishlistSettings = data

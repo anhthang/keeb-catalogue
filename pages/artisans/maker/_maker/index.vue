@@ -1,32 +1,28 @@
 <template>
   <div class="container artisan-container">
     <a-page-header
-      :title="makerInfo.name"
+      :title="maker.name"
       :avatar="{
         props: {
-          src: `https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${makerInfo.id}.jpg`,
+          src: maker.img,
         },
       }"
     >
       <template slot="extra">
-        <a v-if="makerInfo.website" :href="makerInfo.website" target="_blank">
+        <a v-if="maker.website" :href="maker.website" target="_blank">
           <a-button key="3" icon="global"> Website </a-button>
         </a>
-        <a
-          v-if="makerInfo.instagram"
-          :href="makerInfo.instagram"
-          target="_blank"
-        >
+        <a v-if="maker.instagram" :href="maker.instagram" target="_blank">
           <a-button key="2" icon="instagram"> Instagram </a-button>
         </a>
-        <a v-if="makerInfo.discord" :href="makerInfo.discord" target="_blank">
+        <a v-if="maker.discord" :href="maker.discord" target="_blank">
           <a-button key="1">
             <a-icon :component="DiscordSvg" class="custom-icon" />
             Discord
           </a-button>
         </a>
-        <a :href="makerInfo.src" target="_blank">
-          <a-button v-if="makerInfo.src" key="0" icon="file-word">
+        <a :href="maker.src" target="_blank">
+          <a-button v-if="maker.src" key="0" icon="file-word">
             Catalog
           </a-button>
         </a>
@@ -43,7 +39,7 @@
             :lg="6"
             :xl="4"
           >
-            <nuxt-link :to="`/artisans/maker/${maker}/${sculpt.slug}`">
+            <nuxt-link :to="`/artisans/maker/${makerId}/${sculpt.slug}`">
               <a-card hoverable :title="sculpt.name" :size="size">
                 <img
                   slot="cover"
@@ -62,27 +58,31 @@
 
 <script>
 import { mapState } from 'vuex'
+import { isEmpty } from 'lodash'
 import DiscordSvg from '@/components/icons/DiscordSvg'
 
 export default {
   asyncData({ params }) {
     return {
-      ...params,
+      makerId: params.maker,
     }
   },
   data() {
     return {
       size: this.$device.isMobile ? 'small' : 'default',
-      makerInfo: {},
-      sculpts: [],
+      sculpts: {},
       loading: true,
       DiscordSvg,
     }
   },
   async fetch() {
-    if (!this.database[this.maker]) {
+    if (!this.makers[this.makerId]) {
+      await this.$store.dispatch('artisans/getMaker', this.makerId)
+    }
+
+    if (isEmpty(this.makers[this.makerId].sculpts)) {
       await this.$store
-        .dispatch('artisans/fetchMakerDatabase', this.maker)
+        .dispatch('artisans/fetchMakerDatabase', this.makerId)
         .then(() => (this.loading = false))
     } else {
       this.loading = false
@@ -90,16 +90,18 @@ export default {
   },
   head() {
     return {
-      title: `${this.makerInfo.name} - ${process.env.appName}`,
+      title: `${this.maker.name} - ${process.env.appName}`,
     }
   },
   computed: {
-    ...mapState('artisans', ['database']),
+    ...mapState('artisans', ['makers']),
+    maker() {
+      return this.makers[this.makerId] || {}
+    },
   },
   watch: {
     loading() {
-      this.makerInfo = this.database[this.maker].maker
-      this.sculpts = this.database[this.maker].sculpts
+      this.sculpts = this.makers[this.makerId]?.sculpts || {}
     },
   },
 }

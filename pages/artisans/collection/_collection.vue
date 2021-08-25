@@ -156,7 +156,7 @@ export default {
           })
           .then(() => {
             this.$message.success(
-              `${this.cardTitle(clw)} removed from the collection.`
+              `${this.cardTitle(clw)} released from the collection.`
             )
           })
           .catch((err) => {
@@ -169,7 +169,7 @@ export default {
         )
 
         this.$message.success(
-          `${this.cardTitle(clw)} removed from the collection.`
+          `${this.cardTitle(clw)} released from the collection.`
         )
       }
     },

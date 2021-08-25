@@ -79,10 +79,14 @@ export default {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     ...mapState(['user']),
     favorite() {
-      return this.makers.filter((m) => this.favoriteMakers.includes(m.id))
+      return Object.values(this.makers).filter((m) =>
+        this.favoriteMakers.includes(m.id)
+      )
     },
     otherMakers() {
-      return this.makers.filter((m) => !this.favoriteMakers.includes(m.id))
+      return Object.values(this.makers).filter(
+        (m) => !this.favoriteMakers.includes(m.id)
+      )
     },
   },
   methods: {
