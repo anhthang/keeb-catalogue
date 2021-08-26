@@ -1,4 +1,5 @@
 const appName = 'Keeb Catalogue'
+const appUrl = 'https://keeb-catalogue.web.app'
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -12,10 +13,33 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'og:site_name', property: 'og:site_name', content: appName },
+      { hid: 'og:title', property: 'og:title', content: appName },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
       {
-        hid: 'description',
-        name: 'description',
-        content: 'Catalogue for mechanical keyboard community',
+        hid: 'og:image',
+        property: 'og:image',
+        content: `${appUrl}/website-card.png`,
+      },
+      {
+        hid: 'og:image:secure_url',
+        property: 'og:image:secure_url',
+        content: `${appUrl}/website-card.png`,
+      },
+      {
+        hid: 'og:image:alt',
+        property: 'og:image:alt',
+        content: appName,
+      },
+      {
+        hid: 'twitter:card',
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        hid: 'twitter:image',
+        name: 'twitter:image',
+        content: `${appUrl}/website-card.png`,
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

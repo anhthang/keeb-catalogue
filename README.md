@@ -1,5 +1,5 @@
-# keeb-catalogue
-Catalogue for mechanical keyboard community
+# Keeb Catalogue
+Catalogue for mechanical keyboard and artisan keycap community
 
 ## TODO
 - Use dark mode from ant-design-vue v2 once Nuxt.js support Vue 3
