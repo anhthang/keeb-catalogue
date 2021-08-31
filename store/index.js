@@ -1,3 +1,5 @@
+import { sortBy } from 'lodash'
+
 export const state = () => {
   return {
     user: {},
@@ -54,7 +56,7 @@ export const mutations = {
     state.user.social = data.social || {}
     state.user.isAdmin = data.isAdmin || false
     state.user.isEditor = data.isEditor || false
-    state.artisans.collections = data.collections || []
+    state.artisans.collections = sortBy(data.collections, 'name') || []
     state.artisans.favoriteMakers = data.makers || []
   },
 }

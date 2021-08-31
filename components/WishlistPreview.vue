@@ -179,7 +179,12 @@ export default {
     },
   },
   beforeMount() {
-    this.getUserCollections()
+    this.getUserCollections().then(() => {
+      this.draggableWishList =
+        this.collection[this.wishlistSettings.wish.collection] || []
+      this.draggableTradeList =
+        this.collection[this.wishlistSettings.trade.collection] || []
+    })
   },
   methods: {
     cardTitle(clw) {
@@ -188,9 +193,9 @@ export default {
     onCopy() {
       this.$message.success('Wishlist text copied!')
     },
-    getUserCollections() {
+    async getUserCollections() {
       if (this.user.emailVerified) {
-        this.$fire.firestore
+        await this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
           .get()
           .then((doc) => {

@@ -130,6 +130,6 @@ export const mutations = {
     state.favoriteMakers = data
   },
   USER_COLLECTIONS(state, data) {
-    state.collections = data
+    state.collections = sortBy(data, 'name')
   },
 }
