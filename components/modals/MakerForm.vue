@@ -5,6 +5,16 @@
         <a-icon slot="prefix" type="file-text" />
       </a-input>
     </a-form-item>
+    <a-form-item label="Logo">
+      <a-input v-model="maker.img" :disabled="!isKeeb">
+        <a-icon slot="prefix" type="file-image" />
+      </a-input>
+    </a-form-item>
+    <a-form-item v-if="!isKeeb" label="Source">
+      <a-input v-model="maker.src">
+        <a-icon slot="file-word" type="file-image" />
+      </a-input>
+    </a-form-item>
     <a-form-item label="Website">
       <a-input v-model="maker.website">
         <a-icon slot="prefix" type="global" />
@@ -18,11 +28,6 @@
     <a-form-item label="Discord">
       <a-input v-model="maker.discord">
         <a-icon slot="prefix" :component="DiscordSvg" />
-      </a-input>
-    </a-form-item>
-    <a-form-item label="Logo">
-      <a-input v-model="maker.img" :disabled="!isKeeb">
-        <a-icon slot="prefix" type="file-image" />
       </a-input>
     </a-form-item>
   </div>
@@ -46,6 +51,7 @@ export default {
         website: null,
         instagram: null,
         discord: null,
+        src: null,
       },
       slug: null,
     }
