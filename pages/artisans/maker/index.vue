@@ -17,7 +17,7 @@
         :confirm-loading="confirmLoading"
         @ok="addMaker"
       >
-        <artisan-maker-form ref="artisanMaker" />
+        <maker-form ref="artisanMaker" />
       </a-modal>
 
       <a-divider v-if="favorite.length" orientation="left">
@@ -33,7 +33,7 @@
           :lg="6"
           :xl="4"
         >
-          <maker-card type="artisans" :favorite="true" :maker="maker" />
+          <maker-card :favorite="true" :maker="maker" />
         </a-col>
       </a-row>
 
@@ -48,7 +48,7 @@
           :lg="6"
           :xl="4"
         >
-          <maker-card type="artisans" :maker="maker" />
+          <maker-card :maker="maker" />
         </a-col>
       </a-row>
     </a-page-header>
@@ -57,10 +57,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import ArtisanMakerForm from '~/components/modals/ArtisanMakerForm.vue'
+import MakerForm from '~/components/modals/MakerForm.vue'
 
 export default {
-  components: { ArtisanMakerForm },
+  components: { MakerForm },
   data() {
     return {
       visible: false,

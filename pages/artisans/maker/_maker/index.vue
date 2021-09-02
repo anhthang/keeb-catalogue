@@ -68,11 +68,7 @@
         destroy-on-close
         @ok="updateArtisanMaker"
       >
-        <artisan-maker-form
-          ref="artisanMaker"
-          :is-edit="true"
-          :metadata="maker"
-        />
+        <maker-form ref="artisanMaker" :is-edit="true" :metadata="maker" />
       </a-modal>
     </a-page-header>
   </div>
@@ -82,10 +78,10 @@
 import { mapState } from 'vuex'
 import { isEmpty } from 'lodash'
 import DiscordSvg from '@/components/icons/DiscordSvg'
-import ArtisanMakerForm from '~/components/modals/ArtisanMakerForm.vue'
+import MakerForm from '~/components/modals/MakerForm.vue'
 
 export default {
-  components: { ArtisanMakerForm },
+  components: { MakerForm },
   asyncData({ params }) {
     return {
       makerId: params.maker,

@@ -17,7 +17,7 @@
         destroy-on-close
         @ok="addMaker"
       >
-        <keyboard-maker-form ref="keyboardMaker" />
+        <maker-form ref="keyboardMaker" :is-keeb="true" />
       </a-modal>
 
       <a-row :gutter="[8, 8]" type="flex">
@@ -30,7 +30,7 @@
           :lg="6"
           :xl="4"
         >
-          <maker-card type="keebs" :maker="maker" />
+          <maker-card :maker="maker" :is-keeb="true" />
         </a-col>
       </a-row>
     </a-page-header>
@@ -40,11 +40,11 @@
 <script>
 import { sortBy } from 'lodash'
 import { mapState } from 'vuex'
-import KeyboardMakerForm from '~/components/modals/KeyboardMakerForm.vue'
+import MakerForm from '~/components/modals/MakerForm.vue'
 import MakerCard from '~/components/MakerCard.vue'
 
 export default {
-  components: { KeyboardMakerForm, MakerCard },
+  components: { MakerForm, MakerCard },
   data() {
     return {
       size: this.$device.isMobile ? 'small' : 'default',

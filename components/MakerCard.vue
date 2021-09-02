@@ -1,8 +1,8 @@
 <template>
-  <nuxt-link :to="`/${type}/maker/${maker.id}`">
+  <nuxt-link :to="hyperlink">
     <a-card hoverable :title="maker.name" :size="size">
       <a-icon
-        v-if="user.emailVerified && type === 'artisans'"
+        v-if="user.emailVerified && !isKeeb"
         slot="extra"
         type="star"
         :class="favorite ? 'favorite-maker' : ''"
@@ -28,7 +28,7 @@ import { mapState } from 'vuex'
 
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['type', 'maker', 'favorite'],
+  props: ['maker', 'isKeeb', 'favorite'],
   data() {
     return {
       nologo: 'https://i.imgur.com/wYMcZiI.png',
@@ -37,6 +37,11 @@ export default {
   },
   computed: {
     ...mapState(['user']),
+    hyperlink() {
+      return this.isKeeb
+        ? `/keebs/maker/${this.maker.id}`
+        : `/artisans/maker/${this.maker.id}`
+    },
   },
   methods: {
     addFavoriteMaker(name) {

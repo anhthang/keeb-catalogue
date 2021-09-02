@@ -21,7 +21,7 @@
       </a-input>
     </a-form-item>
     <a-form-item label="Logo">
-      <a-input v-model="maker.img" disabled>
+      <a-input v-model="maker.img" :disabled="!isKeeb">
         <a-icon slot="prefix" type="file-image" />
       </a-input>
     </a-form-item>
@@ -30,12 +30,13 @@
 
 <script>
 import crc32 from 'crc/crc32'
+import slugify from 'slugify'
 import { isEmpty } from 'lodash'
 import DiscordSvg from '@/components/icons/DiscordSvg'
 
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['metadata', 'isEdit'],
+  props: ['metadata', 'isKeeb', 'isEdit'],
   data() {
     return {
       DiscordSvg,
@@ -49,15 +50,25 @@ export default {
       slug: null,
     }
   },
+  computed: {
+    makerId() {
+      return this.isKeeb
+        ? slugify(this.maker.name, { lower: true })
+        : this.maker.name // make it same as keycap-archivist
+            .replaceAll(' ', '-')
+            .replaceAll('.', '-')
+            .toLowerCase()
+    },
+    collectionName() {
+      return this.isKeeb ? 'keyboard-makers' : 'artisan-makers'
+    },
+  },
   watch: {
     'maker.name'() {
-      this.slug = this.maker.name
-        .replaceAll(' ', '-')
-        .replaceAll('.', '-')
-        .toLowerCase()
-
-      const id = crc32(this.maker.name).toString(16)
-      this.maker.img = `https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${id}.jpg`
+      if (!this.isKeeb) {
+        const id = crc32(this.maker.name).toString(16)
+        this.maker.img = `https://github.com/keycap-archivist/website/raw/master/src/assets/img/logos/${id}.jpg`
+      }
     },
   },
   created() {
@@ -68,8 +79,8 @@ export default {
   methods: {
     addMaker() {
       this.$fire.firestore
-        .collection('artisan-makers')
-        .doc(this.slug)
+        .collection(this.collectionName)
+        .doc(this.makerId)
         .set(this.maker)
         .then(() => {
           this.$message.success('Successfully added new maker.')

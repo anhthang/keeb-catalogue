@@ -46,9 +46,10 @@
           destroy-on-close
           @ok="updateKeebMaker"
         >
-          <keyboard-maker-form
+          <maker-form
             ref="keyboardMaker"
             :is-edit="true"
+            :is-keeb="true"
             :metadata="maker"
           />
         </a-modal>
@@ -73,10 +74,10 @@ import { mapState } from 'vuex'
 import KeyboardSvg from '@/components/icons/KeyboardSvg'
 import DiscordSvg from '@/components/icons/DiscordSvg'
 import KeyboardForm from '~/components/modals/KeyboardForm.vue'
-import KeyboardMakerForm from '~/components/modals/KeyboardMakerForm.vue'
+import MakerForm from '~/components/modals/MakerForm.vue'
 
 export default {
-  components: { KeyboardForm, KeyboardMakerForm },
+  components: { KeyboardForm, MakerForm },
   asyncData({ params }) {
     return {
       makerId: params.maker,
