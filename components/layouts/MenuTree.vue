@@ -4,6 +4,7 @@
     :mode="mode"
     :default-selected-keys="['1']"
     :style="{ lineHeight: '64px' }"
+    @click="onChangeMenu"
   >
     <a-menu-item key="1">
       <nuxt-link to="/"><a-icon type="calendar" />Calendar </nuxt-link>
@@ -69,6 +70,13 @@ export default {
     return {
       KeyboardSvg,
     }
+  },
+  methods: {
+    onChangeMenu() {
+      if (this.$device.isMobile) {
+        this.$emit('click')
+      }
+    },
   },
 }
 </script>

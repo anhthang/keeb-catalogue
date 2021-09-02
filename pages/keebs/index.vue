@@ -39,7 +39,6 @@ export default {
   },
   watchQuery({ status = 'live' }) {
     this.boardByStatus(status)
-    this.pageTitle = this.titleMap[status]
   },
   methods: {
     boardByStatus(status) {

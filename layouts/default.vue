@@ -25,7 +25,7 @@
         :collapsed="collapsed"
         collapsed-width="0"
       >
-        <menu-tree mode="inline" />
+        <menu-tree mode="inline" @click="sidebarToogle" />
       </a-layout-sider>
 
       <a-layout-content>
