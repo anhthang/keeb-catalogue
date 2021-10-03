@@ -20,37 +20,47 @@
         <maker-form ref="artisanMaker" />
       </a-modal>
 
-      <a-divider v-if="favorite.length" orientation="left">
-        Favorite
-      </a-divider>
-      <a-row :gutter="[8, 8]" type="flex">
-        <a-col
-          v-for="maker in favorite"
-          :key="maker.id"
-          :xs="12"
-          :sm="12"
-          :md="8"
-          :lg="6"
-          :xl="4"
-        >
-          <maker-card :favorite="true" :maker="maker" />
-        </a-col>
-      </a-row>
+      <a-tabs :default-active-key="defaultTab">
+        <a-tab-pane key="favorite">
+          <span slot="tab">
+            <a-icon type="star" />
+            Favorite
+          </span>
 
-      <a-divider v-if="favorite.length" orientation="left"> Makers </a-divider>
-      <a-row :gutter="[8, 8]" type="flex">
-        <a-col
-          v-for="maker in otherMakers"
-          :key="maker.id"
-          :xs="12"
-          :sm="12"
-          :md="8"
-          :lg="6"
-          :xl="4"
-        >
-          <maker-card :maker="maker" />
-        </a-col>
-      </a-row>
+          <a-row :gutter="[8, 8]" type="flex">
+            <a-col
+              v-for="maker in favorite"
+              :key="maker.id"
+              :xs="12"
+              :sm="12"
+              :md="8"
+              :lg="6"
+              :xl="4"
+            >
+              <maker-card :favorite="true" :maker="maker" />
+            </a-col>
+          </a-row>
+        </a-tab-pane>
+        <a-tab-pane key="makers">
+          <span slot="tab">
+            <a-icon type="usergroup-add" />
+            Makers
+          </span>
+          <a-row :gutter="[8, 8]" type="flex">
+            <a-col
+              v-for="maker in otherMakers"
+              :key="maker.id"
+              :xs="12"
+              :sm="12"
+              :md="8"
+              :lg="6"
+              :xl="4"
+            >
+              <maker-card :maker="maker" />
+            </a-col>
+          </a-row>
+        </a-tab-pane>
+      </a-tabs>
     </a-page-header>
   </div>
 </template>
@@ -78,6 +88,9 @@ export default {
   computed: {
     ...mapState('artisans', ['makers', 'favoriteMakers']),
     ...mapState(['user']),
+    defaultTab() {
+      return this.favoriteMakers.length ? 'favorite' : 'makers'
+    },
     favorite() {
       return Object.values(this.makers).filter((m) =>
         this.favoriteMakers.includes(m.id)
