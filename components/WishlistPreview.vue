@@ -200,15 +200,17 @@ export default {
           .get()
           .then((doc) => {
             doc.docs.forEach((d) => {
-              this.collection[d.id] = Object.values(d.data())
+              this.collection[d.id] = Object.values(d.data()).filter(
+                (c) => !c.gotcha
+              )
             })
           })
       } else {
         const wish = JSON.parse(localStorage.getItem(`KeebCatalogue_wish`))
         const trade = JSON.parse(localStorage.getItem(`KeebCatalogue_trade`))
         this.collection = {
-          wish: Object.values(wish || {}),
-          trade: Object.values(trade || {}),
+          wish: Object.values(wish || {}).filter((c) => !c.gotcha),
+          trade: Object.values(trade || {}).filter((c) => !c.gotcha),
         }
       }
     },
