@@ -1,6 +1,14 @@
 <template>
   <div class="container artisan-container">
     <a-page-header :title="collectionName">
+      <a-dropdown slot="extra" placement="bottomRight">
+        <a-menu slot="overlay" @click="onChangeSortType">
+          <a-menu-item key="sculpt_name"> Sort by Sculpt </a-menu-item>
+          <a-menu-item key="name"> Sort by Colorway </a-menu-item>
+        </a-menu>
+        <a-button icon="sort-ascending"> Sort </a-button>
+      </a-dropdown>
+
       <a-button
         v-if="user.emailVerified"
         slot="extra"
@@ -76,6 +84,7 @@ export default {
       loading: false,
       collectionItems: [],
       CheckMarkSealSvg,
+      sort: 'sculpt_name',
     }
   },
   async fetch() {
@@ -110,7 +119,7 @@ export default {
       return collection?.name
     },
     sortedCollections() {
-      return sortBy(this.collectionItems, ['maker_name', 'sculpt_name'])
+      return sortBy(this.collectionItems, ['maker_name', this.sort])
     },
   },
   methods: {
@@ -199,6 +208,9 @@ export default {
             })
         },
       })
+    },
+    onChangeSortType(e) {
+      this.sort = e.key
     },
   },
 }
