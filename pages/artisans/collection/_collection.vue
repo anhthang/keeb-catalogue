@@ -1,15 +1,15 @@
 <template>
   <div class="container artisan-container">
-    <a-page-header :title="collection.name">
-      <template #extra>
-        <a-dropdown slot="extra" placement="bottomRight">
-          <a-menu slot="overlay" @click="onChangeSortType">
-            <a-menu-item key="sculpt_name"> Sort by Sculpt </a-menu-item>
-            <a-menu-item key="name"> Sort by Colorway </a-menu-item>
-          </a-menu>
-          <a-button icon="sort-ascending"> Sort </a-button>
-        </a-dropdown>
+    <a-page-header :title="collection.name || 'Colllection'">
+      <a-dropdown slot="extra" placement="bottomRight">
+        <a-menu slot="overlay" @click="onChangeSortType">
+          <a-menu-item key="sculpt_name"> Sort by Sculpt </a-menu-item>
+          <a-menu-item key="name"> Sort by Colorway </a-menu-item>
+        </a-menu>
+        <a-button icon="sort-ascending"> Sort </a-button>
+      </a-dropdown>
 
+      <template v-if="!isPublic" slot="extra">
         <a-button
           v-if="user.emailVerified"
           type="primary"
@@ -21,6 +21,7 @@
 
         <a-button
           v-if="user.emailVerified && collection.published"
+          type="danger"
           icon="import"
           @click="delPublishedCollection"
         >
@@ -40,6 +41,12 @@
       <conflict-sync-modal />
 
       <a-spin :spinning="loading">
+        <a-row v-if="!isPublic" :gutter="[8, 8]" type="flex">
+          <p>
+            This collection is published at:
+            <a :href="href" target="_blank">{{ href }}</a>
+          </p>
+        </a-row>
         <a-row :gutter="[8, 8]" type="flex">
           <a-col
             v-for="colorway in sortedCollections"
@@ -58,7 +65,7 @@
                 :src="colorway.img"
               />
 
-              <template slot="actions">
+              <template v-if="!isPublic" slot="actions">
                 <div
                   v-if="colorway.gotcha"
                   class="gotcha-cap"
@@ -95,6 +102,7 @@ export default {
   asyncData({ params }) {
     return {
       collectionId: params.collection,
+      isPublic: params.collection.startsWith('p_'),
     }
   },
   data() {
@@ -110,7 +118,13 @@ export default {
   async fetch() {
     this.loading = true
     let doc
-    if (this.user.emailVerified) {
+    if (this.isPublic) {
+      doc = await this.$fire.firestore
+        .collection('public-collections')
+        .doc(this.collectionId)
+        .get()
+        .then((doc) => doc.data())
+    } else if (this.user.emailVerified) {
       doc = await this.$fire.firestore
         .collection(`users/${this.user.uid}/collections`)
         .doc(this.collectionId)
@@ -128,7 +142,9 @@ export default {
   },
   head() {
     return {
-      title: `${this.collection.name} • Collection - ${process.env.appName}`,
+      title: this.isPublic
+        ? `Collection - ${process.env.appName}`
+        : `${this.collection.name} • Collection - ${process.env.appName}`,
     }
   },
   computed: {
@@ -138,7 +154,12 @@ export default {
       return sortBy(this.collectionItems, ['maker_name', this.sort])
     },
     publishId() {
-      return crc32(`${this.user.uid}__${this.collection.name}`).toString(16)
+      const id = crc32(`${this.user.uid}__${this.collection.name}`).toString(16)
+
+      return `p_${id}`
+    },
+    href() {
+      return `${process.env.appUrl}/artisans/collection/${this.publishId}`
     },
   },
   created() {
@@ -236,14 +257,16 @@ export default {
       })
     },
     publishCollection() {
-      const href = `${process.env.appUrl}/collection/${this.collectionId}`
-
       const _this = this
       this.$confirm({
-        title: 'Publish Collection',
+        title: 'Publish',
         content: () => (
           <div>
-            URL for published collection: <a>{href}</a>
+            URL for published collection:
+            <br />
+            <a href={_this.href} target="_blank">
+              {_this.href}
+            </a>
           </div>
         ),
         okText: 'Publish',
