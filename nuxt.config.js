@@ -47,6 +47,7 @@ export default {
 
   env: {
     appName,
+    appUrl,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

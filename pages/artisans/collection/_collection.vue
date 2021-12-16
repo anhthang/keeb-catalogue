@@ -1,23 +1,41 @@
 <template>
   <div class="container artisan-container">
-    <a-page-header :title="collectionName">
-      <a-dropdown slot="extra" placement="bottomRight">
-        <a-menu slot="overlay" @click="onChangeSortType">
-          <a-menu-item key="sculpt_name"> Sort by Sculpt </a-menu-item>
-          <a-menu-item key="name"> Sort by Colorway </a-menu-item>
-        </a-menu>
-        <a-button icon="sort-ascending"> Sort </a-button>
-      </a-dropdown>
+    <a-page-header :title="collection.name">
+      <template #extra>
+        <a-dropdown slot="extra" placement="bottomRight">
+          <a-menu slot="overlay" @click="onChangeSortType">
+            <a-menu-item key="sculpt_name"> Sort by Sculpt </a-menu-item>
+            <a-menu-item key="name"> Sort by Colorway </a-menu-item>
+          </a-menu>
+          <a-button icon="sort-ascending"> Sort </a-button>
+        </a-dropdown>
 
-      <a-button
-        v-if="user.emailVerified"
-        slot="extra"
-        type="danger"
-        icon="delete"
-        @click="deleteCollection"
-      >
-        Delete
-      </a-button>
+        <a-button
+          v-if="user.emailVerified"
+          type="primary"
+          icon="export"
+          @click="publishCollection"
+        >
+          {{ collection.published ? 'Republish' : 'Publish' }}
+        </a-button>
+
+        <a-button
+          v-if="user.emailVerified && collection.published"
+          icon="import"
+          @click="delPublishedCollection"
+        >
+          Unpublish
+        </a-button>
+
+        <a-button
+          v-if="user.emailVerified"
+          type="danger"
+          icon="delete"
+          @click="deleteCollection"
+        >
+          Delete
+        </a-button>
+      </template>
 
       <conflict-sync-modal />
 
@@ -68,6 +86,7 @@
 <script>
 import { mapState } from 'vuex'
 import { keyBy, sortBy } from 'lodash'
+import crc32 from 'crc/crc32'
 import CheckMarkSealSvg from '@/components/icons/CheckMarkSealSvg'
 import ConflictSyncModal from '~/components/modals/ConflictSyncModal.vue'
 
@@ -75,13 +94,14 @@ export default {
   components: { ConflictSyncModal },
   asyncData({ params }) {
     return {
-      ...params,
+      collectionId: params.collection,
     }
   },
   data() {
     return {
       size: this.$device.isMobile ? 'small' : 'default',
       loading: false,
+      collection: {},
       collectionItems: [],
       CheckMarkSealSvg,
       sort: 'sculpt_name',
@@ -93,11 +113,13 @@ export default {
     if (this.user.emailVerified) {
       doc = await this.$fire.firestore
         .collection(`users/${this.user.uid}/collections`)
-        .doc(this.collection)
+        .doc(this.collectionId)
         .get()
         .then((doc) => doc.data())
     } else {
-      doc = JSON.parse(localStorage.getItem(`KeebCatalogue_${this.collection}`))
+      doc = JSON.parse(
+        localStorage.getItem(`KeebCatalogue_${this.collectionId}`)
+      )
     }
 
     this.collectionItems = sortBy(Object.values(doc || {}), 'name')
@@ -106,21 +128,25 @@ export default {
   },
   head() {
     return {
-      title: `${this.collectionName} • Collection - ${process.env.appName}`,
+      title: `${this.collection.name} • Collection - ${process.env.appName}`,
     }
   },
   computed: {
     ...mapState('artisans', ['collections']),
     ...mapState(['user']),
-    collectionName() {
-      const collection = this.collections.find(
-        (c) => c.slug === this.collection
-      )
-      return collection?.name
-    },
     sortedCollections() {
       return sortBy(this.collectionItems, ['maker_name', this.sort])
     },
+    publishId() {
+      return crc32(`${this.user.uid}__${this.collection.name}`).toString(16)
+    },
+  },
+  created() {
+    const collection = this.collections.find(
+      (c) => c.slug === this.collectionId
+    )
+
+    this.collection = collection || {}
   },
   methods: {
     cardTitle(clw) {
@@ -130,7 +156,7 @@ export default {
       if (this.user.emailVerified) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
-          .doc(this.collection)
+          .doc(this.collectionId)
           .update({
             [clw.id]: { ...clw, gotcha: true },
           })
@@ -146,7 +172,7 @@ export default {
         collectionMap[clw.id].gotcha = true
 
         localStorage.setItem(
-          `KeebCatalogue_${this.collection}`,
+          `KeebCatalogue_${this.collectionId}`,
           JSON.stringify(collectionMap)
         )
 
@@ -159,7 +185,7 @@ export default {
       if (this.user.emailVerified) {
         this.$fire.firestore
           .collection(`users/${this.user.uid}/collections`)
-          .doc(this.collection)
+          .doc(this.collectionId)
           .update({
             [clw.id]: this.$fireModule.firestore.FieldValue.delete(),
           })
@@ -173,7 +199,7 @@ export default {
           })
       } else {
         localStorage.setItem(
-          `KeebCatalogue_${this.collection}`,
+          `KeebCatalogue_${this.collectionId}`,
           JSON.stringify(keyBy(this.collectionItems, 'id'))
         )
 
@@ -189,7 +215,7 @@ export default {
         content: 'When you delete this collection, the items will be deleted.',
         okText: 'Delete',
         onOk() {
-          _this.$store.dispatch('artisans/delCollection', _this.collection)
+          _this.$store.dispatch('artisans/delCollection', _this.collectionId)
 
           _this.$fire.firestore.collection('users').doc(_this.user.uid).update({
             collections: _this.collections,
@@ -197,7 +223,7 @@ export default {
 
           _this.$fire.firestore
             .collection(`users/${_this.user.uid}/collections`)
-            .doc(_this.collection)
+            .doc(_this.collectionId)
             .delete()
             .then(() => {
               _this.$message.success('Collection successfully deleted!')
@@ -208,6 +234,82 @@ export default {
             })
         },
       })
+    },
+    publishCollection() {
+      const href = `${process.env.appUrl}/collection/${this.collectionId}`
+
+      const _this = this
+      this.$confirm({
+        title: 'Publish Collection',
+        content: () => (
+          <div>
+            URL for published collection: <a>{href}</a>
+          </div>
+        ),
+        okText: 'Publish',
+        onOk() {
+          // copy collection to public store
+          _this.$fire.firestore
+            .collection('public-collections')
+            .doc(_this.publishId)
+            .set(keyBy(_this.collectionItems, 'id'))
+            .then(() => {
+              _this.$message.success('Collection published.')
+
+              // update collections
+              const collections = _this.collections.map((c) => {
+                if (c.slug === _this.collectionId) {
+                  Object.assign(c, {
+                    published: true,
+                    public_id: _this.publishId,
+                  })
+                }
+
+                return c
+              })
+
+              _this.$fire.firestore
+                .collection('users')
+                .doc(_this.user.uid)
+                .update({
+                  collections,
+                })
+
+              _this.$fetch()
+            })
+            .catch((e) => {
+              _this.$message.error(e.message)
+            })
+        },
+      })
+    },
+    delPublishedCollection() {
+      this.$fire.firestore
+        .collection('public-collections')
+        .doc(this.publishId)
+        .delete()
+        .then(() => {
+          this.$message.success('Collection unpublished!')
+
+          // update collections
+          const collections = this.collections.map((c) => {
+            if (c.slug === this.collectionId) {
+              delete c.published
+              delete c.public_id
+            }
+
+            return c
+          })
+
+          this.$fire.firestore.collection('users').doc(this.user.uid).update({
+            collections,
+          })
+
+          this.$fetch()
+        })
+        .catch((error) => {
+          this.$message.error(error.message)
+        })
     },
     onChangeSortType(e) {
       this.sort = e.key
