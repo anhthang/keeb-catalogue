@@ -9,14 +9,14 @@
       >
         Copy Text
       </a-button>
-      <a-button
+      <!-- <a-button
         :loading="loading"
         type="primary"
         icon="download"
         @click="generateImg"
       >
         Download
-      </a-button>
+      </a-button> -->
     </template>
 
     <div v-if="base64Img && !$device.isDesktop" class="preview-img">

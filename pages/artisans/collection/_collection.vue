@@ -41,7 +41,11 @@
       <conflict-sync-modal />
 
       <a-spin :spinning="loading">
-        <a-row v-if="!isPublic" :gutter="[8, 8]" type="flex">
+        <a-row
+          v-if="collection.published && !isPublic"
+          :gutter="[8, 8]"
+          type="flex"
+        >
           <p>
             This collection is published at:
             <a :href="href" target="_blank">{{ href }}</a>
