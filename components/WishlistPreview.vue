@@ -27,6 +27,15 @@
       <img :src="`data:image/png;base64,${base64Img}`" alt="" />
     </div>
     <div class="artisan-container">
+      <a-descriptions title="Information">
+        <a-descriptions-item label="Discord">
+          {{ wishlistSettings.social.discord }}
+        </a-descriptions-item>
+        <a-descriptions-item label="Reddit">
+          {{ wishlistSettings.social.reddit }}
+        </a-descriptions-item>
+      </a-descriptions>
+
       <a-divider v-if="draggableWishList.length">
         {{ wishlistSettings.wish.title }}
       </a-divider>
