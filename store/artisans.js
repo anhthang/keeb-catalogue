@@ -35,7 +35,7 @@ export const actions = {
       .then((res) => res.json())
       .then((data) => {
         // eslint-disable-next-line prefer-const
-        let { sculpts } = data
+        let { sculpts, nationality } = data
 
         sculpts = sculpts.map((sculpt) => {
           const random = sample(sculpt.colorways)
@@ -49,7 +49,7 @@ export const actions = {
 
         sculpts = keyBy(sortBy(sculpts, 'name'), 'slug')
 
-        commit('MAKER_DB', { id, sculpts })
+        commit('MAKER_DB', { id, nationality, sculpts })
       })
   },
   async updateFavoriteMakers({ commit, state, rootState }, name) {
@@ -120,7 +120,8 @@ export const mutations = {
       [maker.id]: maker,
     }
   },
-  MAKER_DB(state, { id, sculpts }) {
+  MAKER_DB(state, { id, nationality, sculpts }) {
+    state.makers[id].nationality = nationality
     state.makers[id].sculpts = sculpts
   },
   WISHLIST_SETTINGS(state, data) {

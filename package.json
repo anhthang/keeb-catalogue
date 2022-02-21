@@ -36,6 +36,7 @@
     "nuxt": "^2.15.8",
     "slugify": "^1.6.0",
     "vue-clipboard2": "^0.3.1",
+    "vue-country-flag": "^2.3.2",
     "vue-markdown": "^2.2.4",
     "vuedraggable": "^2.24.3"
   },

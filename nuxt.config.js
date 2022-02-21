@@ -1,5 +1,5 @@
 const appName = 'Keeb Catalogue'
-const appUrl = 'https://keeb-catalogue.web.app'
+const appUrl = 'https://keeb-catalogue.web.app/#'
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -58,7 +58,11 @@ export default {
   css: ['@/assets/main.less', '@/assets/main-dark.less'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/antd-ui', '@/plugins/clipboard'],
+  plugins: [
+    '@/plugins/antd-ui',
+    '@/plugins/clipboard',
+    '@/plugins/country-flag',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

@@ -46,10 +46,10 @@
           :gutter="[8, 8]"
           type="flex"
         >
-          <p>
+          <a-col>
             This collection is published at:
             <a :href="href" target="_blank">{{ href }}</a>
-          </p>
+          </a-col>
         </a-row>
         <a-row :gutter="[8, 8]" type="flex">
           <a-col
