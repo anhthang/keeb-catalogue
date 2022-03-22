@@ -8,7 +8,7 @@
         },
       }"
     >
-      <country-flag slot="subTitle" :country="maker.nationality" size="small" />
+      <country-flag v-if="maker.nationality" slot="subTitle" :country="maker.nationality" size="small" />
 
       <template slot="extra">
         <a-button

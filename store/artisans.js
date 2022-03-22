@@ -35,7 +35,7 @@ export const actions = {
       .then((res) => res.json())
       .then((data) => {
         // eslint-disable-next-line prefer-const
-        let { sculpts, nationality } = data
+        let { sculpts, nationality = null } = data
 
         sculpts = sculpts.map((sculpt) => {
           const random = sample(sculpt.colorways)

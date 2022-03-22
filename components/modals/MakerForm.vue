@@ -84,6 +84,9 @@ export default {
   },
   methods: {
     addMaker() {
+      // do not save sculpts into firestore
+      delete this.maker.sculpts
+
       this.$fire.firestore
         .collection(this.collectionName)
         .doc(this.makerId)

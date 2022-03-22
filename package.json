@@ -2,6 +2,11 @@
   "name": "keeb-catalogue",
   "version": "1.0.0",
   "private": true,
+  "author": {
+    "email": "buianhthang89@gmail.com",
+    "name": "Anh Thang Bui",
+    "url": "https://anhthang.org"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
