@@ -30,6 +30,12 @@
             :xl="4"
           >
             <a-card hoverable :title="colorway.name || '-'" :size="size">
+              <a-icon
+                v-if="colorway.commissioned"
+                slot="extra"
+                type="bg-colors"
+                class="favorite-maker"
+              />
               <img
                 slot="cover"
                 loading="lazy"
